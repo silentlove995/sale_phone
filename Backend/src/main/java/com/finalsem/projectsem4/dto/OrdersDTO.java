@@ -2,16 +2,18 @@ package com.finalsem.projectsem4.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.finalsem.projectsem4.common.enums.Status;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrdersDTO {
+public class OrdersDTO extends AbstractDTO {
     private Status orderStatus;
     private String totalAmount;
-    private List<OrderItemsDTO> orderItems;
+    private String shippingAddress;
+    private List<OrderDetailsDTO> orderItems;
+    private Long userId;
 }

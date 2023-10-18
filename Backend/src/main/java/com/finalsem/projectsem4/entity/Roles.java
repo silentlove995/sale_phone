@@ -13,8 +13,8 @@ import java.util.Set;
 @Data
 @Entity
 public class Roles extends BaseEntity {
-    @Column(name = "role_name")
-    private ERoles ERoles;
+    @Column(name = "role_name",nullable = false)
+    private ERoles name;
 
     @ManyToMany(mappedBy = "roles")
     Set<Users> users;
