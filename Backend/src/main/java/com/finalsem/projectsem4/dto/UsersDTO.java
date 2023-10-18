@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.finalsem.projectsem4.entity.Orders;
 import lombok.*;
@@ -19,6 +20,8 @@ public class UsersDTO extends AbstractDTO {
     private String email;
     private String phone;
     private String address;
+    @JsonIgnore
     private List<String> roles;
+    @JsonIgnore
     private List<Orders> orders;
 }

@@ -33,10 +33,10 @@ public class Users extends BaseEntity {
     @Column(name = "full_name")
     private String fullName;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email cannot be blank")
     @Size(max = 100)
     @Column(name = "email",length = 100, nullable = false)
+    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
     private String email;
 
     @NotBlank
@@ -56,6 +56,7 @@ public class Users extends BaseEntity {
     private List<Orders> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Comments> comments;
 
     @ManyToMany(fetch = FetchType.EAGER)

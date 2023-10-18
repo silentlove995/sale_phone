@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finalsem.projectsem4.common.enums.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +25,7 @@ public class Orders extends BaseEntity {
     @Column(name = "shipping_address", length = 512, nullable = false)
     private String shippingAddress;
 
-    // One order can have multiple orderItem
+    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetails = new ArrayList<>();
 

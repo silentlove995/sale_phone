@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class Categories extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categories")
     private List<Products> products;
 

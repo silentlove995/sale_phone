@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,12 +45,15 @@ public class Products extends BaseEntity {
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch= FetchType.EAGER)
     @JsonManagedReference
+    @JsonIgnore
     private List<ProductImages> pictures;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<Comments> comments;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<OrderDetails> orderDetails;
 
     @ManyToOne
