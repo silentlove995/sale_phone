@@ -22,7 +22,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    public ResponseBuilder getAllOrderDetails() {
+    public ResponseBuilder<List<OrderDetailsDTO>> getAllOrderDetails() {
         List<OrderDetails> orderItems = orderDetailsRepository.findAll();
         List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
             OrderDetailsDTO orderDetailsDTO;
@@ -34,7 +34,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    public ResponseBuilder addOrderDetails(OrderDetailsDTO orderDetailsDTO) {
+    public ResponseBuilder<OrderDetailsDTO> addOrderDetails(OrderDetailsDTO orderDetailsDTO) {
         OrderDetails orderDetails = new OrderDetails();
         ObjectMapper mapper = new ObjectMapper();
         orderDetails = mapper.convertValue(orderDetailsDTO, OrderDetails.class);
@@ -43,7 +43,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    public ResponseBuilder updateOrderDetails(OrderDetailsDTO orderDetailsDTO) {
+    public ResponseBuilder<OrderDetailsDTO> updateOrderDetails(OrderDetailsDTO orderDetailsDTO) {
         OrderDetails orderDetails = orderDetailsRepository.getReferenceById(orderDetailsDTO.getId());
         ObjectMapper mapper = new ObjectMapper();
         orderDetails = mapper.convertValue(orderDetailsDTO, OrderDetails.class);
@@ -52,19 +52,24 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    public ResponseBuilder deleteOrderDetails(OrderDetailsDTO orderDetailsDTO) {
-        OrderDetails orderDetails = orderDetailsRepository.getReferenceById(orderDetailsDTO.getId());
+    public ResponseBuilder deleteOrderDetails(Long id) {
+        OrderDetails orderDetails = orderDetailsRepository.getReferenceById(id);
         orderDetailsRepository.delete(orderDetails);
         return new ResponseBuilder<>("00", "success");
     }
 
     @Override
-    public ResponseBuilder getOrderDetailsByOrderId(Long id) {
+    public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByOrderId(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder getOrderDetailsByProductId(Long id) {
+    public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByProductId(Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseBuilder<OrderDetailsDTO> getOrderDetailsById(Long id) {
         return null;
     }
 }

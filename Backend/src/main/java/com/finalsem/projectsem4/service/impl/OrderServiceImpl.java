@@ -6,7 +6,6 @@ import com.finalsem.projectsem4.dto.OrdersDTO;
 import com.finalsem.projectsem4.entity.Orders;
 import com.finalsem.projectsem4.repository.OrderRepository;
 import com.finalsem.projectsem4.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,8 +53,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseBuilder<OrdersDTO>  deleteOrder(OrdersDTO ordersDTO) {
-        Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
+    public ResponseBuilder deleteOrder(Long id) {
+        Orders orders = orderRepository.getReferenceById(id);
         orderRepository.delete(orders);
         return new ResponseBuilder<>("00", "success");
     }
@@ -66,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseBuilder<OrdersDTO>  getOrderByUserId(Long id) {
+    public ResponseBuilder<List<OrdersDTO>>  getOrderByUserId(Long id) {
         return null;
     }
 }

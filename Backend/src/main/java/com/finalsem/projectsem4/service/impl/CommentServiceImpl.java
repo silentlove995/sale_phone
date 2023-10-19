@@ -5,13 +5,15 @@ import com.finalsem.projectsem4.dto.CommentsDTO;
 import com.finalsem.projectsem4.service.CommentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
 @Service
 public class CommentServiceImpl implements CommentService {
     @Override
-    public ResponseBuilder<CommentsDTO> getAllComment() {
+    public ResponseBuilder<List<CommentsDTO>> getAllComment() {
         return null;
     }
 
@@ -31,22 +33,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseBuilder<CommentsDTO> deleteComment(Long id) {
+    public ResponseBuilder deleteComment(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder<CommentsDTO> getCommentByUserId(Long id) {
+    public ResponseBuilder<List<CommentsDTO>> getCommentByUserId(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder<CommentsDTO> getCommentByProductId(Long id) {
+    public ResponseBuilder<List<CommentsDTO>> getCommentByProductId(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder<CommentsDTO> getCommentByUserIdAndProductId(Long userId, Long productId) {
+    public ResponseBuilder<List<CommentsDTO>> getCommentByUserIdAndProductId(Long userId, Long productId) {
         return null;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
@@ -23,7 +25,7 @@ public class BrandController {
 
     @GetMapping("/all")
     ResponseEntity<?> getAllBrands() {
-        ResponseBuilder<BrandsDTO> resp = service.getAllBrand();
+        ResponseBuilder<List<BrandsDTO>> resp = service.getAllBrand();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
@@ -41,7 +43,7 @@ public class BrandController {
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteBrand(@PathVariable Long id) {
-        ResponseBuilder<BrandsDTO> resp = service.deleteBrand(id);
+        ResponseBuilder resp = service.deleteBrand(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 

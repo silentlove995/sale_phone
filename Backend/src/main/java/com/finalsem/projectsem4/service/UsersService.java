@@ -1,18 +1,21 @@
 package com.finalsem.projectsem4.service;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
+import com.finalsem.projectsem4.dto.UsersDTO;
+
+import java.util.List;
 
 /**
  * @author Ly Quoc Trong
  */
 public interface UsersService {
-    ResponseBuilder getAllUsers();
+    ResponseBuilder<List<UsersDTO>> getAllUsers();
 
-    ResponseBuilder getUsersById(Long id);
+    ResponseBuilder<UsersDTO> getUsersById(Long id);
 
-    ResponseBuilder createUsers(String name);
+    ResponseBuilder<UsersDTO> createUsers(UsersDTO dto);
 
-    ResponseBuilder updateUsers(Long id, String name);
+    ResponseBuilder<UsersDTO> updateUsers(UsersDTO dto);
 
-    ResponseBuilder deleteUsers(Long id);
+    ResponseBuilder<UsersDTO> deleteUsers(Long id);
 }

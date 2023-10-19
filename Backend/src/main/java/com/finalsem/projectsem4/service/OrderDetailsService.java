@@ -3,20 +3,24 @@ package com.finalsem.projectsem4.service;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrderDetailsDTO;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
 public interface OrderDetailsService {
 
-    ResponseBuilder getAllOrderDetails();
-    ResponseBuilder addOrderDetails(OrderDetailsDTO orderDetailsDTO);
+    ResponseBuilder<List<OrderDetailsDTO>> getAllOrderDetails();
+    ResponseBuilder<OrderDetailsDTO> addOrderDetails(OrderDetailsDTO orderDetailsDTO);
 
-    ResponseBuilder updateOrderDetails(OrderDetailsDTO orderDetailsDTO);
+    ResponseBuilder<OrderDetailsDTO> updateOrderDetails(OrderDetailsDTO orderDetailsDTO);
 
-    ResponseBuilder deleteOrderDetails(OrderDetailsDTO orderDetailsDTO);
+    ResponseBuilder deleteOrderDetails(Long id);
 
-    ResponseBuilder getOrderDetailsByOrderId(Long id);
+    ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByOrderId(Long id);
 
-    ResponseBuilder getOrderDetailsByProductId(Long id);
+    ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByProductId(Long id);
+
+    ResponseBuilder<OrderDetailsDTO> getOrderDetailsById(Long id);
 
 }

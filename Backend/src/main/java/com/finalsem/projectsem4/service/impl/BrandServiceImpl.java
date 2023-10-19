@@ -5,13 +5,15 @@ import com.finalsem.projectsem4.dto.BrandsDTO;
 import com.finalsem.projectsem4.service.BrandService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
 @Service
 public class BrandServiceImpl implements BrandService {
     @Override
-    public ResponseBuilder<BrandsDTO> getAllBrand() {
+    public ResponseBuilder<List<BrandsDTO>> getAllBrand() {
         return null;
     }
 
@@ -31,7 +33,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public ResponseBuilder<BrandsDTO> deleteBrand(Long id) {
+    public ResponseBuilder deleteBrand(Long id) {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.controller;
 
+import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.ProductDTO;
 import com.finalsem.projectsem4.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,27 +25,45 @@ public class ProductsController {
         this.productService = productService;
     }
 
-    @GetMapping("/get-all")
-    public ResponseEntity<?> getAllProducts() {
-        return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
+    @GetMapping("/all")
+    ResponseEntity<?> getAllProducts() {
+        ResponseBuilder<List<ProductDTO>> resp = productService.getAllProduct();
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    ResponseEntity<?> getProductById(@PathVariable Long id) {
+        ResponseBuilder<ProductDTO> resp = productService.getProductById(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/category/{id}")
+    ResponseEntity<?> getProductByCategoryId(@PathVariable Long id) {
+        ResponseBuilder<List<ProductDTO>> resp = productService.getProductByCategoryId(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/brand/{id}")
+    ResponseEntity<?> getProductByBrandId(@PathVariable Long id) {
+        ResponseBuilder<List<ProductDTO>> resp = productService.getProductByBrandId(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        ResponseBuilder resp = productService.deleteProduct(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
-        return new ResponseEntity<>(productService.addProduct(productDTO), HttpStatus.OK);
+    ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
+        ResponseBuilder<ProductDTO> resp = productService.addProduct(productDTO);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO) {
-        return new ResponseEntity<>(productService.updateProduct(productDTO), HttpStatus.OK);
+    ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO) {
+        ResponseBuilder<ProductDTO> resp = productService.updateProduct(productDTO);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
-
-//    @PutMapping("/delete")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<?> deleteProduct(@RequestBody ProductDTO productDTO) {
-//        return new ResponseEntity<>(productService.deleteProduct(productDTO), HttpStatus.OK);
-//    }
-
 }

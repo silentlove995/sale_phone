@@ -9,18 +9,18 @@ import java.util.List;
 
 public interface ProductService {
 
-    ResponseBuilder getAllProduct();
+    ResponseBuilder<List<ProductDTO>> getAllProduct();
 
-    ResponseBuilder addProduct(ProductDTO productDTO);
+    ResponseBuilder<ProductDTO> addProduct(ProductDTO productDTO);
 
-    ResponseBuilder updateProduct(ProductDTO productDTO);
+    ResponseBuilder<ProductDTO> updateProduct(ProductDTO productDTO);
 
     ResponseBuilder deleteProduct(Long id);
 
-    ResponseBuilder getProductById(Long id);
+    ResponseBuilder<ProductDTO> getProductById(Long id);
 
-    ResponseBuilder getProductByCategory(Long id);
+    ResponseBuilder<List<ProductDTO>> getProductByCategoryId(Long id);
 
-    ResponseBuilder getProductByBrand(Long id);
+    ResponseBuilder<List<ProductDTO>> getProductByBrandId(Long id);
 
 }

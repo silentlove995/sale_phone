@@ -5,13 +5,15 @@ import com.finalsem.projectsem4.dto.CategoryDTO;
 import com.finalsem.projectsem4.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Override
-    public ResponseBuilder<CategoryDTO> getAllCategory() {
+    public ResponseBuilder<List<CategoryDTO>> getAllCategory() {
         return null;
     }
 
@@ -31,12 +33,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseBuilder<CategoryDTO> deleteCategory(Long id) {
-        return null;
+    public ResponseBuilder deleteCategory(Long id) {
+        return new ResponseBuilder<>("00", "success");
     }
 
     @Override
     public ResponseBuilder<CategoryDTO> getCategoryByName(String name) {
+        return null;
+    }
+
+    @Override
+    public ResponseBuilder<List<CategoryDTO>> getCategoryByBrandId(Long id) {
         return null;
     }
 }

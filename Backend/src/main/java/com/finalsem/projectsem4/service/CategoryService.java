@@ -3,11 +3,13 @@ package com.finalsem.projectsem4.service;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.CategoryDTO;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
 public interface CategoryService {
-    ResponseBuilder<CategoryDTO> getAllCategory();
+    ResponseBuilder<List<CategoryDTO>> getAllCategory();
 
     ResponseBuilder<CategoryDTO> getCategoryById(Long id);
 
@@ -15,7 +17,9 @@ public interface CategoryService {
 
     ResponseBuilder<CategoryDTO> updateCategory(Long id, CategoryDTO dto);
 
-    ResponseBuilder<CategoryDTO> deleteCategory(Long id);
+    ResponseBuilder deleteCategory(Long id);
 
     ResponseBuilder<CategoryDTO> getCategoryByName(String name);
+
+    ResponseBuilder<List<CategoryDTO>> getCategoryByBrandId(Long id);
 }

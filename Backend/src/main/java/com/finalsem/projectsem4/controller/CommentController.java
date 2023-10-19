@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
@@ -24,7 +26,7 @@ public class CommentController {
 
     @GetMapping("/all")
     ResponseEntity<?> getAllComments() {
-        ResponseBuilder<CommentsDTO> resp = service.getAllComment();
+        ResponseBuilder<List<CommentsDTO>> resp = service.getAllComment();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
@@ -42,7 +44,7 @@ public class CommentController {
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteComment(@PathVariable Long id) {
-        ResponseBuilder<CommentsDTO> resp = service.deleteComment(id);
+        ResponseBuilder resp = service.deleteComment(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
@@ -54,19 +56,19 @@ public class CommentController {
 
     @GetMapping("/get/user/{id}")
     ResponseEntity<?> getCommentByUserId(@PathVariable Long id) {
-        ResponseBuilder<CommentsDTO> resp = service.getCommentByUserId(id);
+        ResponseBuilder<List<CommentsDTO>> resp = service.getCommentByUserId(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @GetMapping("/get/product/{id}")
     ResponseEntity<?> getCommentByProductId(@PathVariable Long id) {
-        ResponseBuilder<CommentsDTO> resp = service.getCommentByProductId(id);
+        ResponseBuilder<List<CommentsDTO>> resp = service.getCommentByProductId(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @GetMapping("/get/user/{userId}/product/{productId}")
     ResponseEntity<?> getCommentByUserIdAndProductId(@PathVariable Long userId, @PathVariable Long productId) {
-        ResponseBuilder<CommentsDTO> resp = service.getCommentByUserIdAndProductId(userId, productId);
+        ResponseBuilder<List<CommentsDTO>> resp = service.getCommentByUserIdAndProductId(userId, productId);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

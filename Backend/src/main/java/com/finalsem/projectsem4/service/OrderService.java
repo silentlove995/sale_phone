@@ -16,9 +16,9 @@ public interface OrderService {
 
     ResponseBuilder<OrdersDTO>  updateOrder(OrdersDTO ordersDTO);
 
-    ResponseBuilder<OrdersDTO>  deleteOrder(OrdersDTO ordersDTO);
+    ResponseBuilder  deleteOrder(Long id);
 
     ResponseBuilder<OrdersDTO>  getOrderById(Long id);
 
-    ResponseBuilder<OrdersDTO>  getOrderByUserId(Long id);
+    ResponseBuilder<List<OrdersDTO>>  getOrderByUserId(Long id);
 }

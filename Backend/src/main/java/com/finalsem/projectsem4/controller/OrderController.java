@@ -29,4 +29,34 @@ public class OrderController{
         ResponseBuilder<List<OrdersDTO>> resp = orderService.getAllOrder();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
+
+    @GetMapping("/get/{id}")
+    ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        ResponseBuilder<OrdersDTO> resp = orderService.getOrderById(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/user/{id}")
+    ResponseEntity<?> getOrderByUserId(@PathVariable Long id) {
+        ResponseBuilder<List<OrdersDTO>> resp = orderService.getOrderByUserId(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    ResponseEntity<?> addOrder(@RequestBody OrdersDTO ordersDTO) {
+        ResponseBuilder<OrdersDTO> resp = orderService.addOrder(ordersDTO);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    ResponseEntity<?> updateOrder(@RequestBody OrdersDTO ordersDTO) {
+        ResponseBuilder<OrdersDTO> resp = orderService.updateOrder(ordersDTO);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delet/{id}")
+    ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+        ResponseBuilder resp = orderService.deleteOrder(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
 }

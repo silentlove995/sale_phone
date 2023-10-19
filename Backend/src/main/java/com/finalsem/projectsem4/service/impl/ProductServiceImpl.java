@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseBuilder getAllProduct() {
+    public ResponseBuilder<List<ProductDTO>> getAllProduct() {
         List<Products> products = productRepository.findAll();
         List<ProductDTO> productDTOS = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseBuilder addProduct(ProductDTO productDTO) {
+    public ResponseBuilder<ProductDTO> addProduct(ProductDTO productDTO) {
         Products products;
         ObjectMapper mapper = new ObjectMapper();
         products = mapper.convertValue(productDTO, Products.class);
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseBuilder updateProduct(ProductDTO productDTO) {
+    public ResponseBuilder<ProductDTO> updateProduct(ProductDTO productDTO) {
         Products product = productRepository.getReferenceById(productDTO.getId());
         ObjectMapper mapper = new ObjectMapper();
         product = mapper.convertValue(productDTO, Products.class);
@@ -62,17 +62,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseBuilder getProductById(Long id) {
+    public ResponseBuilder<ProductDTO> getProductById(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder getProductByCategory(Long id) {
+    public ResponseBuilder<List<ProductDTO>> getProductByCategoryId(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder getProductByBrand(Long id) {
+    public ResponseBuilder<List<ProductDTO>> getProductByBrandId(Long id) {
         return null;
     }
 

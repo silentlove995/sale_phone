@@ -1,8 +1,11 @@
 package com.finalsem.projectsem4.service.impl;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
+import com.finalsem.projectsem4.dto.UsersDTO;
 import com.finalsem.projectsem4.service.UsersService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Ly Quoc Trong
@@ -10,27 +13,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UsersService {
     @Override
-    public ResponseBuilder getAllUsers() {
+    public ResponseBuilder<List<UsersDTO>> getAllUsers() {
         return null;
     }
 
     @Override
-    public ResponseBuilder getUsersById(Long id) {
+    public ResponseBuilder<UsersDTO> getUsersById(Long id) {
         return null;
     }
 
     @Override
-    public ResponseBuilder createUsers(String name) {
+    public ResponseBuilder<UsersDTO> createUsers(UsersDTO dto) {
         return null;
     }
 
     @Override
-    public ResponseBuilder updateUsers(Long id, String name) {
+    public ResponseBuilder<UsersDTO> updateUsers(UsersDTO dto) {
         return null;
     }
 
     @Override
-    public ResponseBuilder deleteUsers(Long id) {
+    public ResponseBuilder<UsersDTO> deleteUsers(Long id) {
         return null;
     }
 }

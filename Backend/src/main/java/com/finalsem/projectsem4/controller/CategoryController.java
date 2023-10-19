@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Ly Quoc Trong
  */
@@ -23,7 +25,7 @@ public class CategoryController {
 
     @GetMapping("/all")
     ResponseEntity<?> getAllCategories() {
-        ResponseBuilder<CategoryDTO> resp = service.getAllCategory();
+        ResponseBuilder<List<CategoryDTO>> resp = service.getAllCategory();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
@@ -41,7 +43,7 @@ public class CategoryController {
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        ResponseBuilder<CategoryDTO> resp = service.deleteCategory(id);
+        ResponseBuilder resp = service.deleteCategory(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
