@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { ProductionComponent } from './production/production.component';
 
 export const rootRouterConfig: Routes = [
   {
@@ -9,6 +10,7 @@ export const rootRouterConfig: Routes = [
     redirectTo: 'dashboard/analytics',
     pathMatch: 'full'
   },
+  { path: 'product/home', component: ProductionComponent },
   {
     path: '',
     component: AuthLayoutComponent,
@@ -40,17 +42,15 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./views/forms/forms.module').then(m => m.AppFormsModule),
         data: { title: 'Forms', breadcrumb: 'FORMS'}
       },
-      
       {
         path: 'search',
         loadChildren: () => import('./views/search-view/search-view.module').then(m => m.SearchViewModule)
-      },
-      
+      }, 
     ]
   },
   {
     path: '**',
     redirectTo: 'sessions/404'
-  }
+  },
 ];
 
