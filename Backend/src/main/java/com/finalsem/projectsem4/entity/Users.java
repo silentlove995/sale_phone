@@ -23,28 +23,25 @@ import java.util.Set;
                 "user_name"
         }),
         @UniqueConstraint(columnNames = {
-                "phone"
-        }),
-        @UniqueConstraint(columnNames = {
                 "email"
         })
 })
 public class Users extends BaseEntity {
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "user_name",length = 50, nullable = false)
+    private String username;
 
     @Column(name = "full_name")
     private String fullName;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    @Column(name = "email")
+    @NotBlank(message = "Email cannot be blank")
+    @Size(max = 100)
+    @Column(name = "email",length = 100, nullable = false)
+    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
     private String email;
 
     @NotBlank
     @Size(max = 120)
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "phone")
@@ -58,12 +55,16 @@ public class Users extends BaseEntity {
     @JsonIgnore
     private List<Orders> orders = new ArrayList<>();
 
-    @ManyToMany
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Comments> comments;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
-    private Set<Roles> roles;
+//    @JsonIgnore
+    private Set<Roles> roles = new HashSet<>();
 
 }

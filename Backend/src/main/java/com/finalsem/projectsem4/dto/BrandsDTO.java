@@ -2,26 +2,21 @@ package com.finalsem.projectsem4.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.finalsem.projectsem4.entity.Orders;
 import lombok.*;
 
 import java.util.List;
 
 /**
- * @author silen
+ * @author Ly Quoc Trong
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UsersDTO extends AbstractDTO {
-    private String username;
-    private String fullName;
-    private String email;
-    private String phone;
-    private String address;
+public class BrandsDTO extends AbstractDTO {
+    private String name;
     @JsonIgnore
-    private List<String> roles;
+    private List<CategoryDTO> categories;
     @JsonIgnore
-    private List<Orders> orders;
+    private List<ProductDTO> products;
 }

@@ -1,8 +1,9 @@
 package com.finalsem.projectsem4.common;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class ResponseBuilder<T> {
     private String code;
     private String message;
@@ -11,5 +12,11 @@ public class ResponseBuilder<T> {
     public ResponseBuilder(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public ResponseBuilder(String code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
     }
 }

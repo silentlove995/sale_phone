@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finalsem.projectsem4.common.enums.ERoles;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +14,10 @@ import java.util.Set;
 @Data
 @Entity
 public class Roles extends BaseEntity {
-    @Column(name = "role_name")
-    private ERoles ERoles;
+    @Column(name = "role_name",nullable = false)
+    private ERoles name;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     Set<Users> users;
 }

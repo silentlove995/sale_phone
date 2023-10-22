@@ -6,11 +6,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Products, Long> {
-    // write query to find product by id
     Products findById(long id);
-    // write query to find product by name
     Products findByName(String name);
-    // write query to find product by price
     Products findByOriginalPrice(String price);
 
+//    void delete(Optional<Products> product);
+
+//    List<Products> findAllByCategoryId(Long category_id);
+
+//    List<Products> findAllByBrandAndCategoryId(Brands brand, Long category_id);
+
+//    List<Products> findAllByOderItemId(Long order_items_id);
 }
