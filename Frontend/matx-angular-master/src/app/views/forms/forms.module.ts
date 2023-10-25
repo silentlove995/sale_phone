@@ -18,11 +18,10 @@ import { QuillModule } from 'ngx-quill';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { BasicFormComponent } from './basic-form/basic-form.component';
-import { RichTextEditorComponent } from './rich-text-editor/rich-text-editor.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
 
 import { FormsRoutes } from './forms.routing';
-import { WizardComponent } from './wizard/wizard.component';
+import { SearchComponent } from './search/search.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   imports: [
@@ -44,7 +43,8 @@ import { WizardComponent } from './wizard/wizard.component';
     QuillModule.forRoot(),
     FileUploadModule,
     RouterModule.forChild(FormsRoutes),
+    AgGridModule
   ],
-  declarations: [RichTextEditorComponent, FileUploadComponent, WizardComponent, BasicFormComponent],
+  declarations: [BasicFormComponent,SearchComponent],
 })
-export class AppFormsModule {}
+export class AppFormsModule { }

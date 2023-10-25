@@ -23,8 +23,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { CommonModule } from '@angular/common';
-import { ProductionComponent } from './production/production.component';
 import { ProductionModule } from './production/production.module';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 // AoT requires an exported function for factories
@@ -43,6 +43,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SharedModule,
     HttpClientModule,
     PerfectScrollbarModule,
+    AgGridModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
