@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, FormBuilder } from '@angular/forms';
+import { log } from 'console';
 
 @Component({
   selector: 'app-basic-form',
@@ -7,41 +8,56 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
   styleUrls: ['./basic-form.component.css']
 })
 export class BasicFormComponent implements OnInit {
-  formData = {}
-  console = console;
-  basicForm: UntypedFormGroup;
+  productForm: any;
+  formattedAmount: string;
+  categoryArr: Array<any>;
+  brandArr: Array<any>;
 
-  constructor() { }
+  constructor(private formBulder: FormBuilder) {
+    this.productForm = this.formBulder.group({
+      name: '',
+      model: '',
+      color: '',
+      stockQuantity: '',
+      description: '',
+      technologyDescription: '',
+      originalPrice: '',
+      discount: '',
+      salePrice: '',
+      categoryName: '',
+      brand: '',
+    });
+
+    this.categoryArr = [{ label: 'Điện thoại', value: '0' },
+    { label: 'Máy tính pc', value: '1' },
+    { label: 'Máy tính laptop', value: '2' },
+    { label: 'Bàn Phím', value: '3' },];
+
+    this.brandArr = [{ label: 'Hà Nội', value: '0' },
+    { label: 'Hồ Chính Minh', value: '1' },
+    { label: 'Đà Nẵng', value: '2' },
+    { label: 'Đà Lạt', value: '3' },];
+
+  }
 
   ngOnInit() {
-    let password = new UntypedFormControl('', Validators.required);
-    let confirmPassword = new UntypedFormControl('');
 
-    this.basicForm = new UntypedFormGroup({
-      username: new UntypedFormControl('', [
-        Validators.minLength(4),
-        Validators.maxLength(9)
-      ]),
-      firstname: new UntypedFormControl('', [
-        Validators.required
-      ]),
-      email: new UntypedFormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
-      website: new UntypedFormControl(''),
-      date: new UntypedFormControl(),
-      cardno: new UntypedFormControl(''),
-      password: password,
-      confirmPassword: confirmPassword,
-      gender: new UntypedFormControl(''),
-      agreed: new UntypedFormControl('', (control: UntypedFormControl) => {
-        const agreed = control.value;
-        if(!agreed) {
-          return { agreed: true }
-        }
-        return null;
-      })
-    })
+  }
+
+  caculatorSale(): number {
+    const originalPrice = this.productForm.get('originalPrice').value();
+    const discount = this.productForm.get('discount').value();
+    let salePrice = originalPrice * discount / 100;
+    return salePrice;
+  }
+
+  submitProduct() {
+    alert('tạo sản phẩm mới')
+    console.log(this.productForm.getRawValue());
+  }
+
+  outputDemo(event:any){
+    let salePrice = event.target.value
+    this.productForm.get('salePrice').patchValue(salePrice);
   }
 }

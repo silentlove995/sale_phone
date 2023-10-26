@@ -7,7 +7,7 @@ import { ProductionComponent } from './production/production.component';
 export const rootRouterConfig: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/analytics',
+    redirectTo: 'admin/product/search',
     pathMatch: 'full'
   },
   { path: 'product/home', component: ProductionComponent },
@@ -18,7 +18,7 @@ export const rootRouterConfig: Routes = [
       {
         path: 'sessions',
         loadChildren: () => import('./views/sessions/sessions.module').then(m => m.SessionsModule),
-        data: { title: 'Session'}
+        data: { title: 'Session' }
       }
     ]
   },
@@ -27,25 +27,12 @@ export const rootRouterConfig: Routes = [
     component: AdminLayoutComponent,
     canActivate: [AuthGuard],
     children: [
+
       {
-        path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-        data: { title: 'Dashboard', breadcrumb: 'DASHBOARD'}
-      },
-      {
-        path: 'others',
-        loadChildren: () => import('./views/others/others.module').then(m => m.OthersModule),
-        data: { title: 'Others', breadcrumb: 'OTHERS'}
-      },
-      {
-        path: 'forms',
+        path: 'admin',
         loadChildren: () => import('./views/forms/forms.module').then(m => m.AppFormsModule),
-        data: { title: 'Forms', breadcrumb: 'FORMS'}
       },
-      {
-        path: 'search',
-        loadChildren: () => import('./views/search-view/search-view.module').then(m => m.SearchViewModule)
-      }, 
+
     ]
   },
   {

@@ -30,79 +30,43 @@ interface IBadge {
 export class NavigationService {
   iconMenu: IMenuItem[] = [
     {
-      name: 'DASHBOARD',
-      state: 'dashboard/analytics',
-      type: 'link',
-      icon: 'dashboard',
-    },
-    {
-      name: 'FORMS',
-      type: 'separator'
-    },
-    {
-      name: 'BASIC',
-      state: 'forms/basic',
-      type: 'link',
-      icon: 'description',
-    },
-    {
-      name: 'EDITOR',
-      state: 'forms/editor',
-      type: 'link',
-      icon: 'subject',
-    },
-    {
-      name: 'UPLOAD',
-      state: 'forms/upload',
-      type: 'link',
-      icon: 'upload',
-    },
-    {
-      name: 'WIZARD',
-      state: 'forms/wizard',
-      type: 'link',
-      icon: 'grain',
-    },
-    {
-      name: 'PAGES',
-      type: 'separator'
-    },
-    {
-      name: 'SESSIONS',
+      name: 'Quản lý sản phẩm',
       type: 'dropDown',
       tooltip: 'Pages',
       icon: 'view_carousel',
       sub: [
-        { name: 'SIGNUP', state: 'sessions/signup' },
-        { name: 'SIGNIN', state: 'sessions/signin' },
-        { name: 'NOTFOUND', state: 'sessions/404' },
+        { name: 'Thêm mới sản phẩm', state: 'admin/product/create' },
+        { name: 'Tìm kiếm sản phẩm', state: 'admin/product/search' },
       ]
     },
     {
-      name: 'OTHERS',
+      name: 'Quản lý danh mục',
       type: 'dropDown',
-      tooltip: 'Others',
-      icon: 'blur_on',
+      tooltip: 'Pages',
+      icon: 'view_carousel',
       sub: [
-        { name: 'GALLERY', state: 'others/gallery' },
-        { name: 'PRICINGS', state: 'others/pricing' },
-        { name: 'USERS', state: 'others/users' },
-        { name: 'BLANK', state: 'others/blank' }
+        { name: 'Thêm mới danh mục', state: '' },
+        { name: 'Tìm kiếm danh mục', state: '' },
       ]
     },
     {
-      name: 'Pro',
-      type: 'extLink',
-      icon: 'upgrade',
-      state: 'http://matx-angular.ui-lib.com/'
+      name: 'Quản lý thông tin khách hàng',
+      type: 'dropDown',
+      tooltip: 'Pages',
+      icon: 'view_carousel',
+      sub: [
+        { name: 'Tìm kiếm thông tin khách hàng', state: '' },
+      ]
     },
     {
-      name: 'DOC',
-      type: 'extLink',
-      tooltip: 'Documentation',
-      icon: 'library_books',
-      state: 'http://demos.ui-lib.com/matx-doc/'
-    }
+      name: 'Quản lý hóa đơn',
+      type: 'dropDown',
+      tooltip: 'Pages',
+      icon: 'view_carousel',
+      sub: [
+        { name: 'Tìm kiếm thông tin đơn hàng', state: '' },
+      ]
+    },
   ];
 
   // Icon menu TITLE at the very top of navigation.

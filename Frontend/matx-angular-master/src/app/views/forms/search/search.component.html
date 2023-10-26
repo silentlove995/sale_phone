@@ -1,0 +1,60 @@
+<div class="container">
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p>Tìm kiếm sản phầm</p>
+        </blockquote>
+    </figure>
+    <div class="card-title-text"></div>
+    <form [formGroup]="formSearch">
+        <div class="row" style="margin: 35px;">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Tên sản phẩm" aria-label="Tên sản phẩm"
+                    formControlName="name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Model" aria-label="Model" formControlName="model">
+            </div>
+        </div>
+        <div class="row" style="margin: 35px;">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Giá từ" aria-label="Giá từ"
+                    formControlName="fromPrice">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Đến Giá" aria-label="Đến Giá"
+                    formControlName="toPrice">
+            </div>
+        </div>
+        <div class="row" style="margin: 35px;">
+            <div class="col">
+                <select name="categoryArr" formControlName="categoryName" class="form-control">
+                    <option value="" disabled selected hidden>Tên danh mục</option>
+                    <option *ngFor="let item of categoryArr" [value]="item.value">{{ item.label }}</option>
+                </select>
+            </div>
+            <div class="col">
+                <select name="brandArr" formControlName="brand" class="form-control">
+                    <option value="" disabled selected hidden>Tên chi nhánh</option>
+                    <option *ngFor="let item of brandArr" [value]="item.value">{{ item.label }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin: 35px;">
+            <div class="col">
+                <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
+                    title="Choose your color">
+            </div>
+        </div>
+        <div class="text-center" style="margin-bottom: 20px;">
+            <button type="submit" class="btn btn-primary" (click)="searchReq()">Tìm kiếm</button>
+        </div>
+        <table class="table table-hover" style="border: top 1px;">
+            <tr>
+                <th *ngFor="let item of headerName">{{item}}</th>
+            </tr>
+            <tr>
+                <td *ngFor="let item of rowData">{{item}}</td>
+            </tr>
+        </table>
+    </form>
+</div>
