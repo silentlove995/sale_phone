@@ -1,8 +1,10 @@
 package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -18,6 +20,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "user_name"
@@ -57,7 +61,7 @@ public class Users extends BaseEntity {
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Comments> comments;
+    private List<Comments> comments = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",

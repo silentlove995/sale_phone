@@ -13,7 +13,7 @@ public interface OrderDetailsService {
     ResponseBuilder<List<OrderDetailsDTO>> getAllOrderDetails();
     ResponseBuilder<OrderDetailsDTO> addOrderDetails(OrderDetailsDTO orderDetailsDTO);
 
-    ResponseBuilder<OrderDetailsDTO> updateOrderDetails(OrderDetailsDTO orderDetailsDTO);
+    ResponseBuilder<OrderDetailsDTO> updateOrderDetails(Long id, OrderDetailsDTO orderDetailsDTO);
 
     ResponseBuilder deleteOrderDetails(Long id);
 

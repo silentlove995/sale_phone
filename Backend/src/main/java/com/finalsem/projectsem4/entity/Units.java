@@ -1,8 +1,11 @@
 package com.finalsem.projectsem4.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +13,8 @@ import java.util.List;
  */
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "units")
 public class Units {
     @Id
@@ -34,11 +39,11 @@ public class Units {
     private String codeNameEn;
 
     @OneToMany(mappedBy = "units")
-    private List<Provinces> provinces;
+    private List<Provinces> provinces = new ArrayList<>();
 
     @OneToMany(mappedBy = "units")
-    private List<Wards> wards;
+    private List<Wards> wards = new ArrayList<>();
 
     @OneToMany(mappedBy = "units")
-    private List<Districts> districts;
+    private List<Districts> districts = new ArrayList<>();
 }

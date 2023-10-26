@@ -13,7 +13,7 @@ public interface ProductService {
 
     ResponseBuilder<ProductDTO> addProduct(ProductDTO productDTO);
 
-    ResponseBuilder<ProductDTO> updateProduct(ProductDTO productDTO);
+    ResponseBuilder<ProductDTO> updateProduct(Long id, ProductDTO productDTO);
 
     ResponseBuilder deleteProduct(Long id);
 

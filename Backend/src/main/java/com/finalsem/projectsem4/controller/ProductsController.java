@@ -61,9 +61,9 @@ public class ProductsController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO) {
-        ResponseBuilder<ProductDTO> resp = productService.updateProduct(productDTO);
+    @PutMapping("/update/{id}")
+    ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        ResponseBuilder<ProductDTO> resp = productService.updateProduct(id, productDTO);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.finalsem.projectsem4.entity.Districts;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +29,8 @@ public class ProvinceDTO {
     private String fullName;
     private String fullNameEn;
     private String codeName;
-//    private List<DistrictDTO> districts;
+    @JsonIgnore
+    private List<DistrictDTO> districts = new ArrayList<>();
     private Integer unitId;
     private Integer regionId;
 }

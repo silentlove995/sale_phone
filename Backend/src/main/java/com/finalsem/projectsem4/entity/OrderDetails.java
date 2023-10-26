@@ -1,7 +1,9 @@
 package com.finalsem.projectsem4.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +12,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetails extends BaseEntity {
 
     @Column(name = "quantity")
@@ -26,9 +30,9 @@ public class OrderDetails extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Orders order;
+    private Orders orderId;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Products product;
+    private Products productId;
 }

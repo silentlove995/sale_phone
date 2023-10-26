@@ -2,8 +2,10 @@ package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Products extends BaseEntity {
 
     @Column(name = "name") // name of product
@@ -52,15 +56,15 @@ public class Products extends BaseEntity {
     @JsonIgnore
     private List<Comments> comments;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "productId")
     @JsonIgnore
     private List<OrderDetails> orderDetails;
 
     @ManyToOne
     @JoinColumn(name = "category_id") // loai san pham ( dien thoai, laptop, may tinh bang, phu kien)
-    private Categories categories;
+    private Categories categoryId;
 
     @ManyToOne
     @JoinColumn(name = "brand_id") // hang san xuat
-    private Brands brands;
+    private Brands brandId;
 }

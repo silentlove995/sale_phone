@@ -1,8 +1,11 @@
 package com.finalsem.projectsem4.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +13,8 @@ import java.util.List;
  */
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "regions")
 public class Regions {
     @Id
@@ -28,5 +33,5 @@ public class Regions {
     private String codeNameEn;
 
     @OneToMany(mappedBy = "regions")
-    private List<Provinces> provinces;
+    private List<Provinces> provinces = new ArrayList<>();
 }

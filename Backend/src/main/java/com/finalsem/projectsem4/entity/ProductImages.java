@@ -1,14 +1,18 @@
 package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductImages extends BaseEntity {
     @Column(name = "name")
     private String name;

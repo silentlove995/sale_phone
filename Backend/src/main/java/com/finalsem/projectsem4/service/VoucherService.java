@@ -15,9 +15,8 @@ public interface VoucherService {
 
     ResponseBuilder<VouchersDTO> addVoucher(VouchersDTO dto);
 
-    ResponseBuilder<VouchersDTO> updateVoucher(VouchersDTO dto);
+    ResponseBuilder<VouchersDTO> updateVoucher(Long id, VouchersDTO dto);
 
     ResponseBuilder deleteVoucher(Long id);
 
-    ResponseBuilder<VouchersDTO> getVoucherByName(String name);
 }

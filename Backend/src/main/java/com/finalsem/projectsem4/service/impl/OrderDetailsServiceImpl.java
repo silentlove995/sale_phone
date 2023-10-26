@@ -1,11 +1,11 @@
 package com.finalsem.projectsem4.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrderDetailsDTO;
 import com.finalsem.projectsem4.entity.OrderDetails;
 import com.finalsem.projectsem4.repository.OrderDetailsRepository;
 import com.finalsem.projectsem4.service.OrderDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +26,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         List<OrderDetails> orderItems = orderDetailsRepository.findAll();
         List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
             OrderDetailsDTO orderDetailsDTO;
-            ObjectMapper mapper = new ObjectMapper();
-            orderDetailsDTO = mapper.convertValue(orderItem, OrderDetailsDTO.class);
+            ModelMapper mapper = new ModelMapper();
+            orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
             return orderDetailsDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
@@ -35,20 +35,28 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public ResponseBuilder<OrderDetailsDTO> addOrderDetails(OrderDetailsDTO orderDetailsDTO) {
-        OrderDetails orderDetails = new OrderDetails();
-        ObjectMapper mapper = new ObjectMapper();
-        orderDetails = mapper.convertValue(orderDetailsDTO, OrderDetails.class);
-        orderDetailsRepository.save(orderDetails);
-        return new ResponseBuilder<>("00", "success");
+        try {
+            OrderDetails orderDetails = new OrderDetails();
+            ModelMapper mapper = new ModelMapper();
+            orderDetails = mapper.map(orderDetailsDTO, OrderDetails.class);
+            orderDetailsRepository.save(orderDetails);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("01", e.toString());
+        }
     }
 
     @Override
-    public ResponseBuilder<OrderDetailsDTO> updateOrderDetails(OrderDetailsDTO orderDetailsDTO) {
-        OrderDetails orderDetails = orderDetailsRepository.getReferenceById(orderDetailsDTO.getId());
-        ObjectMapper mapper = new ObjectMapper();
-        orderDetails = mapper.convertValue(orderDetailsDTO, OrderDetails.class);
-        orderDetailsRepository.save(orderDetails);
-        return new ResponseBuilder<>("00", "success");
+    public ResponseBuilder<OrderDetailsDTO> updateOrderDetails(Long id, OrderDetailsDTO orderDetailsDTO) {
+        try {
+            OrderDetails orderDetails = orderDetailsRepository.getReferenceById(id);
+            ModelMapper mapper = new ModelMapper();
+            orderDetails = mapper.map(orderDetailsDTO, OrderDetails.class);
+            orderDetailsRepository.save(orderDetails);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("01", e.toString());
+        }
     }
 
     @Override
@@ -60,16 +68,34 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByOrderId(Long id) {
-        return null;
+        List<OrderDetails> orderItems = orderDetailsRepository.findAllByOrderId(id);
+        List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
+            OrderDetailsDTO orderDetailsDTO;
+            ModelMapper mapper = new ModelMapper();
+            orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
+            return orderDetailsDTO;
+        }).collect(java.util.stream.Collectors.toList());
+        return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
     }
 
     @Override
     public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByProductId(Long id) {
-        return null;
+        List<OrderDetails> orderItems = orderDetailsRepository.findAllByProductId(id);
+        List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
+            OrderDetailsDTO orderDetailsDTO;
+            ModelMapper mapper = new ModelMapper();
+            orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
+            return orderDetailsDTO;
+        }).collect(java.util.stream.Collectors.toList());
+        return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
     }
 
     @Override
     public ResponseBuilder<OrderDetailsDTO> getOrderDetailsById(Long id) {
-        return null;
+        OrderDetails orderDetails = orderDetailsRepository.getReferenceById(id);
+        OrderDetailsDTO orderDetailsDTO;
+        ModelMapper mapper = new ModelMapper();
+        orderDetailsDTO = mapper.map(orderDetails, OrderDetailsDTO.class);
+        return new ResponseBuilder<>("00", "success", orderDetailsDTO);
     }
 }

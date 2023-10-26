@@ -1,18 +1,17 @@
 package com.finalsem.projectsem4.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.ProductDTO;
 import com.finalsem.projectsem4.entity.Products;
 import com.finalsem.projectsem4.repository.ProductRepository;
 import com.finalsem.projectsem4.service.ProductService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Ly Quoc Trong
@@ -41,39 +40,58 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseBuilder<ProductDTO> addProduct(ProductDTO productDTO) {
         Products products;
-        ObjectMapper mapper = new ObjectMapper();
-        products = mapper.convertValue(productDTO, Products.class);
+        ModelMapper mapper = new ModelMapper();
+        products = mapper.map(productDTO, Products.class);
         productRepository.save(products);
         return new ResponseBuilder<>("00", "success");
     }
 
     @Override
-    public ResponseBuilder<ProductDTO> updateProduct(ProductDTO productDTO) {
-        Products product = productRepository.getReferenceById(productDTO.getId());
-        ObjectMapper mapper = new ObjectMapper();
-        product = mapper.convertValue(productDTO, Products.class);
+    public ResponseBuilder<ProductDTO> updateProduct(Long id, ProductDTO productDTO) {
+        Products product = productRepository.getReferenceById(id);
+        ModelMapper mapper = new ModelMapper();
+        product = mapper.map(productDTO, Products.class);
         productRepository.save(product);
         return new ResponseBuilder<>("00", "success");
     }
 
     @Override
     public ResponseBuilder deleteProduct(Long id) {
-        return null;
+        try {
+            productRepository.deleteById(id);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "fail");
+        }
     }
 
     @Override
     public ResponseBuilder<ProductDTO> getProductById(Long id) {
-        return null;
+        Products product = productRepository.getReferenceById(id);
+        ProductDTO productDTO;
+        ModelMapper mapper = new ModelMapper();
+        productDTO = mapper.map(product, ProductDTO.class);
+        return new ResponseBuilder<>("00", "success", productDTO);
     }
 
     @Override
     public ResponseBuilder<List<ProductDTO>> getProductByCategoryId(Long id) {
-        return null;
+        List<Products> products = productRepository.getAllByCategoryId(id);
+        List<ProductDTO> productDTOs = products.stream().map(product -> {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(product, ProductDTO.class);
+        }).collect(Collectors.toList());
+        return new ResponseBuilder<>("00", "success", productDTOs);
     }
 
     @Override
     public ResponseBuilder<List<ProductDTO>> getProductByBrandId(Long id) {
-        return null;
+        List<Products> products = productRepository.getAllByBrandId(id);
+        List<ProductDTO> productDTOs = products.stream().map(product -> {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(product, ProductDTO.class);
+        }).collect(Collectors.toList());
+        return new ResponseBuilder<>("00", "success", productDTOs);
     }
 
 }

@@ -1,8 +1,10 @@
 package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -10,6 +12,8 @@ import java.sql.Blob;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pictures extends BaseEntity {
     @Column(name = "name")
     private String name;

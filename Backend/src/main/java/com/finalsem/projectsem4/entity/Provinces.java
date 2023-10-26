@@ -1,9 +1,12 @@
 package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +14,8 @@ import java.util.List;
  */
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "provinces")
 public class Provinces {
     @Id
@@ -33,7 +38,7 @@ public class Provinces {
 
     @OneToMany(mappedBy = "provinces")
     @JsonIgnore
-    private List<Districts> districts;
+    private List<Districts> districts = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "unit_id")

@@ -35,21 +35,15 @@ public class VoucherController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @GetMapping("/get/name/{name}")
-    ResponseEntity<?> getVoucherByName(@PathVariable String name) {
-        ResponseBuilder<VouchersDTO> resp = voucherService.getVoucherByName(name);
-        return new ResponseEntity<>(resp, HttpStatus.OK);
-    }
-
     @PostMapping("/add")
     ResponseEntity<?> addVoucher(@RequestBody VouchersDTO vouchersDTO) {
         ResponseBuilder<VouchersDTO> resp = voucherService.addVoucher(vouchersDTO);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<?> updateVoucher(@RequestBody VouchersDTO vouchersDTO) {
-        ResponseBuilder<VouchersDTO> resp = voucherService.updateVoucher(vouchersDTO);
+    @PutMapping("/update/{id}")
+    ResponseEntity<?> updateVoucher(@PathVariable Long id,@RequestBody VouchersDTO vouchersDTO) {
+        ResponseBuilder<VouchersDTO> resp = voucherService.updateVoucher(id, vouchersDTO);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 

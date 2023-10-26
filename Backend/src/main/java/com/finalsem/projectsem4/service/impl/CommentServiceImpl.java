@@ -79,16 +79,37 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByUserId(Long id) {
-        return null;
+        List<Comments> comments = repository.getAllByUser(id);
+        List<CommentsDTO> result = comments.stream().map( comment -> {
+            CommentsDTO dto;
+            ModelMapper mapper = new ModelMapper();
+            dto = mapper.map(comment, CommentsDTO.class);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseBuilder<>("00", "success", result);
     }
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByProductId(Long id) {
-        return null;
+        List<Comments> comments = repository.getAllByProduct(id);
+        List<CommentsDTO> result = comments.stream().map( comment -> {
+            CommentsDTO dto;
+            ModelMapper mapper = new ModelMapper();
+            dto = mapper.map(comment, CommentsDTO.class);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseBuilder<>("00", "success", result);
     }
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByUserIdAndProductId(Long userId, Long productId) {
-        return null;
+        List<Comments> comments = repository.getAllByUserAndProduct(userId, productId);
+        List<CommentsDTO> result = comments.stream().map( comment -> {
+            CommentsDTO dto;
+            ModelMapper mapper = new ModelMapper();
+            dto = mapper.map(comment, CommentsDTO.class);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseBuilder<>("00", "success", result);
     }
 }

@@ -17,7 +17,7 @@ public interface RatingService {
 
     ResponseBuilder deleteRating(Long id);
 
-    ResponseBuilder<List<RatingsDTO>> getRatingById(Long id);
+    ResponseBuilder<RatingsDTO> getRatingById(Long id);
 
     ResponseBuilder<List<RatingsDTO>> getRatingByUserId(Long id);
 

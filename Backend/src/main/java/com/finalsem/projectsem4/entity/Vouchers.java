@@ -1,7 +1,9 @@
 package com.finalsem.projectsem4.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,6 +15,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vouchers extends BaseEntity {
     @Column(name = "voucher_code",nullable = false, length = 50)
     private String voucherCode;

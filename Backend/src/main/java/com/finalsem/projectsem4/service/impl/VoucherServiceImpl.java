@@ -2,7 +2,11 @@ package com.finalsem.projectsem4.service.impl;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.VouchersDTO;
+import com.finalsem.projectsem4.entity.Vouchers;
+import com.finalsem.projectsem4.repository.VoucherRepository;
 import com.finalsem.projectsem4.service.VoucherService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,33 +16,62 @@ import java.util.List;
  */
 @Service
 public class VoucherServiceImpl implements VoucherService {
+    @Autowired
+    private VoucherRepository voucherRepository;
     @Override
     public ResponseBuilder<List<VouchersDTO>> getAllVoucher() {
-        return null;
+        List<Vouchers> vouchers = voucherRepository.findAll();
+        List<VouchersDTO> voucherDTOs = vouchers.stream().map(voucher -> {
+            VouchersDTO vouchersDTO;
+            ModelMapper modelMapper = new ModelMapper();
+            vouchersDTO = modelMapper.map(voucher, VouchersDTO.class);
+            return vouchersDTO;
+        }).collect(java.util.stream.Collectors.toList());
+        return new ResponseBuilder<>("00", "Success", voucherDTOs);
     }
 
     @Override
     public ResponseBuilder<VouchersDTO> getVoucherById(Long id) {
-        return null;
+        Vouchers vouchers = voucherRepository.getReferenceById(id);
+        VouchersDTO vouchersDTO;
+        ModelMapper modelMapper = new ModelMapper();
+        vouchersDTO = modelMapper.map(vouchers, VouchersDTO.class);
+        return new ResponseBuilder<>("00", "Success", vouchersDTO);
     }
 
     @Override
     public ResponseBuilder<VouchersDTO> addVoucher(VouchersDTO dto) {
-        return null;
+        try {
+            Vouchers vouchers = new Vouchers();
+            ModelMapper modelMapper = new ModelMapper();
+            vouchers = modelMapper.map(dto, Vouchers.class);
+            voucherRepository.save(vouchers);
+            return new ResponseBuilder<>("00", "Success", dto);
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "Error");
+        }
     }
 
     @Override
-    public ResponseBuilder<VouchersDTO> updateVoucher(VouchersDTO dto) {
-        return null;
+    public ResponseBuilder<VouchersDTO> updateVoucher(Long id, VouchersDTO dto) {
+        try {
+            Vouchers vouchers = voucherRepository.getReferenceById(id);
+            ModelMapper modelMapper = new ModelMapper();
+            vouchers = modelMapper.map(dto, Vouchers.class);
+            voucherRepository.save(vouchers);
+            return new ResponseBuilder<>("00", "Success", dto);
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "Error");
+        }
     }
 
     @Override
     public ResponseBuilder deleteVoucher(Long id) {
-        return null;
-    }
-
-    @Override
-    public ResponseBuilder<VouchersDTO> getVoucherByName(String name) {
-        return null;
+        try {
+            voucherRepository.deleteById(id);
+            return new ResponseBuilder<>("00", "Success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "Error");
+        }
     }
 }

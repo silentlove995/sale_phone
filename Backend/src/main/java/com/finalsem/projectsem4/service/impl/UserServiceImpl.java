@@ -2,7 +2,11 @@ package com.finalsem.projectsem4.service.impl;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.UsersDTO;
+import com.finalsem.projectsem4.entity.Users;
+import com.finalsem.projectsem4.repository.UsersRepository;
 import com.finalsem.projectsem4.service.UsersService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +16,13 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UsersService {
+
+    private final UsersRepository usersRepository;
+
+    public UserServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+
     @Override
     public ResponseBuilder<List<UsersDTO>> getAllUsers() {
         return null;
@@ -19,7 +30,11 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     public ResponseBuilder<UsersDTO> getUsersById(Long id) {
-        return null;
+        Users users = usersRepository.getReferenceById(id);
+        UsersDTO usersDTO;
+        ModelMapper modelMapper = new ModelMapper();
+        usersDTO = modelMapper.map(users, UsersDTO.class);
+        return new ResponseBuilder<>("00", "Success", usersDTO);
     }
 
     @Override
@@ -34,6 +49,11 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     public ResponseBuilder<UsersDTO> deleteUsers(Long id) {
-        return null;
+        try {
+            usersRepository.deleteById(id);
+            return new ResponseBuilder<>("00", "Success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "Error");
+        }
     }
 }

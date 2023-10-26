@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,11 +13,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BrandsDTO extends AbstractDTO {
     private String name;
-//    @JsonIgnore
-//    private List<CategoryDTO> categories;
-//    @JsonIgnore
-//    private List<ProductDTO> products;
+    @JsonIgnore
+    private List<CategoryDTO> categories = new ArrayList<>();
+    @JsonIgnore
+    private List<ProductDTO> products = new ArrayList<>();
 }

@@ -9,6 +9,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductImagesDTO extends AbstractDTO {
     private String name;

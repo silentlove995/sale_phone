@@ -1,6 +1,8 @@
 package com.finalsem.projectsem4.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +11,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "wards")
 public class Wards {
     @Id

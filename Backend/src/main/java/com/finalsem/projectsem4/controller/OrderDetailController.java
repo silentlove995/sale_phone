@@ -47,15 +47,21 @@ public class OrderDetailController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<?> updateOrder(@RequestBody OrderDetailsDTO orderDetailsDTO) {
-        ResponseBuilder<OrderDetailsDTO> resp = orderDetailsService.updateOrderDetails(orderDetailsDTO);
+    @PutMapping("/update/{id}")
+    ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestBody OrderDetailsDTO orderDetailsDTO) {
+        ResponseBuilder<OrderDetailsDTO> resp = orderDetailsService.updateOrderDetails(id,orderDetailsDTO);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         ResponseBuilder resp = orderDetailsService.deleteOrderDetails(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    ResponseEntity<?> getOrderDetailsById(@PathVariable Long id) {
+        ResponseBuilder<OrderDetailsDTO> resp = orderDetailsService.getOrderDetailsById(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }
