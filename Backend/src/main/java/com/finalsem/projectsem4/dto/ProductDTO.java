@@ -26,12 +26,12 @@ public class ProductDTO extends AbstractDTO {
     private BigDecimal originalPrice;
     private BigDecimal discount;
     private BigDecimal salePrice;
-    @JsonIgnore
-    private List<ProductImagesDTO> pictures;
-    @JsonIgnore
-    private List<CommentsDTO> comments;
-    @JsonIgnore
-    private List<OrderDetailsDTO> orderDetails;
+//    @JsonIgnore
+//    private List<ProductImagesDTO> pictures;
+//    @JsonIgnore
+//    private List<CommentsDTO> comments;
+//    @JsonIgnore
+//    private List<OrderDetailsDTO> orderDetails;
     private Long categoryId;
     private Long brandId;
 }

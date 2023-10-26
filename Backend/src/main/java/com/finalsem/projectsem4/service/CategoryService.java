@@ -19,7 +19,5 @@ public interface CategoryService {
 
     ResponseBuilder deleteCategory(Long id);
 
-    ResponseBuilder<CategoryDTO> getCategoryByName(String name);
-
     ResponseBuilder<List<CategoryDTO>> getCategoryByBrandId(Long id);
 }

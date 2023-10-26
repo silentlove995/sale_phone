@@ -20,8 +20,8 @@ public class UsersDTO extends AbstractDTO {
     private String email;
     private String phone;
     private String address;
-    @JsonIgnore
-    private List<String> roles;
-    @JsonIgnore
-    private List<Orders> orders;
+//    @JsonIgnore
+//    private List<String> roles;
+//    @JsonIgnore
+//    private List<Orders> orders;
 }

@@ -16,6 +16,6 @@ import java.util.List;
 public class CategoryDTO extends AbstractDTO {
     private String name;
     private Long brandId;
-    @JsonIgnore
-    private List<ProductDTO> products;
+//    @JsonIgnore
+//    private List<ProductDTO> products;
 }

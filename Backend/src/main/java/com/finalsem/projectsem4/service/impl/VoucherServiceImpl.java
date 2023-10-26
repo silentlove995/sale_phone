@@ -23,12 +23,12 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public ResponseBuilder<VouchersDTO> createVoucher(String name) {
+    public ResponseBuilder<VouchersDTO> addVoucher(VouchersDTO dto) {
         return null;
     }
 
     @Override
-    public ResponseBuilder<VouchersDTO> updateVoucher(Long id, String name) {
+    public ResponseBuilder<VouchersDTO> updateVoucher(VouchersDTO dto) {
         return null;
     }
 

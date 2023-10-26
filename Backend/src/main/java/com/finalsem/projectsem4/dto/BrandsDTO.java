@@ -15,8 +15,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BrandsDTO extends AbstractDTO {
     private String name;
-    @JsonIgnore
-    private List<CategoryDTO> categories;
-    @JsonIgnore
-    private List<ProductDTO> products;
+//    @JsonIgnore
+//    private List<CategoryDTO> categories;
+//    @JsonIgnore
+//    private List<ProductDTO> products;
 }

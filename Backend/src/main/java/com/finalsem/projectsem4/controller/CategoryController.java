@@ -53,9 +53,9 @@ public class CategoryController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @GetMapping("/get/{name}")
-    ResponseEntity<?> getCategoryByName(@PathVariable String name) {
-        ResponseBuilder<CategoryDTO> resp = service.getCategoryByName(name);
+    @GetMapping("/getByBrand/{id}")
+    ResponseEntity<?> getCategoryByBrandId(@PathVariable Long id) {
+        ResponseBuilder<List<CategoryDTO>> resp = service.getCategoryByBrandId(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

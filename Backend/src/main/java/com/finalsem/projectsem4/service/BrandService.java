@@ -13,11 +13,9 @@ public interface BrandService {
 
     ResponseBuilder<BrandsDTO> getBrandById(Long id);
 
-    ResponseBuilder<BrandsDTO> createBrand(String name);
+    ResponseBuilder<BrandsDTO> createBrand(BrandsDTO dto);
 
-    ResponseBuilder<BrandsDTO> updateBrand(Long id, String name);
+    ResponseBuilder<BrandsDTO> updateBrand(Long id, BrandsDTO dto);
 
     ResponseBuilder deleteBrand(Long id);
-
-    ResponseBuilder<BrandsDTO> getBrandByName(String name);
 }

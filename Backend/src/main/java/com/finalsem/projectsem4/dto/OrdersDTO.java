@@ -15,7 +15,7 @@ public class OrdersDTO extends AbstractDTO {
     private Status orderStatus;
     private String totalAmount;
     private String shippingAddress;
-    @JsonIgnore
-    private List<OrderDetailsDTO> orderItems;
+//    @JsonIgnore
+//    private List<OrderDetailsDTO> orderItems;
     private Long userId;
 }

@@ -38,9 +38,9 @@ public class Vouchers extends BaseEntity {
     @Lob
     private String categoriesEligible;
 
-    @Column(name = "categories_eligible",nullable = false)
+    @Column(name = "min_purchase_amount",nullable = false)
     private BigDecimal minPurchaseAmount;
 
-    @Column(name = "min_purchase_amount",nullable = false)
+    @Column(name = "single_use",nullable = false)
     private boolean singleUse;
 }

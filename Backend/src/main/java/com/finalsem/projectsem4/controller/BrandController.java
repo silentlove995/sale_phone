@@ -31,13 +31,13 @@ public class BrandController {
 
     @PostMapping("/create")
     ResponseEntity<?> createBrand(@RequestBody BrandsDTO dto) {
-        ResponseBuilder<BrandsDTO> resp = service.createBrand(dto.getName());
+        ResponseBuilder<BrandsDTO> resp = service.createBrand(dto);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
     ResponseEntity<?> updateBrand(@PathVariable Long id, @RequestBody BrandsDTO dto) {
-        ResponseBuilder<BrandsDTO> resp = service.updateBrand(id, dto.getName());
+        ResponseBuilder<BrandsDTO> resp = service.updateBrand(id, dto);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
@@ -50,12 +50,6 @@ public class BrandController {
     @GetMapping("/get/{id}")
     ResponseEntity<?> getBrandById(@PathVariable Long id) {
         ResponseBuilder<BrandsDTO> resp = service.getBrandById(id);
-        return new ResponseEntity<>(resp, HttpStatus.OK);
-    }
-
-    @GetMapping("/get/name/{name}")
-    ResponseEntity<?> getBrandByName(@PathVariable String name) {
-        ResponseBuilder<BrandsDTO> resp = service.getBrandByName(name);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

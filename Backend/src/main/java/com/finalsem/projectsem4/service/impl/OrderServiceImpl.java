@@ -6,9 +6,11 @@ import com.finalsem.projectsem4.dto.OrdersDTO;
 import com.finalsem.projectsem4.entity.Orders;
 import com.finalsem.projectsem4.repository.OrderRepository;
 import com.finalsem.projectsem4.service.OrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Ly Quoc Trong
@@ -27,18 +29,18 @@ public class OrderServiceImpl implements OrderService {
         List<Orders> orders = orderRepository.findAll();
         List<OrdersDTO> ordersDTOS = orders.stream().map(order -> {
             OrdersDTO ordersDTO;
-            ObjectMapper mapper = new ObjectMapper();
-            ordersDTO = mapper.convertValue(order, OrdersDTO.class);
+            ModelMapper mapper = new ModelMapper();
+            ordersDTO = mapper.map(order, OrdersDTO.class);
             return ordersDTO;
-        }).collect(java.util.stream.Collectors.toList());
+        }).collect(Collectors.toList());
         return new ResponseBuilder<List<OrdersDTO>>("00", "success", ordersDTOS);
     }
 
     @Override
     public ResponseBuilder<OrdersDTO>  addOrder(OrdersDTO ordersDTO) {
         Orders orders = new Orders();
-        ObjectMapper mapper = new ObjectMapper();
-        orders = mapper.convertValue(ordersDTO, Orders.class);
+        ModelMapper mapper = new ModelMapper();
+        orders = mapper.map(ordersDTO, Orders.class);
         orderRepository.save(orders);
         return new ResponseBuilder<>("00", "success");
     }
@@ -46,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseBuilder<OrdersDTO>  updateOrder(OrdersDTO ordersDTO) {
         Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
-        ObjectMapper mapper = new ObjectMapper();
-        orders = mapper.convertValue(ordersDTO, Orders.class);
+        ModelMapper mapper = new ModelMapper();
+        orders = mapper.map(ordersDTO, Orders.class);
         orderRepository.save(orders);
         return new ResponseBuilder<>("00", "success");
     }
@@ -61,11 +63,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseBuilder<OrdersDTO>  getOrderById(Long id) {
-        return null;
+        Orders orders = orderRepository.getReferenceById(id);
+        ModelMapper mapper = new ModelMapper();
+        OrdersDTO dto = mapper.map(orders, OrdersDTO.class);
+        return new ResponseBuilder<>("00", "success", dto);
     }
 
     @Override
     public ResponseBuilder<List<OrdersDTO>>  getOrderByUserId(Long id) {
-        return null;
+        List<Orders> orders = orderRepository.findAllByUsersId(id);
+        List<OrdersDTO> ordersDTOS = orders.stream().map(order -> {
+            OrdersDTO ordersDTO;
+            ModelMapper mapper = new ModelMapper();
+            ordersDTO = mapper.map(order, OrdersDTO.class);
+            return ordersDTO;
+        }).collect(java.util.stream.Collectors.toList());
+        return new ResponseBuilder<>("00", "success", ordersDTOS);
     }
 }
