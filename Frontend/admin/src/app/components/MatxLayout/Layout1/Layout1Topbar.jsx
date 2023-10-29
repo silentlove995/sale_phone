@@ -1,27 +1,14 @@
-import { memo } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Avatar,
-  Hidden,
-  Icon,
-  IconButton,
-  MenuItem,
-  useMediaQuery,
-  Box,
-  styled,
-  useTheme
-} from '@mui/material';
+import {memo} from 'react';
+import {Link} from 'react-router-dom';
+import {Avatar, Box, Hidden, Icon, IconButton, MenuItem, styled, useMediaQuery, useTheme} from '@mui/material';
 
-import { MatxMenu, MatxSearchBox } from 'app/components';
-import { themeShadows } from 'app/components/MatxTheme/themeColors';
-import { NotificationProvider } from 'app/contexts/NotificationContext';
+import {MatxMenu, MatxSearchBox} from 'app/components';
+import {themeShadows} from 'app/components/MatxTheme/themeColors';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
-import { topBarHeight } from 'app/utils/constant';
+import {topBarHeight} from 'app/utils/constant';
 
-import { Span } from '../../Typography';
-import NotificationBar from '../../NotificationBar/NotificationBar';
-import ShoppingCart from '../../ShoppingCart';
+import {Span} from '../../Typography';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary
@@ -110,29 +97,29 @@ const Layout1Topbar = () => {
             <Icon>menu</Icon>
           </StyledIconButton>
 
-          <IconBox>
-            <StyledIconButton>
-              <Icon>mail_outline</Icon>
-            </StyledIconButton>
+          {/*<IconBox>*/}
+          {/*  <StyledIconButton>*/}
+          {/*    <Icon>mail_outline</Icon>*/}
+          {/*  </StyledIconButton>*/}
 
-            <StyledIconButton>
-              <Icon>web_asset</Icon>
-            </StyledIconButton>
+          {/*  <StyledIconButton>*/}
+          {/*    <Icon>web_asset</Icon>*/}
+          {/*  </StyledIconButton>*/}
 
-            <StyledIconButton>
-              <Icon>star_outline</Icon>
-            </StyledIconButton>
-          </IconBox>
+          {/*  <StyledIconButton>*/}
+          {/*    <Icon>star_outline</Icon>*/}
+          {/*  </StyledIconButton>*/}
+          {/*</IconBox>*/}
         </Box>
 
         <Box display="flex" alignItems="center">
           <MatxSearchBox />
 
-          <NotificationProvider>
-            <NotificationBar />
-          </NotificationProvider>
+          {/*<NotificationProvider>*/}
+          {/*  <NotificationBar />*/}
+          {/*</NotificationProvider>*/}
 
-          <ShoppingCart />
+          {/*<ShoppingCart />*/}
 
           <MatxMenu
             menuButton={
