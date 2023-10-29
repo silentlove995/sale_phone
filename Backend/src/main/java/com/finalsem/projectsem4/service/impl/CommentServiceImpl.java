@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByUserId(Long id) {
-        List<Comments> comments = repository.getAllByUser(id);
+        List<Comments> comments = repository.getAllByUserId(id);
         List<CommentsDTO> result = comments.stream().map( comment -> {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
@@ -91,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByProductId(Long id) {
-        List<Comments> comments = repository.getAllByProduct(id);
+        List<Comments> comments = repository.getAllByProductId(id);
         List<CommentsDTO> result = comments.stream().map( comment -> {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
@@ -103,7 +103,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseBuilder<List<CommentsDTO>> getCommentByUserIdAndProductId(Long userId, Long productId) {
-        List<Comments> comments = repository.getAllByUserAndProduct(userId, productId);
+        List<Comments> comments = repository.getAllByUserIdAndProductId(userId, productId);
         List<CommentsDTO> result = comments.stream().map( comment -> {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();

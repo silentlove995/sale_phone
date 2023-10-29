@@ -11,9 +11,9 @@ import java.util.List;
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comments, Long> {
-    List<Comments> getAllByUser(Long userId);
+    List<Comments> getAllByUserId(Long userId);
 
-    List<Comments> getAllByProduct(Long productId);
+    List<Comments> getAllByProductId(Long productId);
 
-    List<Comments> getAllByUserAndProduct(Long userId, Long productId);
+    List<Comments> getAllByUserIdAndProductId(Long userId, Long productId);
 }

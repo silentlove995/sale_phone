@@ -6,6 +6,7 @@ import com.finalsem.projectsem4.entity.Orders;
 import com.finalsem.projectsem4.repository.OrderRepository;
 import com.finalsem.projectsem4.service.OrderService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,27 +38,38 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseBuilder<OrdersDTO>  addOrder(OrdersDTO ordersDTO) {
-        Orders orders = new Orders();
-        ModelMapper mapper = new ModelMapper();
-        orders = mapper.map(ordersDTO, Orders.class);
-        orderRepository.save(orders);
-        return new ResponseBuilder<>("00", "success");
+        try {
+            Orders orders = new Orders();
+            ModelMapper mapper = new ModelMapper();
+            orders = mapper.map(ordersDTO, Orders.class);
+            orderRepository.save(orders);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("01", e.toString());
+        }
     }
 
     @Override
     public ResponseBuilder<OrdersDTO>  updateOrder(OrdersDTO ordersDTO) {
-        Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
-        ModelMapper mapper = new ModelMapper();
-        orders = mapper.map(ordersDTO, Orders.class);
-        orderRepository.save(orders);
-        return new ResponseBuilder<>("00", "success");
+        try {
+            Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
+            ModelMapper mapper = new ModelMapper();
+            orders = mapper.map(ordersDTO, Orders.class);
+            orderRepository.save(orders);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("01", e.toString());
+        }
     }
 
     @Override
     public ResponseBuilder deleteOrder(Long id) {
-        Orders orders = orderRepository.getReferenceById(id);
-        orderRepository.delete(orders);
-        return new ResponseBuilder<>("00", "success");
+        try {
+            orderRepository.deleteById(id);
+            return new ResponseBuilder<>("00", "success");
+        } catch (Exception e) {
+            return new ResponseBuilder<>("99", "fail");
+        }
     }
 
     @Override

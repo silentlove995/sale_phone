@@ -33,11 +33,11 @@ public class Wards {
     @Column(name = "code_name")
     private String codeName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Districts.class)
     @JoinColumn(name = "district_code")
-    private Districts districts;
+    private String districtCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Units.class)
     @JoinColumn(name = "unit_id")
-    private Units units;
+    private Integer unitId;
 }

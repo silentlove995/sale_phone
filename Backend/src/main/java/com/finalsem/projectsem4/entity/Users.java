@@ -55,11 +55,11 @@ public class Users extends BaseEntity {
     private String address;
 
     // One customer can have multiple orders
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usersId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Orders> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Comments> comments = new ArrayList<>();
 

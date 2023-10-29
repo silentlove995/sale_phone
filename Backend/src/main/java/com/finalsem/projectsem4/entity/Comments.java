@@ -17,15 +17,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Comments extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Users.class)
     @JoinColumn(name = "user_id")
     @org.hibernate.annotations.Index(name="idx_user_id")
-    private Users user;
+    private Long userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Products.class)
     @JoinColumn(name = "product_id")
     @org.hibernate.annotations.Index(name="idx_product_id")
-    private Products product;
+    private Long productId;
 
     @Lob
     @Column(name="content", length=2048)

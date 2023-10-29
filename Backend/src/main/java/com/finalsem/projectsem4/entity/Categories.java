@@ -26,7 +26,7 @@ public class Categories extends BaseEntity {
     @OneToMany(mappedBy = "categoryId")
     private List<Products> products = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Brands.class)
     @JoinColumn(name = "brand_id")
-    private Brands brandId;
+    private Long brandId;
 }

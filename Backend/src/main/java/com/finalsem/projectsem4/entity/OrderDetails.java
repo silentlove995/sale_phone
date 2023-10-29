@@ -28,11 +28,11 @@ public class OrderDetails extends BaseEntity {
     @Column(name = "sub_total")
     private BigDecimal subTotal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Orders.class)
     @JoinColumn(name = "order_id")
-    private Orders orderId;
+    private Long orderId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Products.class)
     @JoinColumn(name = "product_id")
-    private Products productId;
+    private Long productId;
 }

@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -47,12 +48,12 @@ public class Products extends BaseEntity {
     @Column(name = "sale_price") // gia ban
     private BigDecimal salePrice;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "productId", cascade = {CascadeType.ALL}, fetch= FetchType.EAGER)
     @JsonManagedReference
     @JsonIgnore
     private List<ProductImages> pictures;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "productId")
     @JsonIgnore
     private List<Comments> comments;
 
@@ -60,11 +61,12 @@ public class Products extends BaseEntity {
     @JsonIgnore
     private List<OrderDetails> orderDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id") // loai san pham ( dien thoai, laptop, may tinh bang, phu kien)
-    private Categories categoryId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Categories.class)
+    @JoinColumn(name = "category_id")// loai san pham ( dien thoai, laptop, may tinh bang, phu kien)
+    @JsonBackReference
+    private Long categoryId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Brands.class)
     @JoinColumn(name = "brand_id") // hang san xuat
-    private Brands brandId;
+    private Long brandId;
 }

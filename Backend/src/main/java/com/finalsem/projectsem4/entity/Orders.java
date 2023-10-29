@@ -33,7 +33,7 @@ public class Orders extends BaseEntity {
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetails = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Users.class)
     @JoinColumn(name = "users_id")
-    private Users users;
+    private Long usersId;
 }

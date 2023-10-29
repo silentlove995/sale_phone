@@ -40,11 +40,11 @@ public class Districts {
     @JoinColumn(name = "province_code")
     private Provinces provinces;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Units.class)
     @JoinColumn(name = "unit_id")
-    private Units units;
+    private Integer unitId;
 
-    @OneToMany(mappedBy = "districts")
+    @OneToMany(mappedBy = "districtCode")
     @JsonIgnore
     private List<Wards> wards = new ArrayList<>();
 }
