@@ -1,10 +1,8 @@
-import {DatePicker} from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import {Button, Grid, Icon, styled,} from "@mui/material";
 import {Span} from "app/components/Typography";
 import {useEffect, useState} from "react";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
+import ColorSelect from "../select/ColorSelect";
 
 const TextField = styled(TextValidator)(() => ({
     width: "100%",
@@ -16,14 +14,14 @@ const ProductForm = () => {
 
     useEffect(() => {
         ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-            if (value !== state.password) return false;
-
-            return true;
+            return !(value !== state.password);
         });
         return () => ValidatorForm.removeValidationRule("isPasswordMatch");
     }, [state.password]);
 
     const handleSubmit = (event) => {
+        console.log(event);
+        console.log(state);
     };
 
     const handleChange = (event) => {
@@ -31,15 +29,13 @@ const ProductForm = () => {
         setState({...state, [event.target.name]: event.target.value});
     };
 
-    const handleDateChange = (date) => setState({...state, date});
-
     const {
         name,
         model,
         color,
         stockQuantity,
         description,
-        technologyDescription,
+        technicalDescription,
         originalPrice,
         discount,
         salePrice,
@@ -54,7 +50,7 @@ const ProductForm = () => {
                         <TextField
                             type="text"
                             name="name"
-                            id="sproduct-name"
+                            id="product-name"
                             value={name || ""}
                             onChange={handleChange}
                             errorMessages={["this field is required"]}
@@ -72,70 +68,85 @@ const ProductForm = () => {
                             errorMessages={["this field is required"]}
                         />
 
-                        <TextField
-                            type="email"
-                            name="email"
-                            label="Email"
-                            value={email || ""}
+                        <ColorSelect
+                            name="color"
+                            label="Color"
+                            value={color || ""}
                             onChange={handleChange}
-                            validators={["required", "isEmail"]}
-                            errorMessages={["this field is required", "email is not valid"]}
+                            validators={["required"]}
+                            errorMessages={["this field is required"]}
                         />
 
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                value={date}
-                                onChange={handleDateChange}
-                                renderInput={(props) => (
-                                    <TextField
-                                        {...props}
-                                        label="Date picker"
-                                        id="mui-pickers-date"
-                                        sx={{mb: 2, width: "100%"}}
-                                    />
-                                )}
-                            />
-                        </LocalizationProvider>
+                        <TextField
+                            type="number"
+                            name="stockQuantity"
+                            label="Stock Quantity"
+                            onChange={handleChange}
+                            value={stockQuantity || ""}
+                            errorMessages={["this field is required"]}
+                            validators={["required"]}
+                        />
 
                         <TextField
-                            sx={{mb: 4}}
                             type="number"
-                            name="creditCard"
-                            label="Credit Card"
+                            name="salePrice"
                             onChange={handleChange}
-                            value={creditCard || ""}
+                            label="Sale price"
+                            value={salePrice || ""}
+                            validators={["required"]}
                             errorMessages={["this field is required"]}
-                            validators={["required", "minStringLength:16", "maxStringLength: 16"]}
                         />
                     </Grid>
 
                     <Grid item lg={6} md={6} sm={12} xs={12} sx={{mt: 2}}>
                         <TextField
                             type="text"
-                            name="mobile"
-                            value={mobile || ""}
-                            label="Mobile Nubmer"
+                            name="description"
+                            value={description || ""}
+                            label="Description"
                             onChange={handleChange}
                             validators={["required"]}
                             errorMessages={["this field is required"]}
                         />
                         <TextField
-                            name="password"
-                            type="password"
-                            label="Password"
-                            value={password || ""}
+                            name="technicalDescription"
+                            type="text"
+                            label="Technical description"
+                            value={technicalDescription || ""}
                             onChange={handleChange}
                             validators={["required"]}
                             errorMessages={["this field is required"]}
                         />
                         <TextField
-                            type="password"
-                            name="confirmPassword"
+                            type="number"
+                            name="originalPrice"
                             onChange={handleChange}
-                            label="Confirm Password"
-                            value={confirmPassword || ""}
-                            validators={["required", "isPasswordMatch"]}
-                            errorMessages={["this field is required", "password didn't match"]}
+                            label="Original price"
+                            value={originalPrice || ""}
+                            validators={["required"]}
+                            errorMessages={["this field is required"]}
+                        />
+                        <TextField
+                            type="number"
+                            name="discount"
+                            onChange={handleChange}
+                            label="Discount"
+                            value={discount || ""}
+                            validators={["required"]}
+                            errorMessages={["this field is required"]}
+                        />
+                        <TextField
+                            type="file"
+                            inputProps={{
+                                multiple: true,
+                                accept: "image/*"
+                            }}
+                            name="pictures"
+                            onChange={handleChange}
+                            label="Picture"
+                            value={pictures || ""}
+                            validators={["required"]}
+                            errorMessages={["this field is required"]}
                         />
                     </Grid>
                 </Grid>

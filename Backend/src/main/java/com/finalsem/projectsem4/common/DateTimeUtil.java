@@ -1,4 +1,6 @@
 package com.finalsem.projectsem4.common;
+
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -69,6 +71,16 @@ public class DateTimeUtil {
         try {
             Date dateString = convertString2Date(formatDate, value);
             return convertDate2String(ddMMyyyy, dateString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String timeStamp2String(String pattern, Long value) {
+        try {
+            Date date = new Date(value);
+            Format format = new SimpleDateFormat(pattern);
+            return format.format(date);
         } catch (Exception e) {
             return null;
         }

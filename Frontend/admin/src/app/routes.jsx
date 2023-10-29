@@ -1,4 +1,4 @@
-import {lazy} from 'react';
+import React, {lazy} from 'react';
 import {Navigate} from 'react-router-dom';
 import AuthGuard from './auth/AuthGuard';
 import {authRoles} from './auth/authRoles';
@@ -6,11 +6,10 @@ import Loadable from './components/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
 import Product from "./views/entity/Product";
-// import {Category} from "@react-buddy/ide-toolbox";
 import {Order} from "./views/entity/Order";
 import {Voucher} from "./views/entity/Voucher";
 import {Category} from "./views/entity/Category";
-
+import {Brand} from "./views/entity/Brand";
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
 const JwtLogin = Loadable(lazy(() => import('app/views/sessions/JwtLogin')));
@@ -43,6 +42,12 @@ const routes = [
       {
         path: '/charts/echarts',
         element: <AppEchart />,
+        auth: authRoles.editor
+      },
+
+      {
+        path: '/brand',
+        element: <Brand/>,
         auth: authRoles.editor
       },
 

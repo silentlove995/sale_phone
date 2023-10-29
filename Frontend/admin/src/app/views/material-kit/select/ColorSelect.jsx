@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {Theme, useTheme} from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -17,7 +18,7 @@ const MenuProps = {
     },
 };
 
-const names = [
+const colors = [
     'Red',
     'Orange',
     'Yellow',
@@ -31,24 +32,14 @@ const names = [
     'Pink',
 ];
 
-function getStyles(name: string, personName: string[], theme: Theme) {
-    return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
-
 export default function ColorSelect() {
-    const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
+    const [color, setColor] = React.useState([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const handleChange = (event) => {
         const {
             target: {value},
         } = event;
-        setPersonName(
+        setColor(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -56,24 +47,22 @@ export default function ColorSelect() {
 
     return (
         <div>
-            <FormControl sx={{m: 1, width: 300}}>
-                <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+            <FormControl sx={{width: 1, mb: 2}}>
+                <InputLabel id="demo-multiple-checkbox-label">Color</InputLabel>
                 <Select
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
                     multiple
-                    value={personName}
+                    value={color}
                     onChange={handleChange}
-                    input={<OutlinedInput label="Name"/>}
+                    input={<OutlinedInput label="Color"/>}
+                    renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                        >
-                            {name}
+                    {colors.map((name) => (
+                        <MenuItem key={name} value={name}>
+                            <Checkbox checked={color.indexOf(name) > -1}/>
+                            <ListItemText primary={name}/>
                         </MenuItem>
                     ))}
                 </Select>

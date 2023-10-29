@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class AbstractDTO {
     private Long id;
-    private Long createdAt;
-    private Long updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String createdBy;
     private String updatedBy;
 }

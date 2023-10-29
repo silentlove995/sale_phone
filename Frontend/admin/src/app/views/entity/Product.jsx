@@ -19,7 +19,7 @@ const Container = styled('div')(({ theme }) => ({
 
 const style = {
     position: 'absolute',
-    top: '30%',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 1800,
@@ -46,8 +46,8 @@ const Product = () => {
                 </SimpleCard>
             </Stack>
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
+                aria-labelledby="product-modal-title"
+                aria-describedby="product-modal-description"
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition

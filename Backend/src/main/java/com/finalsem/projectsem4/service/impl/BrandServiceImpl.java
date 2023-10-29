@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.BrandsDTO;
 import com.finalsem.projectsem4.entity.Brands;
@@ -29,6 +30,8 @@ public class BrandServiceImpl implements BrandService {
             BrandsDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(brand, BrandsDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, brand.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, brand.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<List<BrandsDTO>>("00", "success", dtoList);
@@ -46,13 +49,16 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public ResponseBuilder<BrandsDTO> createBrand(BrandsDTO dto) {
         try {
-            Brands brand;
+            Brands brand = repository.findByName(dto.getName());
+            if (brand != null) {
+                return new ResponseBuilder<>("01", "Brand already exists");
+            }
             ModelMapper mapper = new ModelMapper();
             brand = mapper.map(dto, Brands.class);
             repository.save(brand);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
-            return new ResponseBuilder<>("01", e.toString());
+            return new ResponseBuilder<>("02", e.toString());
         }
 
     }

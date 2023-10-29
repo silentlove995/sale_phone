@@ -1,5 +1,5 @@
-import { Box, Button, styled } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import {Box, Button, styled} from '@mui/material';
+import {useNavigate} from 'react-router-dom';
 
 const FlexBox = styled(Box)(() => ({
   display: 'flex',

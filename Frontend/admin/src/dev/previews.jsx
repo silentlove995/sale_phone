@@ -1,4 +1,3 @@
-import React from 'react'
 import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox'
 import {PaletteTree} from './palette'
 import Analytics from "../app/views/dashboard/Analytics";
