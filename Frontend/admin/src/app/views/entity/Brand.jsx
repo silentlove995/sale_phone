@@ -37,7 +37,7 @@ export const Brand = () => {
         setOpen(false);
     }
 
-    open === true ? getListBranch() : console.log('close');
+    // open === true ? getListBranch() : console.log('close');
 
     const [post, setPost] = React.useState(null);
     const [brands, setBrands] = React.useState(null);

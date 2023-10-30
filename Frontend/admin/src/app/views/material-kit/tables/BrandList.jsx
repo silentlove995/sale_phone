@@ -3,24 +3,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import axios from "axios";
-import React from "react";
+// import React from "react";
 
-const editUrl = "http://localhost:8080/api/brands/update/";
-const deleteUrl = "http://localhost:8080/api/brands/delete/";
-const infoUrl = "http://localhost:8080/api/brands/get/";
+// const editUrl = "http://localhost:8080/api/brands/update/";
+// const deleteUrl = "http://localhost:8080/api/brands/delete/";
+// const infoUrl = "http://localhost:8080/api/brands/get/";
 
-const [post, setPost] = React.useState(null);
-const [info, setInfo] = React.useState(null);
+// const [post, setPost] = React.useState(null);
+// const [info, setInfo] = React.useState(null);
 
 const getInfo = (id) => {
-    alert("info: " + id);
-    axios.get(infoUrl + id).then((response) => {
-        setPost(response.data);
-        setInfo(response.data.data);
-        console.log('brands: ', info);
-    });
-    if (!post) return null;
+    // alert("info: " + id);
+    // axios.get(infoUrl + id).then((response) => {
+    //     setPost(response.data);
+    //     setInfo(response.data.data);
+    //     console.log('brands: ', info);
+    // });
+    // if (!post) return null;
+    console.log(id);
 };
 const edit = (index) => {
     alert("edit: " + index);
