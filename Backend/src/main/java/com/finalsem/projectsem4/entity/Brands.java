@@ -25,10 +25,10 @@ public class Brands extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "brandId")
+    @OneToMany(mappedBy = "brands")
     private List<Categories> categories;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "brandId")
+    @OneToMany(mappedBy = "brands")
     private List<Products> products = new ArrayList<>();
 }

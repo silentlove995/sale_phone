@@ -24,5 +24,5 @@ public class ProductImages extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Products.class)
     @JoinColumn(name = "product_id")
     @JsonBackReference
-    private Long productId;
+    private Products products;
 }

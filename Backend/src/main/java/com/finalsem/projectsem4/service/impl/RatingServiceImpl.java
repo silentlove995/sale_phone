@@ -3,9 +3,12 @@ package com.finalsem.projectsem4.service.impl;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.RatingsDTO;
 import com.finalsem.projectsem4.entity.Rating;
+import com.finalsem.projectsem4.repository.ProductRepository;
 import com.finalsem.projectsem4.repository.RatingRepository;
+import com.finalsem.projectsem4.repository.UsersRepository;
 import com.finalsem.projectsem4.service.RatingService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +20,20 @@ import java.util.stream.Collectors;
 @Service
 public class RatingServiceImpl implements RatingService {
 
+    private final UsersRepository usersRepository;
+
+    private final ProductRepository productRepository;
     private final RatingRepository ratingRepository;
 
-    public RatingServiceImpl(RatingRepository ratingRepository) {
+    public RatingServiceImpl(RatingRepository ratingRepository, UsersRepository usersRepository, ProductRepository productRepository) {
         this.ratingRepository = ratingRepository;
+        this.usersRepository = usersRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public ResponseBuilder<List<RatingsDTO>> getRatingByProductId(Long id) {
-        List<Rating> ratings = ratingRepository.getRatingByProductId(id);
+        List<Rating> ratings = ratingRepository.getRatingByProductsId(id);
         List<RatingsDTO> ratingsDTOList = ratings.stream().map(rating -> {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();
@@ -41,6 +49,8 @@ public class RatingServiceImpl implements RatingService {
             Rating rating = new Rating();
             ModelMapper modelMapper = new ModelMapper();
             rating = modelMapper.map(dto, Rating.class);
+            rating.setUsers(usersRepository.getReferenceById(dto.getUserId()));
+            rating.setProducts(productRepository.getReferenceById(dto.getProductId()));
             ratingRepository.save(rating);
             return new ResponseBuilder<>("00", "Success", dto);
         } catch (Exception e) {
@@ -54,6 +64,8 @@ public class RatingServiceImpl implements RatingService {
             Rating rating = ratingRepository.getReferenceById(dto.getId());
             ModelMapper modelMapper = new ModelMapper();
             rating = modelMapper.map(dto, Rating.class);
+            rating.setUsers(usersRepository.getReferenceById(dto.getUserId()));
+            rating.setProducts(productRepository.getReferenceById(dto.getProductId()));
             ratingRepository.save(rating);
             return new ResponseBuilder<>("00", "Success", dto);
         } catch (Exception e) {
@@ -82,7 +94,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public ResponseBuilder<List<RatingsDTO>> getRatingByUserId(Long id) {
-        List<Rating> ratings = ratingRepository.getRatingByUserId(id);
+        List<Rating> ratings = ratingRepository.getRatingByUsersId(id);
         List<RatingsDTO> ratingsDTOList = ratings.stream().map(rating -> {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();
@@ -94,7 +106,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public ResponseBuilder<List<RatingsDTO>> getRatingByUserIdAndProductId(Long userId, Long productId) {
-        List<Rating> ratings = ratingRepository.getRatingByUserIdAndProductId(userId, productId);
+        List<Rating> ratings = ratingRepository.getRatingByUsersIdAndProductsId(userId, productId);
         List<RatingsDTO> ratingsDTOList = ratings.stream().map(rating -> {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();

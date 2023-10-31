@@ -30,9 +30,9 @@ public class OrderDetails extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Orders.class)
     @JoinColumn(name = "order_id")
-    private Long orderId;
+    private Orders orders;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Products.class)
     @JoinColumn(name = "product_id")
-    private Long productId;
+    private Products products;
 }

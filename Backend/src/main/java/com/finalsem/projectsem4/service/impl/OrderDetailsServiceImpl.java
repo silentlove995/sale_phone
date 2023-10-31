@@ -4,8 +4,11 @@ import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrderDetailsDTO;
 import com.finalsem.projectsem4.entity.OrderDetails;
 import com.finalsem.projectsem4.repository.OrderDetailsRepository;
+import com.finalsem.projectsem4.repository.OrderRepository;
+import com.finalsem.projectsem4.repository.ProductRepository;
 import com.finalsem.projectsem4.service.OrderDetailsService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,12 @@ import java.util.List;
  */
 @Service
 public class OrderDetailsServiceImpl implements OrderDetailsService {
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
 
     public OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository) {
@@ -39,6 +48,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             OrderDetails orderDetails = new OrderDetails();
             ModelMapper mapper = new ModelMapper();
             orderDetails = mapper.map(orderDetailsDTO, OrderDetails.class);
+            orderDetails.setProducts(productRepository.getReferenceById(orderDetailsDTO.getProductId()));
+            orderDetails.setOrders(orderRepository.getReferenceById(orderDetailsDTO.getOrderId()));
             orderDetailsRepository.save(orderDetails);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -52,6 +63,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             OrderDetails orderDetails = orderDetailsRepository.getReferenceById(id);
             ModelMapper mapper = new ModelMapper();
             orderDetails = mapper.map(orderDetailsDTO, OrderDetails.class);
+            orderDetails.setProducts(productRepository.getReferenceById(orderDetailsDTO.getProductId()));
+            orderDetails.setOrders(orderRepository.getReferenceById(orderDetailsDTO.getOrderId()));
             orderDetailsRepository.save(orderDetails);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -68,7 +81,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByOrderId(Long id) {
-        List<OrderDetails> orderItems = orderDetailsRepository.findAllByOrderId(id);
+        List<OrderDetails> orderItems = orderDetailsRepository.findAllByOrdersId(id);
         List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
             OrderDetailsDTO orderDetailsDTO;
             ModelMapper mapper = new ModelMapper();
@@ -80,7 +93,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public ResponseBuilder<List<OrderDetailsDTO>> getOrderDetailsByProductId(Long id) {
-        List<OrderDetails> orderItems = orderDetailsRepository.findAllByProductId(id);
+        List<OrderDetails> orderItems = orderDetailsRepository.findAllByProductsId(id);
         List<OrderDetailsDTO> orderDetailsDTOS = orderItems.stream().map(orderItem -> {
             OrderDetailsDTO orderDetailsDTO;
             ModelMapper mapper = new ModelMapper();

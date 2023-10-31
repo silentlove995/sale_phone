@@ -49,9 +49,9 @@ public class ProductImageController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    ResponseEntity<?> updateProductImage(@PathVariable Long id, @RequestBody ProductImagesDTO productImagesDTO) {
-        ResponseBuilder<ProductImagesDTO> resp = productImageService.updateProductImage(id, productImagesDTO);
+    @PutMapping("/update")
+    ResponseEntity<?> updateProductImage( @RequestBody ProductImagesDTO productImagesDTO) {
+        ResponseBuilder<ProductImagesDTO> resp = productImageService.updateProductImage(productImagesDTO);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrdersDTO;
 import com.finalsem.projectsem4.entity.Orders;
 import com.finalsem.projectsem4.repository.OrderRepository;
+import com.finalsem.projectsem4.repository.UsersRepository;
 import com.finalsem.projectsem4.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private final UsersRepository usersRepository;
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, UsersRepository usersRepository) {
         this.orderRepository = orderRepository;
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -42,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
             Orders orders = new Orders();
             ModelMapper mapper = new ModelMapper();
             orders = mapper.map(ordersDTO, Orders.class);
+            orders.setUsers(usersRepository.getReferenceById(ordersDTO.getUserId()));
             orderRepository.save(orders);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -55,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
             Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
             ModelMapper mapper = new ModelMapper();
             orders = mapper.map(ordersDTO, Orders.class);
+            orders.setUsers(usersRepository.getReferenceById(ordersDTO.getUserId()));
             orderRepository.save(orders);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {

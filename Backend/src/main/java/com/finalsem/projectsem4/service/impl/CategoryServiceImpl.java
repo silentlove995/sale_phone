@@ -3,6 +3,7 @@ package com.finalsem.projectsem4.service.impl;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.CategoryDTO;
 import com.finalsem.projectsem4.entity.Categories;
+import com.finalsem.projectsem4.repository.BrandsRepository;
 import com.finalsem.projectsem4.repository.CategoryRepository;
 import com.finalsem.projectsem4.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -18,8 +19,16 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private CategoryRepository repository;
+    private final CategoryRepository repository;
+
+    final
+    BrandsRepository brandsRepository;
+
+    public CategoryServiceImpl(CategoryRepository repository, BrandsRepository brandsRepository) {
+        this.repository = repository;
+        this.brandsRepository = brandsRepository;
+    }
+
     @Override
     public ResponseBuilder<List<CategoryDTO>> getAllCategory() {
         List<Categories> categories = repository.findAll();
@@ -47,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
             Categories categories;
             ModelMapper mapper = new ModelMapper();
             categories = mapper.map(dto, Categories.class);
+            categories.setBrands(brandsRepository.getReferenceById(dto.getBrandId()));
             repository.save(categories);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -60,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
             Categories categories = repository.findById(id).orElse(null);
             ModelMapper mapper = new ModelMapper();
             categories = mapper.map(dto, Categories.class);
+            categories.setBrands(brandsRepository.getReferenceById(dto.getBrandId()));
             repository.save(categories);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -79,7 +90,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseBuilder<List<CategoryDTO>> getCategoryByBrandId(Long id) {
-        List<Categories> categories = repository.findAllByBrandId(id);
+        List<Categories> categories = repository.findAllByBrandsId(id);
         List<CategoryDTO> result = categories.stream().map( category -> {
             CategoryDTO dto;
             ModelMapper mapper = new ModelMapper();

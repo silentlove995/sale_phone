@@ -42,7 +42,7 @@ public class Districts {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Units.class)
     @JoinColumn(name = "unit_id")
-    private Integer unitId;
+    private Units units;
 
     @OneToMany(mappedBy = "districtCode")
     @JsonIgnore

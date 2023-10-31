@@ -38,12 +38,12 @@ public class Units {
     @Column(name = "code_name_en")
     private String codeNameEn;
 
-    @OneToMany(mappedBy = "unitId")
+    @OneToMany(mappedBy = "units")
     private List<Provinces> provinces = new ArrayList<>();
 
-    @OneToMany(mappedBy = "unitId")
+    @OneToMany(mappedBy = "units")
     private List<Wards> wards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "unitId")
+    @OneToMany(mappedBy = "units")
     private List<Districts> districts = new ArrayList<>();
 }

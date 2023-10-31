@@ -1,6 +1,7 @@
 package com.finalsem.projectsem4.repository;
 
 import com.finalsem.projectsem4.entity.ProductImages;
+import com.finalsem.projectsem4.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface ProductImagesRepository extends JpaRepository<ProductImages, Long> {
-    List<ProductImages> findAllByProductId(Long product_id);
+    List<ProductImages> findAllByProductsId(Long id);
 }

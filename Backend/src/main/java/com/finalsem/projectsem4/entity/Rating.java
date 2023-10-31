@@ -26,9 +26,9 @@ public class Rating extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Users.class)
     @JoinColumn(name = "user_id")
-    private Long userId;
+    private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Products.class)
     @JoinColumn(name = "product_id")
-    private Long productId;
+    private Products products;
 }

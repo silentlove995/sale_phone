@@ -4,6 +4,7 @@ import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.ProductImagesDTO;
 import com.finalsem.projectsem4.entity.ProductImages;
 import com.finalsem.projectsem4.repository.ProductImagesRepository;
+import com.finalsem.projectsem4.repository.ProductRepository;
 import com.finalsem.projectsem4.service.ProductImageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,15 @@ import java.util.List;
 @Service
 public class ProductImageServiceImpl implements ProductImageService {
 
-    @Autowired
-    private ProductImagesRepository productImageRepository;
+    private final ProductRepository productRepository;
+
+    private final ProductImagesRepository productImageRepository;
+
+    public ProductImageServiceImpl(ProductRepository productRepository, ProductImagesRepository productImageRepository) {
+        this.productRepository = productRepository;
+        this.productImageRepository = productImageRepository;
+    }
+
     @Override
     public ResponseBuilder<List<ProductImagesDTO>> getAllProductImage() {
         List<ProductImages> productImages = productImageRepository.findAll();
@@ -46,6 +54,7 @@ public class ProductImageServiceImpl implements ProductImageService {
             ProductImages productImages = new ProductImages();
             ModelMapper mapper = new ModelMapper();
             productImages = mapper.map(dto, ProductImages.class);
+            productImages.setProducts(productRepository.getReferenceById(dto.getProductId()));
             productImageRepository.save(productImages);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -54,11 +63,12 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
 
     @Override
-    public ResponseBuilder<ProductImagesDTO> updateProductImage(Long id, ProductImagesDTO dto) {
+    public ResponseBuilder<ProductImagesDTO> updateProductImage(ProductImagesDTO dto) {
         try {
-            ProductImages productImages = productImageRepository.getReferenceById(id);
+            ProductImages productImages = productImageRepository.getReferenceById(dto.getId());
             ModelMapper mapper = new ModelMapper();
             productImages = mapper.map(dto, ProductImages.class);
+            productImages.setProducts(productRepository.getReferenceById(dto.getProductId()));
             productImageRepository.save(productImages);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -79,7 +89,7 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     @Override
     public ResponseBuilder<List<ProductImagesDTO>> getProductImageByProductId(Long id) {
-        List<ProductImages> productImages = productImageRepository.findAllByProductId(id);
+        List<ProductImages> productImages = productImageRepository.findAllByProductsId(id);
         List<ProductImagesDTO> productImagesDTOS = productImages.stream().map(productImage -> {
             ProductImagesDTO productImagesDTO;
             ModelMapper mapper = new ModelMapper();

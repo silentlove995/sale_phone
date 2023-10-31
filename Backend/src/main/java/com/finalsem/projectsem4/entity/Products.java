@@ -48,25 +48,25 @@ public class Products extends BaseEntity {
     @Column(name = "sale_price") // gia ban
     private BigDecimal salePrice;
 
-    @OneToMany(mappedBy = "productId", cascade = {CascadeType.ALL}, fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "products", cascade = {CascadeType.ALL}, fetch= FetchType.EAGER)
     @JsonManagedReference
     @JsonIgnore
     private List<ProductImages> pictures;
 
-    @OneToMany(mappedBy = "productId")
+    @OneToMany(mappedBy = "products")
     @JsonIgnore
     private List<Comments> comments;
 
-    @OneToMany(mappedBy = "productId")
+    @OneToMany(mappedBy = "products")
     @JsonIgnore
     private List<OrderDetails> orderDetails;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Categories.class)
     @JoinColumn(name = "category_id")// loai san pham ( dien thoai, laptop, may tinh bang, phu kien)
     @JsonBackReference
-    private Long categoryId;
+    private Categories categories;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Brands.class)
     @JoinColumn(name = "brand_id") // hang san xuat
-    private Long brandId;
+    private Brands brands;
 }

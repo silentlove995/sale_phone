@@ -15,5 +15,5 @@ import lombok.*;
 public class ProductImagesDTO extends AbstractDTO {
     private String name;
     private byte[] data;
-    private String productId;
+    private Long productId;
 }

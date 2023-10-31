@@ -32,6 +32,6 @@ public class Regions {
     @Column(name = "code_name_en")
     private String codeNameEn;
 
-    @OneToMany(mappedBy = "regionId")
+    @OneToMany(mappedBy = "regions")
     private List<Provinces> provinces = new ArrayList<>();
 }

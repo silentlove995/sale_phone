@@ -42,9 +42,9 @@ public class Provinces {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Units.class)
     @JoinColumn(name = "unit_id")
-    private Long unitId;
+    private Units units;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Regions.class)
     @JoinColumn(name = "region_id")
-    private Long regionId;
+    private Regions regions;
 }

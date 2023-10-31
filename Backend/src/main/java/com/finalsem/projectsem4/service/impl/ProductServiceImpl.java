@@ -7,8 +7,10 @@ import com.finalsem.projectsem4.entity.ProductImages;
 import com.finalsem.projectsem4.entity.Products;
 import com.finalsem.projectsem4.repository.ProductImagesRepository;
 import com.finalsem.projectsem4.repository.ProductRepository;
+import com.finalsem.projectsem4.service.ProductImageService;
 import com.finalsem.projectsem4.service.ProductService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,12 +24,14 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductImageService productImageService;
     private final ProductRepository productRepository;
     private final ProductImagesRepository productImageRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductImagesRepository productImageRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductImagesRepository productImageRepository, ProductImageService productImageService) {
         this.productRepository = productRepository;
         this.productImageRepository = productImageRepository;
+        this.productImageService = productImageService;
     }
 
     @Override
@@ -48,13 +52,8 @@ public class ProductServiceImpl implements ProductService {
         ModelMapper mapper = new ModelMapper();
         products = mapper.map(productDTO, Products.class);
         productRepository.save(products);
-        Long productId = products.getId(); // Assuming there's a getId() method in Products
-        // Associate the product ID with the product images
         for (ProductImagesDTO imageDTO : productDTO.getPictures()) {
-            ProductImages productImages = new ProductImages();
-            productImages = mapper.map(imageDTO, ProductImages.class);
-            productImages.setProductId(productId); // Set the product ID
-            productImageRepository.save(productImages);
+            productImageService.addProductImage(imageDTO);
         }
         return new ResponseBuilder<>("00", "success");
     }
@@ -66,10 +65,7 @@ public class ProductServiceImpl implements ProductService {
         product = mapper.map(productDTO, Products.class);
         productRepository.save(product);
         for (ProductImagesDTO imageDTO : productDTO.getPictures()) {
-            ProductImages productImages =  productImageRepository.getReferenceById(imageDTO.getId());
-            productImages = mapper.map(imageDTO, ProductImages.class);
-            productImages.setProductId(id); // Set the product ID
-            productImageRepository.save(productImages);
+            productImageService.updateProductImage(imageDTO);
         }
         return new ResponseBuilder<>("00", "success");
     }
@@ -102,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseBuilder<List<ProductDTO>> getProductByCategoryId(Long id) {
-        List<Products> products = productRepository.getAllByCategoryId(id);
+        List<Products> products = productRepository.findAllByCategoriesId(id);
         List<ProductDTO> productDTOs = products.stream().map(product -> {
             ModelMapper mapper = new ModelMapper();
             return mapper.map(product, ProductDTO.class);
@@ -112,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseBuilder<List<ProductDTO>> getProductByBrandId(Long id) {
-        List<Products> products = productRepository.getAllByBrandId(id);
+        List<Products> products = productRepository.findAllByBrandsId(id);
         List<ProductDTO> productDTOs = products.stream().map(product -> {
             ModelMapper mapper = new ModelMapper();
             return mapper.map(product, ProductDTO.class);

@@ -23,10 +23,10 @@ public class Categories extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoryId")
+    @OneToMany(mappedBy = "categories")
     private List<Products> products = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, targetEntity = Brands.class)
     @JoinColumn(name = "brand_id")
-    private Long brandId;
+    private Brands brands;
 }

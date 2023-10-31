@@ -9,5 +9,7 @@ import java.util.List;
  * @author Ly Quoc Trong
  */
 public interface WardRepository extends JpaRepository<Wards, String> {
+    List<Wards> findAllByDistrictCode(String districtCode);
 
+    List<Wards> findAllByUnitsId(Integer unitsId);
 }

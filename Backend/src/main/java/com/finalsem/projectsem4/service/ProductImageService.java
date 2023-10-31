@@ -15,7 +15,7 @@ public interface ProductImageService {
 
     ResponseBuilder<ProductImagesDTO> addProductImage(ProductImagesDTO dto);
 
-    ResponseBuilder<ProductImagesDTO> updateProductImage(Long id, ProductImagesDTO dto);
+    ResponseBuilder<ProductImagesDTO> updateProductImage(ProductImagesDTO dto);
 
     ResponseBuilder deleteProductImage(Long id);
 
