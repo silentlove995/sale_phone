@@ -32,7 +32,7 @@ const ElectronicsOne = () => {
       <HeroSliderFive heroSliderData={heroSliderFiveData} />
       {/* tab product */}
       <ProductTabThree
-        title="Exclusive Products"
+        title="Exclusive Products code here"
         bannerImage="/assets/images/banner/shop_banner_img6.jpg"
         newProducts={newProducts}
         bestSellerProducts={bestSellerProductsTwo}

@@ -7,6 +7,7 @@ import { LayoutOne } from "../../layouts";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { Sidebar, ShopHeader, ShopProducts } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
+import { fetchProductsFromBackend } from "../../servicesAPI/productAPI";
 
 const GridLeftSidebar = () => {
   const { products } = useSelector((state) => state.product);
@@ -38,6 +39,9 @@ const GridLeftSidebar = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+    //const data = await fetchProductsFromBackend();
+    //console.log(data);
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
     const filterSortedProducts = getSortedProducts(
       sortedProducts,
@@ -47,6 +51,8 @@ const GridLeftSidebar = () => {
     sortedProducts = filterSortedProducts;
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+  };
+  fetchData();
   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
   return (
