@@ -28,5 +28,7 @@ public interface UsersService {
 
     ResponseBuilder<?> changePassword(PasswordDTO passwordDTO);
 
+    ResponseBuilder<?> forgotPassword(String email);
+
     public UserDetails loadUserByUsername(String username);
 }

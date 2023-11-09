@@ -61,12 +61,12 @@ public class Users extends BaseEntity {
     @JsonIgnore
     private List<Comments> comments = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id" ),
+            inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-//    @JsonIgnore
+    @JsonIgnore
     private Set<Roles> roles = new HashSet<>();
 
 }

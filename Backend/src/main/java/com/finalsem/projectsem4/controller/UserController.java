@@ -2,15 +2,26 @@ package com.finalsem.projectsem4.controller;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.UsersDTO;
+import com.finalsem.projectsem4.dto.authen.JwtResponse;
+import com.finalsem.projectsem4.dto.authen.LoginRequest;
 import com.finalsem.projectsem4.dto.authen.PasswordDTO;
 import com.finalsem.projectsem4.dto.authen.SignupDTO;
+import com.finalsem.projectsem4.security.service.UserDetailsImpl;
 import com.finalsem.projectsem4.service.UsersService;
+import com.finalsem.projectsem4.util.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Ly Quoc Trong
@@ -19,6 +30,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/users")
 public class UserController {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtils jwtUtils;
     private final UsersService userService;
 
     public UserController(UsersService userService) {
@@ -35,6 +52,23 @@ public class UserController {
     ResponseEntity<?> getUserById(@PathVariable Long id) {
         ResponseBuilder<UsersDTO> resp = userService.getUsersById(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt, roles, userDetails.getUserId(), userDetails.getUsername()));
+
     }
 
     @PostMapping("/signup")

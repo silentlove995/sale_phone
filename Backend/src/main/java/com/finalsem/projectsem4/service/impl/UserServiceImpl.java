@@ -29,9 +29,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -171,6 +173,35 @@ public class UserServiceImpl implements UsersService {
         } catch (Exception e) {
             throw new RuntimeException("Change password failed with error: " + e.getMessage());
         }
+    }
+
+    @Override
+    public ResponseBuilder<?> forgotPassword(String email) {
+//        Users user = usersRepository.findByEmail(email);
+//        ForgotPassword token;
+//        if (user == null) {
+//            return "Invalid email id.";
+//        }
+//
+//        if (user.getForgotPasswords() != null) {
+//            token = user.getForgotPasswords();
+//        } else {
+//            token = new ForgotPassword();
+//        }
+//        token.setUser(user);
+//        token.setToken(UUID.randomUUID().toString());
+//        token.setTokenCreationDate(LocalDateTime.now());
+//        forgetPasswordRepository.save(token);
+//        user.setForgotPasswords(token);
+//        userRepository.save(user);
+//        String response = token.getToken();
+//
+//        if (!response.startsWith("Invalid")) {
+//            response = "/api/auth/reset-password?token=" + response;
+//
+//        }
+//        mailService.sendmail(email, response);
+        return null;
     }
 
     @Override
