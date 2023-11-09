@@ -146,17 +146,20 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     public ResponseBuilder<JwtResponse> login(LoginRequest loginDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),
-                        loginDTO.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-        return new ResponseBuilder<>("00", "successfully",
-                new JwtResponse(jwt, roles, userDetails.getUserId(), userDetails.getUsername()));
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),
+                            loginDTO.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+            return new ResponseBuilder<>("00", "successfully",
+                    new JwtResponse(jwt, roles, userDetails.getUserId(), userDetails.getUsername()));
+        } catch (Exception e) {
+            return new ResponseBuilder<>("01","username or password invalid");
+        }
     }
 
     @Override
