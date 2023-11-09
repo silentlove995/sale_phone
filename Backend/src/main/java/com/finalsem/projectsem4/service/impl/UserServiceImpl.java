@@ -3,21 +3,18 @@ package com.finalsem.projectsem4.service.impl;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.common.enums.ERoles;
 import com.finalsem.projectsem4.dto.UsersDTO;
-import com.finalsem.projectsem4.dto.authen.JwtResponse;
-import com.finalsem.projectsem4.dto.authen.LoginDTO;
-import com.finalsem.projectsem4.dto.authen.PasswordDTO;
-import com.finalsem.projectsem4.dto.authen.SignupDTO;
+import com.finalsem.projectsem4.dto.authen.*;
+import com.finalsem.projectsem4.entity.ForgotPassword;
 import com.finalsem.projectsem4.entity.Roles;
 import com.finalsem.projectsem4.entity.Users;
+import com.finalsem.projectsem4.repository.ForgetPasswordRepository;
 import com.finalsem.projectsem4.repository.RolesRepository;
 import com.finalsem.projectsem4.repository.UsersRepository;
 import com.finalsem.projectsem4.security.service.UserDetailsImpl;
+import com.finalsem.projectsem4.service.MailService;
 import com.finalsem.projectsem4.service.UsersService;
 import com.finalsem.projectsem4.util.JwtUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,12 +49,18 @@ public class UserServiceImpl implements UsersService {
 
     private final JwtUtils jwtUtils;
 
-    public UserServiceImpl(UsersRepository usersRepository, PasswordEncoder encoder, RolesRepository roleRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    private final ForgetPasswordRepository forgetPasswordRepository;
+
+    private final MailService mailService;
+
+    public UserServiceImpl(UsersRepository usersRepository, PasswordEncoder encoder, RolesRepository roleRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils, ForgetPasswordRepository forgetPasswordRepository, MailService mailService) {
         this.usersRepository = usersRepository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.forgetPasswordRepository = forgetPasswordRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -142,7 +145,7 @@ public class UserServiceImpl implements UsersService {
     }
 
     @Override
-    public JwtResponse login(LoginDTO loginDTO) {
+    public ResponseBuilder<JwtResponse> login(LoginRequest loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),
                         loginDTO.getPassword()));
@@ -152,12 +155,8 @@ public class UserServiceImpl implements UsersService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        return JwtResponse.builder()
-                .token(jwt)
-                .roles(roles)
-                .userId(userDetails.getUserId())
-                .username(userDetails.getUsername())
-                .build();
+        return new ResponseBuilder<>("00", "successfully",
+                new JwtResponse(jwt, roles, userDetails.getUserId(), userDetails.getUsername()));
     }
 
     @Override
@@ -177,31 +176,29 @@ public class UserServiceImpl implements UsersService {
 
     @Override
     public ResponseBuilder<?> forgotPassword(String email) {
-//        Users user = usersRepository.findByEmail(email);
-//        ForgotPassword token;
-//        if (user == null) {
-//            return "Invalid email id.";
-//        }
-//
-//        if (user.getForgotPasswords() != null) {
-//            token = user.getForgotPasswords();
-//        } else {
-//            token = new ForgotPassword();
-//        }
-//        token.setUser(user);
-//        token.setToken(UUID.randomUUID().toString());
-//        token.setTokenCreationDate(LocalDateTime.now());
-//        forgetPasswordRepository.save(token);
-//        user.setForgotPasswords(token);
-//        userRepository.save(user);
-//        String response = token.getToken();
-//
-//        if (!response.startsWith("Invalid")) {
-//            response = "/api/auth/reset-password?token=" + response;
-//
-//        }
-//        mailService.sendmail(email, response);
-        return null;
+        Users user = usersRepository.findByEmail(email);
+        ForgotPassword token;
+        if (user == null) {
+            return  new ResponseBuilder<>("01","Invalid email id.");
+        }
+        if (user.getForgotPasswords() != null) {
+            token = user.getForgotPasswords();
+        } else {
+            token = new ForgotPassword();
+        }
+        token.setUser(user);
+        token.setToken(UUID.randomUUID().toString());
+        token.setTokenCreationDate(LocalDateTime.now());
+        forgetPasswordRepository.save(token);
+        user.setForgotPasswords(token);
+        usersRepository.save(user);
+        String response = token.getToken();
+
+        if (!response.startsWith("Invalid")) {
+            response = "/api/auth/reset-password?token=" + response;
+        }
+        mailService.sendmail(email, response);
+        return new ResponseBuilder<>("00", "Success sent to email", response);
     }
 
     @Override
@@ -210,5 +207,22 @@ public class UserServiceImpl implements UsersService {
         Users user = usersRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
         return UsersDTO.build(user);
+    }
+
+    @Override
+    public ResponseBuilder<?> resetPassword(String token, PasswordDTO passForm) {
+        ForgotPassword forgotPassword = forgetPasswordRepository.findByToken(token);
+        Users user = forgotPassword.getUser();
+        if (user == null) {
+            return new ResponseBuilder<>("01","Not found user");
+        }
+        try {
+            user.setPassword(encoder.encode(passForm.getNewPassword()));
+            usersRepository.save(user);
+            return new ResponseBuilder<>("00","Success");
+
+        } catch (Exception e) {
+            throw new RuntimeException("Fail!");
+        }
     }
 }

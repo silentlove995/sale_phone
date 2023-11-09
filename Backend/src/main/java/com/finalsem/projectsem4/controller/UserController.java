@@ -57,18 +57,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                        loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt, roles, userDetails.getUserId(), userDetails.getUsername()));
-
+        ResponseBuilder<JwtResponse> resp = userService.login(loginRequest);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
@@ -90,14 +80,20 @@ public class UserController {
     }
 
     @PostMapping("/forgot-password")
-    ResponseEntity<?> forgotPassword(@RequestBody String email) {
+    ResponseEntity<?> forgotPassword(@RequestParam String email) {
         ResponseBuilder<?> resp = userService.forgotPassword(email);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        ResponseBuilder resp = userService.deleteUsers(id);
+        ResponseBuilder<?> resp = userService.deleteUsers(id);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> forgotPasswordUpdate(@RequestParam String token, @Valid @RequestBody PasswordDTO passForm) {
+        ResponseBuilder<?> resp = userService.resetPassword(token, passForm);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

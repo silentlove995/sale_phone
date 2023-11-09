@@ -9,6 +9,11 @@ import '../fake-db';
 
 const App = () => {
   const content = useRoutes(routes);
+    const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+
+// Pages
+    const Login = React.lazy(() => import('./views/pages/login/Login'))
+    const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 
   return (
     <SettingsProvider>

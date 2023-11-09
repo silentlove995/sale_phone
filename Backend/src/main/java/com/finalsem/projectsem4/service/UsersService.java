@@ -2,10 +2,7 @@ package com.finalsem.projectsem4.service;
 
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.UsersDTO;
-import com.finalsem.projectsem4.dto.authen.JwtResponse;
-import com.finalsem.projectsem4.dto.authen.LoginDTO;
-import com.finalsem.projectsem4.dto.authen.PasswordDTO;
-import com.finalsem.projectsem4.dto.authen.SignupDTO;
+import com.finalsem.projectsem4.dto.authen.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -24,11 +21,13 @@ public interface UsersService {
 
     ResponseBuilder<UsersDTO> deleteUsers(Long id);
 
-    JwtResponse login(LoginDTO loginDTO);
+    ResponseBuilder<JwtResponse> login(LoginRequest loginDTO);
 
     ResponseBuilder<?> changePassword(PasswordDTO passwordDTO);
 
     ResponseBuilder<?> forgotPassword(String email);
 
-    public UserDetails loadUserByUsername(String username);
+    UserDetails loadUserByUsername(String username);
+
+    ResponseBuilder<?> resetPassword(String token, PasswordDTO passForm);
 }

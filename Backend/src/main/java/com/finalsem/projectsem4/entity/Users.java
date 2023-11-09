@@ -38,7 +38,8 @@ public class Users extends BaseEntity {
     @NotBlank(message = "Email cannot be blank")
     @Size(max = 100)
     @Column(name = "email",length = 100, nullable = false)
-    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
+//    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
+    @Email
     private String email;
 
     @NotBlank
@@ -68,5 +69,8 @@ public class Users extends BaseEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private Set<Roles> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private ForgotPassword forgotPasswords;
 
 }
