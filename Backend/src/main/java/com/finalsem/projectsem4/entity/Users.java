@@ -1,10 +1,7 @@
 package com.finalsem.projectsem4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,6 +17,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users", uniqueConstraints = {
@@ -40,7 +38,8 @@ public class Users extends BaseEntity {
     @NotBlank(message = "Email cannot be blank")
     @Size(max = 100)
     @Column(name = "email",length = 100, nullable = false)
-    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
+//    @Email(regexp=".*@.*\\..*", message = "Email should be valid")
+    @Email
     private String email;
 
     @NotBlank
@@ -63,12 +62,15 @@ public class Users extends BaseEntity {
     @JsonIgnore
     private List<Comments> comments = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id" ),
+            inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-//    @JsonIgnore
+    @JsonIgnore
     private Set<Roles> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private ForgotPassword forgotPasswords;
 
 }

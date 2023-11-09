@@ -7,22 +7,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Roles extends BaseEntity {
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "role_name",nullable = false)
     private ERoles name;
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    Set<Users> users = new HashSet<Users>();
+//    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+//    Set<Users> users = new HashSet<Users>();
+
 }
