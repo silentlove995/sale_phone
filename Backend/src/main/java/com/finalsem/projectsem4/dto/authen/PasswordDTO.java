@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.dto.authen;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +16,16 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PasswordDTO {
     private Long id;
-    @NotBlank
+
     @Size(min = 3 , max = 50)
     private String username;
-    @NotBlank
+
     @Size(min = 6 ,max = 100)
     private String currentPassword;
-    @NotBlank
+
     @Size(min = 6 ,max = 100)
     private String newPassword;
 }

@@ -195,7 +195,7 @@ public class UserServiceImpl implements UsersService {
         String response = token.getToken();
 
         if (!response.startsWith("Invalid")) {
-            response = "/api/auth/reset-password?token=" + response;
+            response = "/api/users/reset-password?token=" + response;
         }
         mailService.sendmail(email, response);
         return new ResponseBuilder<>("00", "Success sent to email", response);

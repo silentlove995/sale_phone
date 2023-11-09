@@ -56,7 +56,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
         ResponseBuilder<JwtResponse> resp = userService.login(loginRequest);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
