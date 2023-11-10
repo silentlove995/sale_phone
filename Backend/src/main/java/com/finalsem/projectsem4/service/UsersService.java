@@ -30,4 +30,6 @@ public interface UsersService {
     UserDetails loadUserByUsername(String username);
 
     ResponseBuilder<?> resetPassword(String token, PasswordDTO passForm);
+
+    ResponseBuilder<?> checkIdFacebook(String id);
 }

@@ -27,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -227,5 +224,20 @@ public class UserServiceImpl implements UsersService {
         } catch (Exception e) {
             throw new RuntimeException("Fail!");
         }
+    }
+
+    @Override
+    public ResponseBuilder<?> checkIdFacebook(String id) {
+        Optional<Users> optionalUser  = usersRepository.findByUsername(id);
+        Users user;
+        if (optionalUser.isEmpty()) {
+            user = new Users();
+            user.setUsername(id);
+            usersRepository.save(user);
+        } else {
+            user = optionalUser.get();
+        }
+
+        return null;
     }
 }
