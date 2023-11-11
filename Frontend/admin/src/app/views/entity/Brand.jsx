@@ -7,7 +7,7 @@ import Fade from "@mui/material/Fade";
 import BrandForm from "../material-kit/forms/BrandForm";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
-import axios from "axios";
+import {connect} from 'react-redux'
 
 const Container = styled('div')(({theme}) => ({
     margin: '30px',
@@ -29,31 +29,14 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const baseURL = "http://localhost:8080/api/brands/all";
 export const Brand = () => {
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
     }
 
-    // open === true ? getListBranch() : console.log('close');
-
-    const [post, setPost] = React.useState(null);
-    const [brands, setBrands] = React.useState(null);
-    React.useEffect(() => {
-        getListBranch();
-    }, []);
-
-    const getListBranch = () => {
-        axios.get(baseURL).then((response) => {
-            setPost(response.data);
-            setBrands(response.data.data);
-            console.log('brands: ', brands);
-        });
-    }
-
-    if (!post) return null;
     return (
         <Container>
             <Box className="breadcrumb">
@@ -63,7 +46,7 @@ export const Brand = () => {
                 <SimpleCard title="Brand List">
                     <span style={{float: 'right', marginBottom: '15px'}}><Button variant="outlined"
                                                                                  onClick={handleOpen}>Add</Button></span>
-                    <BrandList brandList={brands}/>
+                    <BrandList/>
                 </SimpleCard>
             </Stack>
             <Modal
@@ -90,3 +73,7 @@ export const Brand = () => {
         </Container>
     );
 };
+
+export default connect(({Admin: {listBrand}}) => ({
+    listBrand,
+}))(Brand)

@@ -1,6 +1,6 @@
 import useAuth from 'app/hooks/useAuth';
 import {Navigate, useLocation} from 'react-router-dom';
-import React from 'react';
+// import React from 'react';
 
 const AuthGuard = ({ children }) => {
   const { isAuthenticated } = useAuth();

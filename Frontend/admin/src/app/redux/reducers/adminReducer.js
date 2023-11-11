@@ -1,5 +1,6 @@
 import typeAction from '../typeactions'
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
+// import jwt_decode from 'jwt-decode'
 
 const initialState = {
   listApis: [],
@@ -7,24 +8,15 @@ const initialState = {
   user: {},
   listRoles: [],
   roleCombo: [],
-  //challenge
-  listChallenge: [],
-  challengeUpdate: {},
-  //contest
-  listContest: [],
-  contestUpdate: {},
-  //badge
-  listBadge: [],
-  badgeUpdate: {},
-  associatedBadge: [],
-  //audio
-  listAudio: [],
-  audioUpdate: {},
-  mediaUpload: {},
-  audioListing: [],
-  //playlist
-  listPlaylist: [],
-  playlistUpdate: {},
+  //brand
+  listBrand: [],
+  brandUpdate: {},
+  //category
+  listCategory: [],
+  categoryUpdate: {},
+  //product
+  listProduct: [],
+  productUpdate: {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -78,82 +70,28 @@ const reducer = (state = initialState, action) => {
     }
 
     //badge
-    case typeAction.FIND_ALL_BADGE_SUCCESS: {
-      copyState.listBadge = action.payload
+    case typeAction.GET_ALL_BRAND_SUCCESS: {
+      copyState.listBrand = action.payload
       return copyState
     }
 
-    case typeAction.FIND_ALL_ASSOCIATED_BADGE_SUCCESS: {
-      copyState.associatedBadge = action.payload
+    case typeAction.GET_ALL_CATEGORY_SUCCESS: {
+      copyState.listCategory = action.payload
       return copyState
     }
 
-    case typeAction.FIND_BADGE_BY_ID_SUCCESS: {
-      copyState.badgeUpdate = action.payload
+    case typeAction.GET_BRAND_BY_ID_SUCCESS: {
+      copyState.brandUpdate = action.payload
       return copyState
     }
 
-    //challenge
-    case typeAction.FIND_ALL_CHALLENGE_SUCCESS: {
-      copyState.listChallenge = action.payload
+    case typeAction.UPDATE_BRAND_SUCCESS: {
+      copyState.listBrand = action.payload
       return copyState
     }
 
-    case typeAction.FIND_CHALLENGE_BY_ID_SUCCESS: {
-      copyState.challengeUpdate = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_CHALLENGE_BY_CONDITION_SUCCESS: {
-      copyState.listChallenge = action.payload
-      return copyState
-    }
-
-    //contest
-    case typeAction.FIND_ALL_CONTEST_SUCCESS: {
-      copyState.listContest = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_CONTEST_BY_ID_SUCCESS: {
-      copyState.contestUpdate = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_CONTEST_BY_CONDITION_SUCCESS: {
-      copyState.listContest = action.payload
-      return copyState
-    }
-
-    //audio
-    case typeAction.UPLOAD_MEDIA_SUCCESS: {
-      copyState.mediaUpload = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_ALL_AUDIO_SUCCESS: {
-      copyState.listAudio = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_AUDIO_BY_ID_SUCCESS: {
-      copyState.audioUpdate = action.payload
-      return copyState
-    }
-
-    case typeAction.GET_AUDIO_LISTING_SUCCESS: {
-      copyState.audioListing = action.payload
-      return copyState
-    }
-
-    //playlist
-    case typeAction.FIND_ALL_PLAYLIST_SUCCESS: {
-      copyState.listPlaylist = action.payload
-      return copyState
-    }
-
-    case typeAction.FIND_PLAYLIST_BY_ID_SUCCESS: {
-      copyState.playlistUpdate = action.payload
+    case typeAction.DELETE_BRAND_SUCCESS: {
+      copyState.listBrand = action.payload
       return copyState
     }
 

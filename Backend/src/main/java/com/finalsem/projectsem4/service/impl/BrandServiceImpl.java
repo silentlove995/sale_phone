@@ -6,6 +6,7 @@ import com.finalsem.projectsem4.dto.BrandsDTO;
 import com.finalsem.projectsem4.entity.Brands;
 import com.finalsem.projectsem4.repository.BrandsRepository;
 import com.finalsem.projectsem4.service.BrandService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * @author Ly Quoc Trong
  */
 @Service
+@Slf4j
 public class BrandServiceImpl implements BrandService {
 
     @Autowired
@@ -25,6 +27,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public ResponseBuilder<List<BrandsDTO>> getAllBrand() {
+        log.info("Get all brand");
         List<Brands> brands = repository.findAll();
         List<BrandsDTO> dtoList = brands.stream().map( brand -> {
             BrandsDTO dto;

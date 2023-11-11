@@ -24,7 +24,7 @@ public class BrandController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<?> getAllBrands() {
+    ResponseEntity<?> getAllBrand() {
         ResponseBuilder<List<BrandsDTO>> resp = service.getAllBrand();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }

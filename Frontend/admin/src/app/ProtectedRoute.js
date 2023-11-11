@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom'
+import {Outlet} from 'react-router-dom'
 import React from 'react'
-import Login from './views/pages/login/Login'
+import JwtLogin from "./views/sessions/JwtLogin";
 
 const useAuth = () => {
   const user = { loggedIn: true }
@@ -9,7 +9,7 @@ const useAuth = () => {
 
 const ProtectedRoute = () => {
   const isAuth = useAuth()
-  return isAuth ? <Outlet /> : <Login />
+  return isAuth ? <Outlet/> : <JwtLogin/>
 }
 
 export default ProtectedRoute

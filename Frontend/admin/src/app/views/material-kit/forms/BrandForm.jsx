@@ -2,44 +2,36 @@ import {Button, Grid, Icon, styled,} from "@mui/material";
 import {Span} from "app/components/Typography";
 import {useState} from "react";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
-import axios from "axios";
-import Swal from "sweetalert2";
+import {useDispatch} from "react-redux";
+import toast from "react-hot-toast";
+import typeAction from "../../../redux/typeactions";
 
 const TextField = styled(TextValidator)(() => ({
     width: "100%",
     marginBottom: "16px",
 }));
-const baseURL = "http://localhost:8080/api/brands/create";
 export default function BrandForm(props) {
     const [state, setState] = useState("");
-    const [post, setPost] = useState(null);
+    const dispatch = useDispatch();
     const handleSubmit = () => {
-        props.closeModal();
-        // event.preventDefault();
-        // console.log(state);
         const brand = {
             name: state.name
         };
-        axios.post(baseURL, brand).then((response) => {
-            setPost(response.data);
-            console.log(post);
-            console.log('response', response);
-            const errCode = response.data.code;
-            if (errCode === '00') {
-                Swal.fire(
-                    'Success!',
-                    'Brand added successfully!',
-                    'success'
-                );
-            } else {
-                Swal.fire(
-                    'Error!',
-                    response.data.message,
-                    'error'
-                );
-            }
+        const createBrand = toast.loading('Creating brand');
+        dispatch({
+            type: typeAction.CREATE_BRAND,
+            payload: brand,
+            callback: (res) => {
+                if (res?.success) {
+                    toast.dismiss(createBrand)
+                    toast.success('Create brand successfully!');
+                } else {
+                    toast.dismiss(createBrand)
+                    toast.error(res)
+                }
+            },
         });
-        if (!post) return null;
+        props.closeModal();
     };
 
     const handleChange = (event) => {
