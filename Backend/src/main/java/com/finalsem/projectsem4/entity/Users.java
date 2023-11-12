@@ -73,4 +73,6 @@ public class Users extends BaseEntity {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private ForgotPassword forgotPasswords;
 
+    @Column(name = "auth_provider")
+    private String authProvider;
 }

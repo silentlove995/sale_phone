@@ -15,6 +15,7 @@ import com.finalsem.projectsem4.service.MailService;
 import com.finalsem.projectsem4.service.UsersService;
 import com.finalsem.projectsem4.util.JwtUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,29 +37,26 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UsersService {
 
-    private final RolesRepository roleRepository;
+    @Autowired
+    private  RolesRepository roleRepository;
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
 
-    private final PasswordEncoder encoder;
+    @Autowired
+    private  PasswordEncoder encoder;
 
-    private final UsersRepository usersRepository;
+    @Autowired
+    private  UsersRepository usersRepository;
 
-    private final JwtUtils jwtUtils;
+    @Autowired
+    private  JwtUtils jwtUtils;
 
-    private final ForgetPasswordRepository forgetPasswordRepository;
+    @Autowired
+    private  ForgetPasswordRepository forgetPasswordRepository;
 
-    private final MailService mailService;
-
-    public UserServiceImpl(UsersRepository usersRepository, PasswordEncoder encoder, RolesRepository roleRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils, ForgetPasswordRepository forgetPasswordRepository, MailService mailService) {
-        this.usersRepository = usersRepository;
-        this.encoder = encoder;
-        this.roleRepository = roleRepository;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
-        this.forgetPasswordRepository = forgetPasswordRepository;
-        this.mailService = mailService;
-    }
+    @Autowired
+    private  MailService mailService;
 
     @Override
     public ResponseBuilder<List<UsersDTO>> getAllUsers() {
@@ -227,7 +225,7 @@ public class UserServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseBuilder<?> checkIdFacebook(String id) {
+    public ResponseBuilder<?> getUserInfo(String id) {
         Optional<Users> optionalUser  = usersRepository.findByUsername(id);
         Users user;
         if (optionalUser.isEmpty()) {
@@ -237,7 +235,7 @@ public class UserServiceImpl implements UsersService {
         } else {
             user = optionalUser.get();
         }
-
-        return null;
+        UsersDTO userDTO = new UsersDTO();
+        return new ResponseBuilder<>("00","", userDTO);
     }
 }

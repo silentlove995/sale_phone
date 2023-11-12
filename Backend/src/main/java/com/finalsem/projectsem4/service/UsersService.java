@@ -31,5 +31,5 @@ public interface UsersService {
 
     ResponseBuilder<?> resetPassword(String token, PasswordDTO passForm);
 
-    ResponseBuilder<?> checkIdFacebook(String id);
+    ResponseBuilder<?> getUserInfo(String id);
 }
