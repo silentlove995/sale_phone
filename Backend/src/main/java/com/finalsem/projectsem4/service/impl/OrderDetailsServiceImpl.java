@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrderDetailsDTO;
 import com.finalsem.projectsem4.entity.OrderDetails;
@@ -19,15 +20,15 @@ import java.util.List;
 @Service
 public class OrderDetailsServiceImpl implements OrderDetailsService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
 
-    public OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository) {
+    public OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, OrderRepository orderRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -37,6 +38,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             OrderDetailsDTO orderDetailsDTO;
             ModelMapper mapper = new ModelMapper();
             orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
+            orderDetailsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getCreatedAt()));
+            orderDetailsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getUpdatedAt()));
             return orderDetailsDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
@@ -86,6 +89,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             OrderDetailsDTO orderDetailsDTO;
             ModelMapper mapper = new ModelMapper();
             orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
+            orderDetailsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getCreatedAt()));
+            orderDetailsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getUpdatedAt()));
             return orderDetailsDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
@@ -98,6 +103,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             OrderDetailsDTO orderDetailsDTO;
             ModelMapper mapper = new ModelMapper();
             orderDetailsDTO = mapper.map(orderItem, OrderDetailsDTO.class);
+            orderDetailsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getCreatedAt()));
+            orderDetailsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderItem.getUpdatedAt()));
             return orderDetailsDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", orderDetailsDTOS);
@@ -109,6 +116,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         OrderDetailsDTO orderDetailsDTO;
         ModelMapper mapper = new ModelMapper();
         orderDetailsDTO = mapper.map(orderDetails, OrderDetailsDTO.class);
+        orderDetailsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderDetails.getCreatedAt()));
+        orderDetailsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orderDetails.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", orderDetailsDTO);
     }
 }

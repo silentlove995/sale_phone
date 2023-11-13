@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.VouchersDTO;
 import com.finalsem.projectsem4.entity.Vouchers;
@@ -25,6 +26,8 @@ public class VoucherServiceImpl implements VoucherService {
             VouchersDTO vouchersDTO;
             ModelMapper modelMapper = new ModelMapper();
             vouchersDTO = modelMapper.map(voucher, VouchersDTO.class);
+            vouchersDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, voucher.getCreatedAt()));
+            vouchersDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, voucher.getUpdatedAt()));
             return vouchersDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "Success", voucherDTOs);
@@ -36,6 +39,8 @@ public class VoucherServiceImpl implements VoucherService {
         VouchersDTO vouchersDTO;
         ModelMapper modelMapper = new ModelMapper();
         vouchersDTO = modelMapper.map(vouchers, VouchersDTO.class);
+        vouchersDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, vouchers.getCreatedAt()));
+        vouchersDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, vouchers.getUpdatedAt()));
         return new ResponseBuilder<>("00", "Success", vouchersDTO);
     }
 

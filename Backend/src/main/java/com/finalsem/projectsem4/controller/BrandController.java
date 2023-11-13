@@ -24,7 +24,7 @@ public class BrandController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<?> getAllBrands() {
+    ResponseEntity<?> getAllBrand() {
         ResponseBuilder<List<BrandsDTO>> resp = service.getAllBrand();
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class BrandController {
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteBrand(@PathVariable Long id) {
-        ResponseBuilder resp = service.deleteBrand(id);
+        ResponseBuilder<?> resp = service.deleteBrand(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 

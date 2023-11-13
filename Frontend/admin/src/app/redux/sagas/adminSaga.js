@@ -1,6 +1,7 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import {call, put, takeLatest} from 'redux-saga/effects'
 import typeAction from '../typeactions'
 import * as apiRequest from '../api/index'
+import {getAllProducts} from '../api/index'
 import jwtDecode from 'jwt-decode'
 
 function* loginAdmin({ payload, callback }) {
@@ -18,7 +19,7 @@ function* loginAdmin({ payload, callback }) {
   }
 }
 
-function* logout({ payload, callback }) {
+function* logout({callback}) {
   try {
     yield put({ type: typeAction.LOGOUT_SUCCESS })
     if (typeof callback === 'function') {
@@ -60,716 +61,456 @@ function* autoRefreshToken(fn, params) {
   }
 }
 
-//                                             CHALLENGE
+//                                             brand
 // ---------------------------------------------------------------------------------------------- //
 
-function* findAllChallenge({ payload, callback }) {
+function* getAllBrands({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getAllChallenge, payload)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getAllBrand, payload);
+    yield put({type: typeAction.GET_ALL_BRAND_SUCCESS, payload: response.data.data});
+    if (typeof callback === 'function') {
+      callback({success: true});
+    }
+  } catch (e) {
+    console.log('e', e);
+    yield put({type: typeAction.GET_ALL_BRAND_FAILED});
+    if (typeof callback === 'function') {
+      callback(e);
+    }
+  }
+}
+
+function* createBrand({payload, callback}) {
+  try {
+    yield call(apiRequest.createBrand, payload);
+    const response = yield call(apiRequest.getAllBrand, payload);
+    yield put({type: typeAction.GET_ALL_BRAND_SUCCESS, payload: response.data.data});
     if (typeof callback === 'function') {
       callback({ success: true })
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_FAILED })
+    yield put({type: typeAction.CREATE_BRAND_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findChallengeById({ payload, callback }) {
+function* updateBrand({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getChallengeById, payload)
-    yield put({ type: typeAction.FIND_CHALLENGE_BY_ID_SUCCESS, payload: response.data })
+    yield call(apiRequest.updateBrandById, payload);
+    const response = yield call(apiRequest.getAllBrand, payload);
+    yield put({type: typeAction.GET_ALL_BRAND_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
       callback({ success: true })
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_CHALLENGE_BY_ID_FAILED })
+    yield put({type: typeAction.UPDATE_BRAND_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findChallengeByCondition({ payload, callback }) {
+function* deleteBrand({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getChallengeByCondition, payload)
-    yield put({ type: typeAction.FIND_CHALLENGE_BY_CONDITION_SUCCESS, payload: response.data })
+    yield call(apiRequest.deleteBrandBById, payload);
+    const response = yield call(apiRequest.getAllBrand, payload);
+    yield put({type: typeAction.GET_ALL_BRAND_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_CHALLENGE_BY_CONDITION_FAILED })
+    yield put({type: typeAction.DELETE_BRAND_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* createChallenge({ payload, callback }) {
+function* getBrandById({payload, callback}) {
   try {
-    yield call(apiRequest.createChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getBrandById, payload)
+    yield put({type: typeAction.GET_BRAND_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.CREATE_CHALLENGE_FAILED })
+    yield put({type: typeAction.GET_BRAND_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* updateChallenge({ payload, callback }) {
+// ---------------------------------------------------------------------------------------------- //
+//Category
+function* getAllCategory({payload, callback}) {
   try {
-    yield call(apiRequest.updateChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getAllCategories, payload);
+    yield put({type: typeAction.GET_ALL_CATEGORY_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.UPDATE_CHALLENGE_FAILED })
+    yield put({type: typeAction.GET_ALL_CATEGORY_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* saveDraftChallenge({ payload, callback }) {
+function* addCategory({payload, callback}) {
   try {
-    yield call(apiRequest.saveDraftChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.addCategory, payload);
+    const response = yield call(apiRequest.getAllCategories, payload);
+    yield put({type: typeAction.GET_ALL_CATEGORY_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.SAVE_DRAFT_CHALLENGE_FAILED })
+    yield put({type: typeAction.CREATE_CATEGORY_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* updateDraftChallenge({ payload, callback }) {
+function* updateCategory({payload, callback}) {
   try {
-    yield call(apiRequest.updateDraftChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.updateCategory, payload);
+    const response = yield call(apiRequest.getAllCategories, payload);
+    yield put({type: typeAction.GET_ALL_CATEGORY_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.UPDATE_DRAFT_CHALLENGE_FAILED })
+    yield put({type: typeAction.UPDATE_CATEGORY_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* activeChallenge({ payload, callback }) {
+function* deleteCategory({payload, callback}) {
   try {
-    yield call(apiRequest.activeChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.deleteCategory, payload)
+    const response = yield call(apiRequest.getAllCategories, payload);
+    yield put({type: typeAction.GET_ALL_CATEGORY_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.ACTIVE_CHALLENGE_FAILED })
+    yield put({type: typeAction.DELETE_CATEGORY_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* inactiveChallenge({ payload, callback }) {
+function* getCategoryById({payload, callback}) {
   try {
-    yield call(apiRequest.inactiveChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getCategoryById, payload)
+    yield put({type: typeAction.GET_CATEGORY_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.INACTIVE_CHALLENGE_FAILED })
+    yield put({type: typeAction.GET_CATEGORY_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* deleteChallenge({ payload, callback }) {
+function* getCategoryByBrandId({payload, callback}) {
   try {
-    yield call(apiRequest.deleteChallenge, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getCategoryByBrandId, payload)
+    yield put({type: typeAction.GET_CATEGORY_BY_BRAND_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.DELETE_CHALLENGE_FAILED })
+    yield put({type: typeAction.GET_CATEGORY_BY_BRAND_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-//                                                      CONTEST
-// ---------------------------------------------------------------------------------------------------------//
-
-function* findAllContest({ payload, callback }) {
+function* getAllProduct({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getAllProducts, payload)
+    yield put({type: typeAction.GET_ALL_PRODUCT_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_CONTEST_FAILED })
+    yield put({type: typeAction.GET_ALL_PRODUCT_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findContestById({ payload, callback }) {
+function* getProductById({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getContestById, payload)
-    yield put({ type: typeAction.FIND_CONTEST_BY_ID_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getProductById, payload)
+    yield put({type: typeAction.GET_PRODUCT_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_CONTEST_BY_ID_FAILED })
+    yield put({type: typeAction.GET_PRODUCT_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findContestByCondition({ payload, callback }) {
+function* getProductByCategoryId({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getContestByCondition, payload)
-    yield put({ type: typeAction.FIND_CONTEST_BY_CONDITION_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getProductByCategoryId, payload)
+    yield put({type: typeAction.GET_PRODUCT_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_CONTEST_BY_CONDITION_FAILED })
+    yield put({type: typeAction.GET_PRODUCT_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* createContest({ payload, callback }) {
+function* getProductByBrandId({payload, callback}) {
   try {
-    yield call(apiRequest.createContest, payload)
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getProductByBrandId, payload)
+    yield put({type: typeAction.GET_PRODUCT_BY_BRAND_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.CREATE_CONTEST_FAILED })
+    yield put({type: typeAction.GET_PRODUCT_BY_BRAND_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* updateContest({ payload, callback }) {
+function* deleteProduct({payload, callback}) {
   try {
-    yield call(apiRequest.updateContest, payload)
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    yield call(apiRequest.deleteProduct, payload)
+    const response = yield call(apiRequest.getAllProducts, payload)
+    yield put({type: typeAction.GET_ALL_PRODUCT_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.UPDATE_CONTEST_FAILED })
+    yield put({type: typeAction.DELETE_PRODUCT_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* saveDraftContest({ payload, callback }) {
+function* addProduct({payload, callback}) {
   try {
-    yield call(apiRequest.saveDraftContest, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.addProduct, payload)
+    const response = yield call(apiRequest.getAllProducts, payload)
+    yield put({type: typeAction.GET_ALL_PRODUCT_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.SAVE_DRAFT_CONTEST_FAILED })
+    yield put({type: typeAction.CREATE_PRODUCT_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* updateDraftContest({ payload, callback }) {
+function* updateProduct({payload, callback}) {
   try {
-    yield call(apiRequest.updateDraftContest, payload)
-    const response = yield call(apiRequest.getAllChallenge)
-    yield put({ type: typeAction.FIND_ALL_CHALLENGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.updateProduct, payload)
+    const response = yield call(apiRequest.getAllProducts, payload)
+    yield put({type: typeAction.GET_ALL_PRODUCT_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.UPDATE_DRAFT_CONTEST_FAILED })
+    yield put({type: typeAction.UPDATE_PRODUCT_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* activeContest({ payload, callback }) {
+function* getAllOrders({payload, callback}) {
   try {
-    yield call(apiRequest.activeContest, payload)
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getAllOrders, payload)
+    yield put({type: typeAction.GET_ALL_ORDER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.ACTIVE_CONTEST_FAILED })
+    yield put({type: typeAction.GET_ALL_ORDER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* inactiveContest({ payload, callback }) {
+function* getOrderById({payload, callback}) {
   try {
-    yield call(apiRequest.inactiveContest, payload)
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getOrderById, payload)
+    yield put({type: typeAction.GET_ORDER_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.INACTIVE_CONTEST_FAILED })
+    yield put({type: typeAction.GET_ORDER_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* deleteContest({ payload, callback }) {
+function* getOrderByUserId({payload, callback}) {
   try {
-    yield call(apiRequest.deleteContest, payload)
-    const response = yield call(apiRequest.getAllContest)
-    yield put({ type: typeAction.FIND_ALL_CONTEST_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getOrderByUserId, payload)
+    yield put({type: typeAction.GET_ORDER_BY_USER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.DELETE_CONTEST_FAILED })
+    yield put({type: typeAction.GET_ORDER_BY_USER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-//                                                     BADGE
-// --------------------------------------------------------------------------------------------------- //
-
-function* findAllBadge({ payload, callback }) {
+function* addOrder({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getAllBadge)
-    yield put({ type: typeAction.FIND_ALL_BADGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.addOrder, payload)
+    const response = yield call(apiRequest.getAllOrders, payload)
+    yield put({type: typeAction.GET_ALL_ORDER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_BADGE_FAILED })
+    yield put({type: typeAction.CREATE_ORDER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findBadgeById({ payload, callback }) {
+function* updateOrder({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getBadgeById, payload)
-    yield put({ type: typeAction.FIND_BADGE_BY_ID_SUCCESS, payload: response.data })
+    yield call(apiRequest.updateOrder, payload)
+    const response = yield call(apiRequest.getAllOrders, payload)
+    yield put({type: typeAction.GET_ALL_ORDER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_BADGE_BY_ID_FAILED })
+    yield put({type: typeAction.UPDATE_ORDER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findAllAssociatedBadge({ payload, callback }) {
+function* deleteOrder({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getAssociatedBadge, payload)
-    yield put({ type: typeAction.FIND_ALL_ASSOCIATED_BADGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.deleteOrder, payload)
+    const response = yield call(apiRequest.getAllOrders, payload)
+    yield put({type: typeAction.GET_ALL_ORDER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_ASSOCIATED_BADGE_FAILED })
+    yield put({type: typeAction.DELETE_ORDER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* findBadgeByCondition({ payload, callback }) {
+function* getAllVouchers({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getBadgeByCondition, payload)
-    yield put({ type: typeAction.FIND_BADGE_BY_CONDITION_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getAllVouchers, payload)
+    yield put({type: typeAction.GET_ALL_VOUCHER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_BADGE_BY_CONDITION_FAILED })
+    yield put({type: typeAction.GET_ALL_VOUCHER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* createBadge({ payload, callback }) {
+function* getVoucherById({payload, callback}) {
   try {
-    yield call(apiRequest.createBadge, payload)
-    const response = yield call(apiRequest.getAllBadge)
-    yield put({ type: typeAction.FIND_ALL_BADGE_SUCCESS, payload: response.data })
+    const response = yield call(apiRequest.getVoucherById, payload)
+    yield put({type: typeAction.GET_VOUCHER_BY_ID_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.CREATE_BADGE_FAILED })
+    yield put({type: typeAction.GET_VOUCHER_BY_ID_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* updateBadge({ payload, callback }) {
+function* addVoucher({payload, callback}) {
   try {
-    yield call(apiRequest.updateBadge, payload)
-    const response = yield call(apiRequest.getAllBadge)
-    yield put({ type: typeAction.FIND_ALL_BADGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.addVoucher, payload)
+    const response = yield call(apiRequest.getAllVouchers, payload)
+    yield put({type: typeAction.GET_ALL_VOUCHER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.UPDATE_BADGE_FAILED })
+    yield put({type: typeAction.CREATE_VOUCHER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-function* deleteBadge({ payload, callback }) {
+function* updateVoucher({payload, callback}) {
   try {
-    yield call(apiRequest.deleteBadge, payload)
-    const response = yield call(apiRequest.getAllBadge)
-    yield put({ type: typeAction.FIND_ALL_BADGE_SUCCESS, payload: response.data })
+    yield call(apiRequest.updateVoucher, payload)
+    const response = yield call(apiRequest.getAllVouchers, payload)
+    yield put({type: typeAction.GET_ALL_VOUCHER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.DELETE_BADGE_FAILED })
+    yield put({type: typeAction.UPDATE_VOUCHER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
   }
 }
 
-//                                                     AUDIO
-// ------------------------------------------------------------------------------------------------------- //
-
-function* findAllAudio({ payload, callback }) {
+function* deleteVoucher({payload, callback}) {
   try {
-    const response = yield call(apiRequest.getAllAudio)
-    yield put({ type: typeAction.FIND_ALL_AUDIO_SUCCESS, payload: response.data })
+    yield call(apiRequest.deleteVoucher, payload)
+    const response = yield call(apiRequest.getAllVouchers, payload)
+    yield put({type: typeAction.GET_ALL_VOUCHER_SUCCESS, payload: response.data.data})
     if (typeof callback === 'function') {
-      callback({ success: true })
+      callback({success: true})
     }
   } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_AUDIO_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* findAudioById({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getAudioById, payload)
-    yield put({ type: typeAction.FIND_AUDIO_BY_ID_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.FIND_AUDIO_BY_ID_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* findAudioByCondition({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getAudioByCondition, payload)
-    yield put({ type: typeAction.FIND_AUDION_BY_CONDITION_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.FIND_AUDIO_BY_CONDITION_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* getAudioListing({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getAudioListing, payload)
-    yield put({ type: typeAction.GET_AUDIO_LISTING_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.GET_AUDIO_LISTING_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* createAudio({ payload, callback }) {
-  try {
-    yield call(apiRequest.createAudio, payload)
-    const response = yield call(apiRequest.getAllAudio)
-    yield put({ type: typeAction.FIND_ALL_AUDIO_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.CREATE_AUDIO_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* updateAudio({ payload, callback }) {
-  try {
-    yield call(apiRequest.updateAudio, payload)
-    const response = yield call(apiRequest.getAllAudio)
-    yield put({ type: typeAction.FIND_ALL_AUDIO_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.UPDATE_AUDIO_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* deleteAudio({ payload, callback }) {
-  try {
-    yield call(apiRequest.deleteAudio, payload)
-    const response = yield call(apiRequest.getAllAudio)
-    yield put({ type: typeAction.FIND_ALL_AUDIO_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.DELETE_AUDIO_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* deleteMultiAudio({ payload, callback }) {
-  try {
-    yield call(apiRequest.deleteAudio, payload)
-    const response = yield call(apiRequest.getAllAudio)
-    yield put({ type: typeAction.FIND_ALL_AUDIO_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.DELETE_AUDIO_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* uploadAudio({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.uploadAudio, payload)
-    yield put({ type: typeAction.UPLOAD_MEDIA_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.UPLOAD_MEDIA_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-//                                                     PLAYLIST
-// ----------------------------------------------------------------------------------------------------------//
-
-function* findAllPlaylist({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getAllPlaylist)
-    yield put({ type: typeAction.FIND_ALL_PLAYLIST_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.FIND_ALL_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* findPlaylistById({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getPlaylistById, payload)
-    yield put({ type: typeAction.FIND_PLAYLIST_BY_ID_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.FIND_PLAYLIST_BY_ID_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* findPlaylistByCondition({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.getPlaylistByCondition, payload)
-    yield put({ type: typeAction.FIND_PLAYLIST_BY_CONDITION_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.FIND_PLAYLIST_BY_CONDITION_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* createPlaylist({ payload, callback }) {
-  try {
-    yield call(apiRequest.createPlaylist, payload)
-    const response = yield call(apiRequest.getAllPlaylist)
-    yield put({ type: typeAction.FIND_ALL_PLAYLIST_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.CREATE_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* updatePlaylist({ payload, callback }) {
-  try {
-    yield call(apiRequest.updatePlaylist, payload)
-    const response = yield call(apiRequest.getAllPlaylist)
-    yield put({ type: typeAction.FIND_ALL_PLAYLIST_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.UPDATE_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* addAudioToPlaylist({ payload, callback }) {
-  try {
-    yield call(apiRequest.addAudioToPlaylist, payload)
-    const response = yield call(apiRequest.getAudioListing, payload.params)
-    yield put({ type: typeAction.GET_AUDIO_LISTING_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.ADD_AUDIO_TO_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* deleteAudioFromPlaylist({ payload, callback }) {
-  try {
-    yield call(apiRequest.deleteAudioFromPlaylist, payload)
-    const response = yield call(apiRequest.getAudioListing, payload.params)
-    yield put({ type: typeAction.GET_AUDIO_LISTING_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.DELETE_AUDIO_FROM_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* deletePlaylist({ payload, callback }) {
-  try {
-    yield call(apiRequest.deletePlaylist, payload)
-    const response = yield call(apiRequest.getAllPlaylist)
-    yield put({ type: typeAction.FIND_ALL_PLAYLIST_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.DELETE_PLAYLIST_FAILED })
-    if (typeof callback === 'function') {
-      callback(e)
-    }
-  }
-}
-
-function* deleteFileOnS3({ payload, callback }) {
-  try {
-    const response = yield call(apiRequest.deleteFileOnS3, payload)
-    yield put({ type: typeAction.DELETE_ON_S3_SUCCESS, payload: response.data })
-    if (typeof callback === 'function') {
-      callback({ success: true })
-    }
-  } catch (e) {
-    yield put({ type: typeAction.DELETE_ON_S3_FAILED })
+    yield put({type: typeAction.DELETE_VOUCHER_FAILED})
     if (typeof callback === 'function') {
       callback(e)
     }
@@ -781,57 +522,35 @@ function* homeSaga() {
   yield takeLatest(typeAction.LOGIN, loginAdmin)
   yield takeLatest(typeAction.LOGOUT, logout)
   yield takeLatest(typeAction.CALL_REFRESH_TOKEN, autoRefreshToken)
-  //challenge
-  yield takeLatest(typeAction.FIND_ALL_CHALLENGE, findAllChallenge)
-  yield takeLatest(typeAction.FIND_CHALLENGE_BY_ID, findChallengeById)
-  yield takeLatest(typeAction.FIND_CHALLENGE_BY_CONDITION, findChallengeByCondition)
-  yield takeLatest(typeAction.CREATE_CHALLENGE, createChallenge)
-  yield takeLatest(typeAction.UPDATE_CHALLENGE, updateChallenge)
-  yield takeLatest(typeAction.SAVE_DRAFT_CHALLENGE, saveDraftChallenge)
-  yield takeLatest(typeAction.UPDATE_DRAFT_CHALLENGE, updateDraftChallenge)
-  yield takeLatest(typeAction.ACTIVE_CHALLENGE, activeChallenge)
-  yield takeLatest(typeAction.INACTIVE_CHALLENGE, inactiveChallenge)
-  yield takeLatest(typeAction.DELETE_CHALLENGE, deleteChallenge)
-  //contest
-  yield takeLatest(typeAction.FIND_ALL_CONTEST, findAllContest)
-  yield takeLatest(typeAction.FIND_CONTEST_BY_ID, findContestById)
-  yield takeLatest(typeAction.FIND_CONTEST_BY_CONDITION, findContestByCondition)
-  yield takeLatest(typeAction.CREATE_CONTEST, createContest)
-  yield takeLatest(typeAction.UPDATE_CONTEST, updateContest)
-  yield takeLatest(typeAction.SAVE_DRAFT_CONTEST, saveDraftContest)
-  yield takeLatest(typeAction.UPDATE_DRAFT_CONTEST, updateDraftContest)
-  yield takeLatest(typeAction.ACTIVE_CONTEST, activeContest)
-  yield takeLatest(typeAction.INACTIVE_CONTEST, inactiveContest)
-  yield takeLatest(typeAction.DELETE_CONTEST, deleteContest)
-  //badge
-  yield takeLatest(typeAction.FIND_ALL_BADGE, findAllBadge)
-  yield takeLatest(typeAction.FIND_BADGE_BY_ID, findBadgeById)
-  yield takeLatest(typeAction.FIND_ALL_ASSOCIATED_BADGE, findAllAssociatedBadge)
-  yield takeLatest(typeAction.FIND_BADGE_BY_CONDITION, findBadgeByCondition)
-  yield takeLatest(typeAction.CREATE_BADGE, createBadge)
-  yield takeLatest(typeAction.UPDATE_BADGE, updateBadge)
-  yield takeLatest(typeAction.DELETE_BADGE, deleteBadge)
-  //audio
-  yield takeLatest(typeAction.FIND_ALL_AUDIO, findAllAudio)
-  yield takeLatest(typeAction.FIND_AUDIO_BY_ID, findAudioById)
-  yield takeLatest(typeAction.FIND_AUDIO_BY_CONDITION, findAudioByCondition)
-  yield takeLatest(typeAction.GET_AUDIO_LISTING, getAudioListing)
-  yield takeLatest(typeAction.CREATE_AUDIO, createAudio)
-  yield takeLatest(typeAction.UPDATE_AUDIO, updateAudio)
-  yield takeLatest(typeAction.DELETE_AUDIO, deleteAudio)
-  yield takeLatest(typeAction.DELETE_MULTI_AUDIO, deleteMultiAudio)
-  yield takeLatest(typeAction.UPLOAD_MEDIA, uploadAudio)
-  //playlist
-  yield takeLatest(typeAction.FIND_ALL_PLAYLIST, findAllPlaylist)
-  yield takeLatest(typeAction.FIND_PLAYLIST_BY_ID, findPlaylistById)
-  yield takeLatest(typeAction.FIND_PLAYLIST_BY_CONDITION, findPlaylistByCondition)
-  yield takeLatest(typeAction.CREATE_PLAYLIST, createPlaylist)
-  yield takeLatest(typeAction.ADD_AUDIO_TO_PLAYLIST, addAudioToPlaylist)
-  yield takeLatest(typeAction.DELETE_AUDIO_FROM_PLAYLIST, deleteAudioFromPlaylist)
-  yield takeLatest(typeAction.UPDATE_PLAYLIST, updatePlaylist)
-  yield takeLatest(typeAction.DELETE_PLAYLIST, deletePlaylist)
-
-  yield takeLatest(typeAction.DELETE_ON_S3, deleteFileOnS3)
+  yield takeLatest(typeAction.GET_ALL_BRAND, getAllBrands)
+  yield takeLatest(typeAction.CREATE_BRAND, createBrand)
+  yield takeLatest(typeAction.UPDATE_BRAND, updateBrand)
+  yield takeLatest(typeAction.DELETE_BRAND, deleteBrand)
+  yield takeLatest(typeAction.GET_BRAND_BY_ID, getBrandById)
+  yield takeLatest(typeAction.GET_CATEGORY_BY_ID, getCategoryById)
+  yield takeLatest(typeAction.GET_ALL_CATEGORY, getAllCategory)
+  yield takeLatest(typeAction.CREATE_CATEGORY, addCategory)
+  yield takeLatest(typeAction.UPDATE_CATEGORY, updateCategory)
+  yield takeLatest(typeAction.DELETE_CATEGORY, deleteCategory)
+  yield takeLatest(typeAction.GET_CATEGORY_BY_BRAND, getCategoryByBrandId)
+  yield takeLatest(typeAction.GET_ALL_PRODUCT, getAllProducts)
+  yield takeLatest(typeAction.GET_PRODUCT_BY_ID, getProductById)
+  yield takeLatest(typeAction.GET_PRODUCT_BY_CATEGORY, getProductByCategoryId)
+  yield takeLatest(typeAction.GET_PRODUCT_BY_BRAND, getProductByBrandId)
+  yield takeLatest(typeAction.DELETE_PRODUCT, deleteProduct)
+  yield takeLatest(typeAction.CREATE_PRODUCT, addProduct)
+  yield takeLatest(typeAction.UPDATE_PRODUCT, updateProduct)
+  yield takeLatest(typeAction.GET_ALL_ORDER, getAllOrders)
+  yield takeLatest(typeAction.GET_ORDER_BY_ID, getOrderById)
+  yield takeLatest(typeAction.GET_ORDER_BY_USER, getOrderByUserId)
+  yield takeLatest(typeAction.CREATE_ORDER, addOrder)
+  yield takeLatest(typeAction.UPDATE_ORDER, updateOrder)
+  yield takeLatest(typeAction.DELETE_ORDER, deleteOrder)
+  yield takeLatest(typeAction.GET_ALL_VOUCHER, getAllVouchers)
+  yield takeLatest(typeAction.GET_VOUCHER_BY_ID, getVoucherById)
+  yield takeLatest(typeAction.CREATE_VOUCHER, addVoucher)
+  yield takeLatest(typeAction.UPDATE_VOUCHER, updateVoucher)
+  yield takeLatest(typeAction.DELETE_VOUCHER, deleteVoucher)
 }
 
 export default homeSaga

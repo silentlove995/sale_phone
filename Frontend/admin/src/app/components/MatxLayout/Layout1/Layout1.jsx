@@ -1,10 +1,10 @@
-import { useEffect, useRef, memo } from 'react';
-import { ThemeProvider, useMediaQuery, Box, styled, useTheme } from '@mui/material';
+import {memo, useEffect, useRef} from 'react';
+import {Box, styled, ThemeProvider, useMediaQuery, useTheme} from '@mui/material';
 import Scrollbar from 'react-perfect-scrollbar';
-import { Outlet } from 'react-router-dom';
-import { MatxSuspense } from 'app/components';
+import {Outlet} from 'react-router-dom';
+import {MatxSuspense} from 'app/components';
 import useSettings from 'app/hooks/useSettings';
-import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';
+import {sidenavCompactWidth, sideNavWidth} from 'app/utils/constant';
 import Footer from '../../Footer';
 import SidenavTheme from '../../MatxTheme/SidenavTheme/SidenavTheme';
 import SecondarySidebar from '../../SecondarySidebar/SecondarySidebar';
@@ -81,7 +81,6 @@ const Layout1 = () => {
       let mode = isMdScreen ? 'close' : sidebarMode;
       updateSettings({ layout1Settings: { leftSidebar: { mode } } });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMdScreen]);
 
   return (

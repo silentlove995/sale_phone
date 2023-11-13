@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.ProductDTO;
 import com.finalsem.projectsem4.dto.ProductImagesDTO;
@@ -41,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
         ModelMapper modelMapper = new ModelMapper();
         for (Products product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getCreatedAt()));
+            productDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getUpdatedAt()));
             productDTOS.add(productDTO);
         }
         return new ResponseBuilder<>("00", "success", productDTOS);
@@ -93,6 +96,8 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO;
         ModelMapper mapper = new ModelMapper();
         productDTO = mapper.map(product, ProductDTO.class);
+        productDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getCreatedAt()));
+        productDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", productDTO);
     }
 
@@ -101,7 +106,10 @@ public class ProductServiceImpl implements ProductService {
         List<Products> products = productRepository.findAllByCategoriesId(id);
         List<ProductDTO> productDTOs = products.stream().map(product -> {
             ModelMapper mapper = new ModelMapper();
-            return mapper.map(product, ProductDTO.class);
+            ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+            productDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getCreatedAt()));
+            productDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getUpdatedAt()));
+            return productDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", productDTOs);
     }
@@ -111,7 +119,10 @@ public class ProductServiceImpl implements ProductService {
         List<Products> products = productRepository.findAllByBrandsId(id);
         List<ProductDTO> productDTOs = products.stream().map(product -> {
             ModelMapper mapper = new ModelMapper();
-            return mapper.map(product, ProductDTO.class);
+            ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+            productDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getCreatedAt()));
+            productDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, product.getUpdatedAt()));
+            return productDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", productDTOs);
     }

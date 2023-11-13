@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.CategoryDTO;
 import com.finalsem.projectsem4.entity.Categories;
@@ -36,6 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
             CategoryDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(category, CategoryDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, category.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, category.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);
@@ -47,6 +50,8 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDTO dto;
         ModelMapper mapper = new ModelMapper();
         dto = mapper.map(categories, CategoryDTO.class);
+        dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, categories.getCreatedAt()));
+        dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, categories.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", dto);
     }
 
@@ -95,6 +100,8 @@ public class CategoryServiceImpl implements CategoryService {
             CategoryDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(category, CategoryDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, category.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, category.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);

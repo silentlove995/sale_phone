@@ -8,7 +8,7 @@ const TextField = styled(TextValidator)(() => ({
     width: "100%",
     marginBottom: "16px",
 }));
-export const CategoryDetail = (props) => {
+export const BrandDetail = (props) => {
     const brand = useSelector((state) => state.Admin.brandUpdate);
     console.log('brandUpdate: ', brand);
     const closeModal = () => {
@@ -46,6 +46,6 @@ export const CategoryDetail = (props) => {
         </div>
     );
 }
-export default connect(({Admin: {categoryUpdate}}) => ({
-    categoryUpdate,
-}))(CategoryDetail)
+export default connect(({Admin: {brandUpdate}}) => ({
+    brandUpdate,
+}))(BrandDetail)

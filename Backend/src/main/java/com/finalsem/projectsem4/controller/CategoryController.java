@@ -29,7 +29,7 @@ public class CategoryController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     ResponseEntity<?> addCategory(@RequestBody CategoryDTO dto) {
         ResponseBuilder<CategoryDTO> resp = service.createCategory(dto);
         return new ResponseEntity<>(resp, HttpStatus.OK);

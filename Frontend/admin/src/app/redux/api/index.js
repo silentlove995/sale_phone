@@ -4,187 +4,120 @@ export const loginAdminRequest = (body) => {
   return axiosService.postWithoutAuth(`/auth/login`, body)
 }
 
-// challenge
-export const getAllChallenge = () => {
-  return axiosService.get(`/program/type/CHALLENGE`)
+// brands
+export const getAllBrand = () => {
+  return axiosService.get(`/brands/all`);
 }
 
-export const getChallengeById = (params) => {
-  return axiosService.get(`/program/` + params)
+export const createBrand = (body) => {
+  return axiosService.post(`/brands/create`, body)
 }
 
-export const getChallengeByCondition = (body) => {
-  return axiosService.put(`/program/type/CHALLENGE`, body)
+export const updateBrandById = (body) => {
+  return axiosService.put(`/brands/update/` + body.params, body.data)
 }
 
-export const createChallenge = (body) => {
-  return axiosService.post(`/program`, body)
+export const deleteBrandBById = (params) => {
+  return axiosService.delete(`/brands/delete/` + params)
 }
 
-export const updateChallenge = (body) => {
-  return axiosService.put(`/program/` + body.params, body.data)
+export const getBrandById = (params) => {
+  return axiosService.get(`/brands/get/` + params)
 }
 
-export const saveDraftChallenge = (body) => {
-  return axiosService.post(`/program/CHALLENGE/draft`, body)
+// categories
+export const getAllCategories = () => {
+  return axiosService.get(`/categories/all`)
 }
 
-export const updateDraftChallenge = (body) => {
-  return axiosService.put(`/program/CHALLENGE/draft/` + body.params, body.data)
+export const addCategory = (body) => {
+  return axiosService.post(`/categories/create`, body)
 }
 
-export const activeChallenge = (params) => {
-  return axiosService.get(`/program/` + params + `/active`)
+export const updateCategory = (body) => {
+  return axiosService.put(`/categories/update/` + body.param, body.data)
 }
 
-export const inactiveChallenge = (params) => {
-  return axiosService.get(`/program/` + params + `/de-active`)
+export const deleteCategory = (param) => {
+  return axiosService.delete(`/categories/delete` + param)
 }
 
-export const deleteChallenge = (params) => {
-  return axiosService.delete(`/program/` + params)
+export const getCategoryById = (param) => {
+  return axiosService.get(`/categories/get/` + param)
 }
 
-//contest
-export const getAllContest = (params) => {
-  return axiosService.get(`/program/type/CONTEST`)
+export const getCategoryByBrandId = (param) => {
+  return axiosService.get(`/categories/getByBrand/` + param)
 }
 
-export const getContestById = (params) => {
-  return axiosService.get(`/program/` + params)
+export const getAllProducts = () => {
+  return axiosService.get(`/products/all`)
 }
 
-export const getContestByCondition = (body) => {
-  return axiosService.put(`/program/type/CHALLENGE`, body)
+export const getProductById = (param) => {
+  return axiosService.get(`/products/get/` + param)
 }
 
-export const createContest = (body) => {
-  return axiosService.post(`/program`, body)
+export const getProductByCategoryId = (param) => {
+  return axiosService.get(`/products/get/category/` + param)
 }
 
-export const updateContest = (body) => {
-  return axiosService.put(`/program/` + body.params, body.data)
+export const getProductByBrandId = (param) => {
+  return axiosService.get(`/products/get/brand/` + param)
 }
 
-export const saveDraftContest = (body) => {
-  return axiosService.post(`/program/CONTEST/draft`, body)
+export const deleteProduct = (param) => {
+  return axiosService.delete(`/products/delete/` + param)
 }
 
-export const updateDraftContest = (body) => {
-  return axiosService.put(`/program/CONTEST/draft/` + body.params, body.data)
+export const addProduct = (body) => {
+  return axiosService.post(`/products/add`, body)
 }
 
-export const activeContest = (params) => {
-  return axiosService.get(`/program/` + params + `/active`)
+export const updateProduct = (body) => {
+  return axiosService.put(`/products/update/` + body.param, body.data)
 }
 
-export const inactiveContest = (params) => {
-  return axiosService.get(`/program/` + params + `/de-active`)
+export const getAllOrders = () => {
+  return axiosService.get(`/orders/all`)
 }
 
-export const deleteContest = (params) => {
-  return axiosService.delete(`/program/` + params)
+export const getOrderById = (param) => {
+  return axiosService.get(`/orders/get/` + param)
 }
 
-//badge
-export const getAllBadge = (params) => {
-  return axiosService.get(`/badge`)
+export const getOrderByUserId = (param) => {
+  return axiosService.get(`/orders/get/user/` + param)
 }
 
-export const getBadgeById = (params) => {
-  return axiosService.get(`/badge/` + params)
+export const addOrder = (body) => {
+  return axiosService.post(`/orders/add`, body)
 }
 
-export const getAssociatedBadge = (params) => {
-  return axiosService.get(`/program/associated-badge/` + params)
+export const updateOrder = (body) => {
+  return axiosService.put(`/orders/update/` + body.param, body.data)
 }
 
-export const getBadgeByCondition = (params) => {
-  return axiosService.get(`/badge/search?` + params)
+export const deleteOrder = (param) => {
+  return axiosService.delete(`/orders/delete/` + param)
 }
 
-export const createBadge = (body) => {
-  return axiosService.post(`/badge`, body)
+export const getAllVouchers = () => {
+  return axiosService.get(`/vouchers/all`)
 }
 
-export const updateBadge = (body) => {
-  return axiosService.put(`/badge/` + body.params, body.data)
+export const getVoucherById = (param) => {
+  return axiosService.get(`/vouchers/get/` + param)
 }
 
-export const deleteBadge = (params) => {
-  return axiosService.delete(`/badge/` + params)
+export const addVoucher = (body) => {
+  return axiosService.post(`/vouchers/add`, body)
 }
 
-//audio
-export const getAllAudio = (params) => {
-  return axiosService.get(`/audio`)
+export const updateVoucher = (body) => {
+  return axiosService.put(`/vouchers/update/` + body.param, body.data)
 }
 
-export const getAudioById = (params) => {
-  return axiosService.get(`/audio/` + params)
-}
-
-export const getAudioByCondition = (params) => {
-  return axiosService.get(`/audio/search?` + params)
-}
-
-export const getAudioListing = (params) => {
-  return axiosService.get(`/audio/` + params + `/audio-listing`)
-}
-
-export const createAudio = (body) => {
-  return axiosService.post(`/audio`, body)
-}
-
-export const updateAudio = (body) => {
-  return axiosService.put(`/audio/` + body.params, body.data)
-}
-
-export const deleteAudio = (params) => {
-  return axiosService.delete(`/audio/` + params)
-}
-
-export const deleteMultiAudio = (body) => {
-  return axiosService.put(`/audio/multiple-audio` + body)
-}
-
-export const uploadAudio = (body) => {
-  return axiosService.postMedia(`/upload`, body)
-}
-
-//playlist
-export const getAllPlaylist = (params) => {
-  return axiosService.get(`/playlist`)
-}
-
-export const getPlaylistById = (params) => {
-  return axiosService.get(`/playlist/` + params)
-}
-
-export const getPlaylistByCondition = (params) => {
-  return axiosService.get(`/playlist/search?` + params)
-}
-
-export const createPlaylist = (body) => {
-  return axiosService.post(`/playlist`, body)
-}
-
-export const addAudioToPlaylist = (body) => {
-  return axiosService.put(`/playlist/` + body.params + `/add-audio`, body.data.chosenId)
-}
-
-export const deleteAudioFromPlaylist = (body) => {
-  return axiosService.put(`/playlist/` + body.params + `/remove-audio`, body.data.deleteId)
-}
-
-export const updatePlaylist = (body) => {
-  return axiosService.put(`/playlist/` + body.params, body.data)
-}
-
-export const deletePlaylist = (params) => {
-  return axiosService.delete(`/playlist/` + params)
-}
-
-export const deleteFileOnS3 = (body) => {
-  return axiosService.deleteMedia(`/resource`, body)
+export const deleteVoucher = (param) => {
+  return axiosService.delete(`/vouchers/delete/` + param)
 }
