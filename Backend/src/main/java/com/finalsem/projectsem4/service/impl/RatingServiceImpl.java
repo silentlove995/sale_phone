@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.RatingsDTO;
 import com.finalsem.projectsem4.entity.Rating;
@@ -38,6 +39,8 @@ public class RatingServiceImpl implements RatingService {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();
             ratingsDTO = modelMapper.map(rating, RatingsDTO.class);
+            ratingsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getCreatedAt()));
+            ratingsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getUpdatedAt()));
             return ratingsDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "Success", ratingsDTOList);
@@ -89,6 +92,8 @@ public class RatingServiceImpl implements RatingService {
         RatingsDTO ratingsDTO;
         ModelMapper modelMapper = new ModelMapper();
         ratingsDTO = modelMapper.map(rating, RatingsDTO.class);
+        ratingsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getCreatedAt()));
+        ratingsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getUpdatedAt()));
         return new ResponseBuilder<>("00", "Success", ratingsDTO);
     }
 
@@ -99,6 +104,8 @@ public class RatingServiceImpl implements RatingService {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();
             ratingsDTO = modelMapper.map(rating, RatingsDTO.class);
+            ratingsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getCreatedAt()));
+            ratingsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getUpdatedAt()));
             return ratingsDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "Success", ratingsDTOList);
@@ -111,6 +118,8 @@ public class RatingServiceImpl implements RatingService {
             RatingsDTO ratingsDTO;
             ModelMapper modelMapper = new ModelMapper();
             ratingsDTO = modelMapper.map(rating, RatingsDTO.class);
+            ratingsDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getCreatedAt()));
+            ratingsDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, rating.getUpdatedAt()));
             return ratingsDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "Success", ratingsDTOList);

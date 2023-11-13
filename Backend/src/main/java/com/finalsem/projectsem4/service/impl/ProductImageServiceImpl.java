@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.ProductImagesDTO;
 import com.finalsem.projectsem4.entity.ProductImages;
@@ -34,6 +35,8 @@ public class ProductImageServiceImpl implements ProductImageService {
             ProductImagesDTO productImagesDTO;
             ModelMapper mapper = new ModelMapper();
             productImagesDTO = mapper.map(productImage, ProductImagesDTO.class);
+            productImagesDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImage.getCreatedAt()));
+            productImagesDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImage.getUpdatedAt()));
             return productImagesDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", productImagesDTOS);
@@ -45,6 +48,8 @@ public class ProductImageServiceImpl implements ProductImageService {
         ProductImagesDTO productImagesDTO;
         ModelMapper mapper = new ModelMapper();
         productImagesDTO = mapper.map(productImages, ProductImagesDTO.class);
+        productImagesDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImages.getCreatedAt()));
+        productImagesDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImages.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", productImagesDTO);
     }
 
@@ -94,6 +99,8 @@ public class ProductImageServiceImpl implements ProductImageService {
             ProductImagesDTO productImagesDTO;
             ModelMapper mapper = new ModelMapper();
             productImagesDTO = mapper.map(productImage, ProductImagesDTO.class);
+            productImagesDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImage.getCreatedAt()));
+            productImagesDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, productImage.getUpdatedAt()));
             return productImagesDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", productImagesDTOS);

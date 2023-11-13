@@ -39,7 +39,7 @@ export const updateCategory = (body) => {
 }
 
 export const deleteCategory = (param) => {
-  return axiosService.post(`/categories/delete`, param)
+  return axiosService.delete(`/categories/delete` + param)
 }
 
 export const getCategoryById = (param) => {
@@ -48,4 +48,76 @@ export const getCategoryById = (param) => {
 
 export const getCategoryByBrandId = (param) => {
   return axiosService.get(`/categories/getByBrand/` + param)
+}
+
+export const getAllProducts = () => {
+  return axiosService.get(`/products/all`)
+}
+
+export const getProductById = (param) => {
+  return axiosService.get(`/products/get/` + param)
+}
+
+export const getProductByCategoryId = (param) => {
+  return axiosService.get(`/products/get/category/` + param)
+}
+
+export const getProductByBrandId = (param) => {
+  return axiosService.get(`/products/get/brand/` + param)
+}
+
+export const deleteProduct = (param) => {
+  return axiosService.delete(`/products/delete/` + param)
+}
+
+export const addProduct = (body) => {
+  return axiosService.post(`/products/add`, body)
+}
+
+export const updateProduct = (body) => {
+  return axiosService.put(`/products/update/` + body.param, body.data)
+}
+
+export const getAllOrders = () => {
+  return axiosService.get(`/orders/all`)
+}
+
+export const getOrderById = (param) => {
+  return axiosService.get(`/orders/get/` + param)
+}
+
+export const getOrderByUserId = (param) => {
+  return axiosService.get(`/orders/get/user/` + param)
+}
+
+export const addOrder = (body) => {
+  return axiosService.post(`/orders/add`, body)
+}
+
+export const updateOrder = (body) => {
+  return axiosService.put(`/orders/update/` + body.param, body.data)
+}
+
+export const deleteOrder = (param) => {
+  return axiosService.delete(`/orders/delete/` + param)
+}
+
+export const getAllVouchers = () => {
+  return axiosService.get(`/vouchers/all`)
+}
+
+export const getVoucherById = (param) => {
+  return axiosService.get(`/vouchers/get/` + param)
+}
+
+export const addVoucher = (body) => {
+  return axiosService.post(`/vouchers/add`, body)
+}
+
+export const updateVoucher = (body) => {
+  return axiosService.put(`/vouchers/update/` + body.param, body.data)
+}
+
+export const deleteVoucher = (param) => {
+  return axiosService.delete(`/vouchers/delete/` + param)
 }

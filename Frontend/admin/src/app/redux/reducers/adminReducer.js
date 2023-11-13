@@ -17,6 +17,12 @@ const initialState = {
   //product
   listProduct: [],
   productUpdate: {},
+  //order
+  listOrder: [],
+  orderUpdate: {},
+  //voucher
+  listVoucher: [],
+  voucherUpdate: {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -80,18 +86,53 @@ const reducer = (state = initialState, action) => {
       return copyState
     }
 
+    case typeAction.GET_CATEGORY_BY_BRAND_SUCCESS: {
+      copyState.listCategory = action.payload
+      return copyState
+    }
+
     case typeAction.GET_BRAND_BY_ID_SUCCESS: {
       copyState.brandUpdate = action.payload
       return copyState
     }
 
-    case typeAction.UPDATE_BRAND_SUCCESS: {
-      copyState.listBrand = action.payload
+    case typeAction.GET_ALL_PRODUCT_SUCCESS: {
+      copyState.listProduct = action.payload
       return copyState
     }
 
-    case typeAction.DELETE_BRAND_SUCCESS: {
-      copyState.listBrand = action.payload
+    case typeAction.GET_PRODUCT_BY_BRAND_SUCCESS: {
+      copyState.listProduct = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_PRODUCT_BY_CATEGORY_SUCCESS: {
+      copyState.listProduct = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_PRODUCT_BY_ID_SUCCESS: {
+      copyState.productUpdate = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_ALL_ORDER_SUCCESS: {
+      copyState.listOrder = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_ORDER_BY_ID_SUCCESS: {
+      copyState.orderUpdate = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_ALL_VOUCHER_SUCCESS: {
+      copyState.listVoucher = action.payload
+      return copyState
+    }
+
+    case typeAction.GET_VOUCHER_BY_ID_SUCCESS: {
+      copyState.voucherUpdate = action.payload
       return copyState
     }
 

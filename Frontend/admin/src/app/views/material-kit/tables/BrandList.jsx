@@ -9,18 +9,36 @@ import toast from "react-hot-toast";
 import typeAction from "../../../redux/typeactions";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
-import BrandForm from "../forms/BrandForm";
 import Modal from "@mui/material/Modal";
+import BrandDetail from "../details/BrandDetail";
+import Swal from "sweetalert2";
+import {BrandUpdate} from "../update/BrandUpdate";
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 export const BrandList = () => {
     const dispatch = useDispatch();
     const [brands, setBrands] = React.useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [openDetail, setOpenDetail] = React.useState(false);
+    const [openUpdate, setOpenUpdate] = React.useState(false);
     let data = useSelector((state) => state.Admin.listBrand);
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseDetail = () => {
+        setOpenDetail(false);
     };
-    const handleOpen = () => setOpen(true);
+    const handleOpenDetail = () => setOpenDetail(true);
+    const handleCloseUpdate = () => {
+        setOpenUpdate(false);
+    };
+    const handleOpenUpdate = () => setOpenUpdate(true);
     useEffect(() => {
         if (data) {
             setBrands(data);
@@ -47,12 +65,12 @@ export const BrandList = () => {
         console.log(id);
         const loadBrand = toast.loading('Getting brand by id');
         dispatch({
-            type: typeAction.GET_ALL_BRAND,
+            type: typeAction.GET_BRAND_BY_ID,
             payload: id,
             callback: (res) => {
                 if (res?.success) {
                     toast.dismiss(loadBrand);
-                    handleOpen();
+                    handleOpenDetail();
                     // toast.success('Success!')
                 } else {
                     toast.dismiss(loadBrand)
@@ -61,12 +79,57 @@ export const BrandList = () => {
             },
         });
     };
-    const edit = (index) => {
-        alert("edit: " + index);
+    const edit = (id) => {
+        console.log(id);
+        const loadBrand = toast.loading('Getting brand by id');
+        dispatch({
+            type: typeAction.GET_BRAND_BY_ID,
+            payload: id,
+            callback: (res) => {
+                if (res?.success) {
+                    toast.dismiss(loadBrand);
+                    handleOpenUpdate();
+                } else {
+                    toast.dismiss(loadBrand)
+                    toast.error(res)
+                }
+            },
+        });
     };
 
-    const remove = (index) => {
-        alert("remove: " + index);
+    const remove = (id) => {
+        Swal.fire({
+            title: "Are you sure to delete?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch({
+                    type: typeAction.DELETE_BRAND,
+                    payload: id,
+                    callback: (res) => {
+                        console.log('res', res);
+                        if (res?.success) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your record has been deleted.",
+                                icon: "success"
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Have some problem when delete.",
+                                icon: "error"
+                            });
+                        }
+                    },
+                });
+            }
+        });
     }
 
     const columns: GridColDef[] = [
@@ -108,10 +171,10 @@ export const BrandList = () => {
                 // checkboxSelection
             />
             <Modal
-                aria-labelledby="brand-modal-title"
+                aria-labelledby="brand-modal-info"
                 aria-describedby="brand-modal-description"
-                open={open}
-                onClose={handleClose}
+                open={openDetail}
+                onClose={handleCloseDetail}
                 closeAfterTransition
                 slots={{backdrop: Backdrop}}
                 slotProps={{
@@ -120,10 +183,31 @@ export const BrandList = () => {
                     },
                 }}
             >
-                <Fade in={open}>
+                <Fade in={openDetail}>
                     <Box sx={style}>
-                        <BrandForm closeModal={() => {
-                            handleClose();
+                        <BrandDetail closeModal={() => {
+                            handleCloseDetail();
+                        }}/>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="brand-modal-update"
+                aria-describedby="brand-modal-description"
+                open={openUpdate}
+                onClose={handleCloseUpdate}
+                closeAfterTransition
+                slots={{backdrop: Backdrop}}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={openUpdate}>
+                    <Box sx={style}>
+                        <BrandUpdate closeModal={() => {
+                            handleCloseUpdate();
                         }}/>
                     </Box>
                 </Fade>

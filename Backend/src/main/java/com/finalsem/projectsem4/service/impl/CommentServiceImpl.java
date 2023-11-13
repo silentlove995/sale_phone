@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.CommentsDTO;
 import com.finalsem.projectsem4.entity.Comments;
@@ -27,6 +28,8 @@ public class CommentServiceImpl implements CommentService {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(comment, CommentsDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);
@@ -38,6 +41,8 @@ public class CommentServiceImpl implements CommentService {
         CommentsDTO dto;
         ModelMapper mapper = new ModelMapper();
         dto = mapper.map(comments, CommentsDTO.class);
+        dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comments.getCreatedAt()));
+        dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comments.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", dto);
     }
 
@@ -84,6 +89,8 @@ public class CommentServiceImpl implements CommentService {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(comment, CommentsDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);
@@ -96,6 +103,8 @@ public class CommentServiceImpl implements CommentService {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(comment, CommentsDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);
@@ -108,6 +117,8 @@ public class CommentServiceImpl implements CommentService {
             CommentsDTO dto;
             ModelMapper mapper = new ModelMapper();
             dto = mapper.map(comment, CommentsDTO.class);
+            dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getCreatedAt()));
+            dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, comment.getUpdatedAt()));
             return dto;
         }).collect(Collectors.toList());
         return new ResponseBuilder<>("00", "success", result);

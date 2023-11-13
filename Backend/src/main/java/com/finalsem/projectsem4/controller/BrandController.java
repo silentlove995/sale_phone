@@ -43,7 +43,7 @@ public class BrandController {
 
     @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteBrand(@PathVariable Long id) {
-        ResponseBuilder resp = service.deleteBrand(id);
+        ResponseBuilder<?> resp = service.deleteBrand(id);
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 

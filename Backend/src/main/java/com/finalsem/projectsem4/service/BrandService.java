@@ -17,5 +17,5 @@ public interface BrandService {
 
     ResponseBuilder<BrandsDTO> updateBrand(Long id, BrandsDTO dto);
 
-    ResponseBuilder deleteBrand(Long id);
+    ResponseBuilder<?> deleteBrand(Long id);
 }

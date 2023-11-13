@@ -42,10 +42,13 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public ResponseBuilder<BrandsDTO> getBrandById(Long id) {
+        log.info("Get brand by id");
         Brands brand = repository.findById(id).orElse(null);
         BrandsDTO brandDTO;
         ModelMapper mapper = new ModelMapper();
         brandDTO = mapper.map(brand, BrandsDTO.class);
+        brandDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, brand.getCreatedAt()));
+        brandDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, brand.getUpdatedAt()));
         return new ResponseBuilder<BrandsDTO>("00", "success", brandDTO);
     }
 
@@ -70,8 +73,11 @@ public class BrandServiceImpl implements BrandService {
     public ResponseBuilder<BrandsDTO> updateBrand(Long id, BrandsDTO dto) {
         try {
             Brands brand = repository.getReferenceById(id);
-            ModelMapper mapper = new ModelMapper();
-            brand = mapper.map(dto, Brands.class);
+            Brands brandCheck = repository.findByName(dto.getName());
+            if (brandCheck != null) {
+                return new ResponseBuilder<>("01", "Brand already exists");
+            }
+            brand.setName(dto.getName());
             repository.save(brand);
             return new ResponseBuilder<>("00", "success");
         } catch (Exception e) {
@@ -80,7 +86,8 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public ResponseBuilder deleteBrand(Long id) {
+    public ResponseBuilder<?> deleteBrand(Long id) {
+        log.info("Delete brand by id");
         try {
             repository.deleteById(id);
             return new ResponseBuilder<>("00", "success");

@@ -1,5 +1,6 @@
 package com.finalsem.projectsem4.service.impl;
 
+import com.finalsem.projectsem4.common.DateTimeUtil;
 import com.finalsem.projectsem4.common.ResponseBuilder;
 import com.finalsem.projectsem4.dto.OrdersDTO;
 import com.finalsem.projectsem4.entity.Orders;
@@ -34,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
             OrdersDTO ordersDTO;
             ModelMapper mapper = new ModelMapper();
             ordersDTO = mapper.map(order, OrdersDTO.class);
+            ordersDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, order.getCreatedAt()));
+            ordersDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, order.getUpdatedAt()));
             return ordersDTO;
         }).collect(Collectors.toList());
         return new ResponseBuilder<List<OrdersDTO>>("00", "success", ordersDTOS);
@@ -54,9 +57,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseBuilder<OrdersDTO>  updateOrder(OrdersDTO ordersDTO) {
+    public ResponseBuilder<OrdersDTO>  updateOrder(Long id,OrdersDTO ordersDTO) {
         try {
-            Orders orders = orderRepository.getReferenceById(ordersDTO.getId());
+            Orders orders = orderRepository.getReferenceById(id);
             ModelMapper mapper = new ModelMapper();
             orders = mapper.map(ordersDTO, Orders.class);
             orders.setUsers(usersRepository.getReferenceById(ordersDTO.getUserId()));
@@ -68,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseBuilder deleteOrder(Long id) {
+    public ResponseBuilder<?> deleteOrder(Long id) {
         try {
             orderRepository.deleteById(id);
             return new ResponseBuilder<>("00", "success");
@@ -82,6 +85,8 @@ public class OrderServiceImpl implements OrderService {
         Orders orders = orderRepository.getReferenceById(id);
         ModelMapper mapper = new ModelMapper();
         OrdersDTO dto = mapper.map(orders, OrdersDTO.class);
+        dto.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orders.getCreatedAt()));
+        dto.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, orders.getUpdatedAt()));
         return new ResponseBuilder<>("00", "success", dto);
     }
 
@@ -92,6 +97,8 @@ public class OrderServiceImpl implements OrderService {
             OrdersDTO ordersDTO;
             ModelMapper mapper = new ModelMapper();
             ordersDTO = mapper.map(order, OrdersDTO.class);
+            ordersDTO.setCreatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, order.getCreatedAt()));
+            ordersDTO.setUpdatedAt(DateTimeUtil.convertDate2String(DateTimeUtil.ddMMyyyy, order.getUpdatedAt()));
             return ordersDTO;
         }).collect(java.util.stream.Collectors.toList());
         return new ResponseBuilder<>("00", "success", ordersDTOS);
