@@ -8,12 +8,14 @@ import { BreadcrumbOne } from "../../../components/Breadcrumb";
 import {
   ImageGalleryBottomThumb,
   ProductDescription,
-  ProductDescriptionTab
+  ProductDescriptionTab,
+  Sidebar
 } from "../../../components/ProductDetails";
 import products from "../../../data/products.json";
 import { ProductSliderTwo } from "../../../components/ProductSlider";
+import { getStaticPathsAPI, getStaticPropsAPI } from "../../../servicesAPI/api";
 
-const ProductBasic = ({ product }) => {
+const ProductLeftSidebar = ({ product }) => {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -59,55 +61,97 @@ const ProductBasic = ({ product }) => {
       <div className="product-details space-pt--r100 space-pb--r100">
         <Container>
           <Row>
-            <Col lg={6} className="space-mb-mobile-only--40">
-              {/* image gallery */}
-              <ImageGalleryBottomThumb product={product} />
+            <Col
+              xl={3}
+              lg={4}
+              className="order-2 order-lg-1 space-mt-mobile-only--60"
+            >
+              {/* sidebar */}
+              <Sidebar products={products} category={product.category[0]} />
             </Col>
-            <Col lg={6}>
-              {/* product description */}
-              <ProductDescription
-                product={product}
-                productPrice={productPrice}
-                discountedPrice={discountedPrice}
-                cartItems={cartItems}
-                cartItem={cartItem}
-                wishlistItem={wishlistItem}
-                compareItem={compareItem}
+            <Col xl={9} lg={8} className="order-1 order-lg-2">
+              <Row>
+                <Col lg={6} className="space-mb-mobile-only--40">
+                  {/* image gallery */}
+                  <ImageGalleryBottomThumb product={product} />
+                </Col>
+                <Col lg={6}>
+                  {/* product description */}
+                  <ProductDescription
+                    product={product}
+                    productPrice={productPrice}
+                    discountedPrice={discountedPrice}
+                    cartItems={cartItems}
+                    cartItem={cartItem}
+                    wishlistItem={wishlistItem}
+                    compareItem={compareItem}
+                    productContentButtonStyleClass="product-content__button-wrapper--style-two"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {/* product description tab */}
+                  <ProductDescriptionTab product={product} />
+                </Col>
+              </Row>
+
+              {/* related product slider */}
+              <ProductSliderTwo
+                title="Related Products"
+                products={relatedProducts}
+                items={3}
               />
             </Col>
           </Row>
-          <Row>
-            <Col>
-              {/* product description tab */}
-              <ProductDescriptionTab product={product} />
-            </Col>
-          </Row>
-
-          {/* related product slider */}
-          <ProductSliderTwo
-            title="Related Products"
-            products={relatedProducts}
-          />
         </Container>
       </div>
     </LayoutOne>
   );
 };
 
-export default ProductBasic;
+
+export default ProductLeftSidebar;
+
+// export async function getStaticPaths() {
+//   // get the paths we want to pre render based on products
+//   const paths = products.map((product) => ({
+//     params: { slug: product.slug }
+//   }));
+//
+//   return { paths, fallback: false };
+// }
+//
+// export async function getStaticProps({ params }) {
+//   // get product data based on slug
+//   const product = products.filter((single) => single.slug === params.slug)[0];
+//
+//   return { props: { product } };
+// }
+// Import thư viện hoặc module để gọi API hoặc những hàm cần thiết
+
 
 export async function getStaticPaths() {
-  // get the paths we want to pre render based on products
-  const paths = products.map((product) => ({
-    params: { slug: product.slug }
-  }));
-
-  return { paths, fallback: false };
+  try {
+    const products = await getStaticPathsAPI();
+    const paths = products.map((product) => ({
+      params: { slug: product.slug },
+    }));
+    console.log('thứ 2', paths);
+    return { paths, fallback: false };
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return { paths: [], fallback: false };
+  }
 }
 
 export async function getStaticProps({ params }) {
-  // get product data based on slug
-  const product = products.filter((single) => single.slug === params.slug)[0];
-
-  return { props: { product } };
+  try {
+    const product = await getStaticPropsAPI(params.slug);
+    console.log('thứ 1: ', product);
+    return { props: { product } };
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return { props: { product: null } };
+  }
 }
