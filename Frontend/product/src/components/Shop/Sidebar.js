@@ -185,6 +185,26 @@ const Sidebar = ({ products, getSortParams }) => {
           "No tags found"
         )}
       </div>
+
+      <div className="widget">
+        <div className="shop-banner">
+          <div className="banner-img">
+            <img
+              src="/assets/images/banner/sidebar_banner_img.jpg"
+              alt="sidebar_banner_img"
+            />
+          </div>
+          <div className="shop-bn-content2">
+            <h5 className="text-uppercase shop-subtitle">New Collection</h5>
+            <h3 className="text-uppercase shop-title">Sale 30% Off</h3>
+            <Link
+              href="/shop/grid-left-sidebar"
+              className="btn btn-white rounded-0 btn-sm text-uppercase">
+                Shop Now
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,9 +11,8 @@ import {
   ProductDescriptionTab,
   Sidebar
 } from "../../../components/ProductDetails";
-// import products from "../../../data/products.json";
+import products from "../../../data/products.json";
 import { ProductSliderTwo } from "../../../components/ProductSlider";
-import { getProductBySlug } from "../../../servicesAPI/api"
 
 const ProductLeftSidebar = ({ product }) => {
   const { products } = useSelector((state) => state.product);
@@ -124,7 +123,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // get product data based on slug
-  // const product = products.filter((single) => single.slug === params.slug)[0];
-  const product = await getProductBySlug(params.slug);
+  const product = products.filter((single) => single.slug === params.slug)[0];
+
   return { props: { product } };
 }
