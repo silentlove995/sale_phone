@@ -140,6 +140,7 @@ export async function getStaticPaths() {
     console.log('thứ 2', paths);
     return { paths, fallback: false };
   } catch (error) {
+    console.log('cai gi day troi oi 1');
     console.error('Error fetching product data:', error);
     return { paths: [], fallback: false };
   }
@@ -151,6 +152,7 @@ export async function getStaticProps({ params }) {
     console.log('thứ 1: ', product);
     return { props: { product } };
   } catch (error) {
+    console.log('cai gi day troi oi 2');
     console.error('Error fetching product data:', error);
     return { props: { product: null } };
   }
