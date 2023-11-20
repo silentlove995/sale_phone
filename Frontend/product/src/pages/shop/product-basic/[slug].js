@@ -11,11 +11,12 @@ import {
   ProductDescriptionTab,
   Sidebar
 } from "../../../components/ProductDetails";
-import { ProductSliderTwo } from "../../../components/ProductSlider";
 import {getListProductAPI} from "../../../servicesAPI/api";
 import {setProducts} from "../../../store/slices/product-slice";
+import {useEffect} from "react";
 
 const ProductLeftSidebar = ({ product}) => {
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -25,6 +26,22 @@ const ProductLeftSidebar = ({ product}) => {
     product.price,
     product.discount
   ).toFixed(2);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { props } = await getListProductAPI();
+        const productsFromAPI = props.product;
+
+        // Dispatch action để cập nhật Redux store
+        dispatch(setProducts(productsFromAPI));
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   const productPrice = product.price.toFixed(2);
   const cartItem = cartItems.find(
@@ -94,13 +111,6 @@ const ProductLeftSidebar = ({ product}) => {
                   <ProductDescriptionTab product={product} />
                 </Col>
               </Row>
-
-              {/* related product slider */}
-              {/*<ProductSliderTwo*/}
-              {/*  title="Related Products"*/}
-              {/*  products={relatedProducts}*/}
-              {/*  items={3}*/}
-              {/*/>*/}
             </Col>
           </Row>
         </Container>
@@ -125,19 +135,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  // get product data based on slug
-  /*const product = products.filter((single) => single.slug === params.slug)[0];
-  return { props: { product } };*/
   try {
-    // Gọi hàm getListProductAPI để lấy dữ liệu sản phẩm
     const { props } = await getListProductAPI();
     const product = props.product.find((single) => single.slug === params.slug);
-    // Lấy danh sách toàn bộ sản phẩm
-    /*const allProducts = props.product;
-
-    // Dispatch action để cập nhật Redux store
-    const dispatch = useDispatch();
-    dispatch(setProducts(allProducts));*/
     return { props: { product } };
   } catch (error) {
     console.error('Error fetching product data:', error);
