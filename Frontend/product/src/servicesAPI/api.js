@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export async function getStaticPathsAPI() {
+export async function getListProductAPI() {
   try {
-    const response = await axios.post(`http://localhost:8080/api/product/getListFE`);
+    const response = await axios.get(`http://localhost:8080/api/product/getListFE`);
     const product = response.data.data;
     return { props: { product } };
   } catch (error) {

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LayoutOne } from "../../layouts";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaFacebookF, FaGooglePlusG } from "react-icons/fa";
+import {FaFacebookF, FaGithub, FaGooglePlusG} from "react-icons/fa";
 
 const Login = () => {
   return (
@@ -79,17 +79,30 @@ const Login = () => {
                   <div className="different-login">
                     <span> or</span>
                   </div>
+
+                  {/*Thêm CSS trong component*/}
+                  <style jsx>{`
+                    .btn-github {
+                      display: inline-block;
+                      padding: 10px 20px;
+                      text-decoration: none;
+                      color: #fff;
+                      background-color: #333;
+                      border: 1px solid #fff;
+                      border-radius: 20px;
+                    }
+                  
+                    .btn-github:hover {
+                      background-color: #555;
+                    }
+                  `}</style>
+
+
                   <ul className="btn-login text-center">
                     <li>
-                      <a href="#" className="btn btn-facebook">
-                        <FaFacebookF />
-                        Facebook
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="btn btn-google">
-                        <FaGooglePlusG />
-                        Google
+                      <a href="#" className="btn btn-github">
+                        <FaGithub />
+                        Github
                       </a>
                     </li>
                   </ul>

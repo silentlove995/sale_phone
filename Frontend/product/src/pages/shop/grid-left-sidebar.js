@@ -7,7 +7,7 @@ import { LayoutOne } from "../../layouts";
 import { BreadcrumbOne } from "../../components/Breadcrumb";
 import { Sidebar, ShopHeader, ShopProducts } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
-import {getStaticPathsAPI} from "../../servicesAPI/api";
+import {getListProductAPI, getStaticPathsAPI} from "../../servicesAPI/api";
 import axios from "axios";
 import {setProducts} from "../../store/slices/product-slice";
 
@@ -44,8 +44,10 @@ const GridLeftSidebar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:8080/api/product/getListFE');
-      const products = response.data.data;
+      // const response = await axios.get('http://localhost:8080/api/product/getListFE');
+      // const products = response.data.data;
+      const { props } = await getListProductAPI();
+      const { product: products } = props;
       dispatch(setProducts(products));
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
     const filterSortedProducts = getSortedProducts(

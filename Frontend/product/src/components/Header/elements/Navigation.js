@@ -9,7 +9,6 @@ const Navigation = ({ positionClass }) => {
       <ul className={clsx("d-flex", positionClass ? positionClass : "justify-content-end")}>
         <li>
           <Link href="/home/electronics-one" className="nav-link">
-            {/* HOME<IoIosArrowDown /> */}
             HOME
           </Link>
         </li>
@@ -18,45 +17,12 @@ const Navigation = ({ positionClass }) => {
             SHOP
           </Link>
         </li>
-        <li className="has-children-mega">
+        <li>
           <Link href="/" className="nav-link">
             PRODUCTS<IoIosArrowDown />
 
           </Link>
-          <ul className="sub-menu sub-menu--mega sub-menu--mega--with-banner">
-            <li className="sub-menu--mega__column">
-              <h3 className="sub-menu--mega__title">SHOP PAGE LAYOUT</h3>
-              <ul className="sub-menu--mega__list">
-                <li>
-                  <Link href="/shop/grid-left-sidebar">
-                    Grid Left Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/grid-right-sidebar">
-                    Grid Right Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/list-left-sidebar">
-                    List Left Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/list-right-sidebar">
-                    List Right Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/list-no-sidebar">
-                    List No Sidebar
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className="sub-menu--mega__column">
-              <h3 className="sub-menu--mega__title">OTHER PAGES</h3>
-              <ul className="sub-menu--mega__list">
+            <ul className="sub-menu sub-menu--one-column">
                 <li>
                   <Link href="/other/cart">
                     Cart
@@ -87,105 +53,34 @@ const Navigation = ({ positionClass }) => {
                     Order Completed
                   </Link>
                 </li>
-              </ul>
-            </li>
-            <li className="sub-menu--mega__column">
-              <h3 className="sub-menu--mega__title">PRODUCT PAGES</h3>
-              <ul className="sub-menu--mega__list">
-                <li>
-                  <Link href="/shop/product-basic/lorem-ipsum-fashion-eight">
-                    Default
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-left-sidebar/lorem-ipsum-fashion-eight">
-                    Left Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-right-sidebar/lorem-ipsum-fashion-eight">
-                    Right Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-thumb-left/lorem-ipsum-fashion-eight">
-                    Thumb Left
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className="sub-menu--mega__column">
-              <h3 className="sub-menu--mega__title">PRODUCT PAGES</h3>
-              <ul className="sub-menu--mega__list">
-                <li>
-                  <Link href="/shop/product-basic/lorem-ipsum-fashion-eight">
-                    Default
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-left-sidebar/lorem-ipsum-fashion-eight">
-                    Left Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-right-sidebar/lorem-ipsum-fashion-eight">
-                    Right Sidebar
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop/product-thumb-left/lorem-ipsum-fashion-eight">
-                    Thumb Left
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className="d-lg-flex sub-menu--mega__column--banners">
-              <Col lg={4}>
-                <div className="header-banner p-0">
-                  <img
-                    src="/assets/images/banner/menu_banner1.jpg"
-                    alt="menu_banner1"
-                  />
-                  <div className="banner-info">
-                    <h6>10% Off</h6>
-                    <h4>New Arrival</h4>
-                    <Link href="/shop/grid-left-sidebar">
-                      Shop now
-                    </Link>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="header-banner p-0">
-                  <img
-                    src="/assets/images/banner/menu_banner2.jpg"
-                    alt="menu_banner1"
-                  />
-                  <div className="banner-info">
-                    <h6>10% Off</h6>
-                    <h4>New Arrival</h4>
-                    <Link href="/shop/grid-left-sidebar">
-                      Shop now
-                    </Link>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="header-banner p-0">
-                  <img
-                    src="/assets/images/banner/menu_banner3.jpg"
-                    alt="menu_banner1"
-                  />
-                  <div className="banner-info">
-                    <h6>10% Off</h6>
-                    <h4>New Arrival</h4>
-                    <Link href="/shop/grid-left-sidebar">
-                      Shop now
-                    </Link>
-                  </div>
-                </div>
-              </Col>
-            </li>
+              {/*</ul>*/}
+            {/*</li>*/}
+            {/*<li className="sub-menu--mega__column">*/}
+            {/*  <h3 className="sub-menu--mega__title">PRODUCT PAGES</h3>*/}
+            {/*  <ul className="sub-menu--mega__list">*/}
+            {/*    <li>*/}
+            {/*      <Link href="/shop/product-basic/lorem-ipsum-fashion-eight">*/}
+            {/*        Default*/}
+            {/*      </Link>*/}
+            {/*    </li>*/}
+            {/*    <li>*/}
+            {/*      <Link href="/shop/product-left-sidebar/lorem-ipsum-fashion-eight">*/}
+            {/*        Left Sidebar*/}
+            {/*      </Link>*/}
+            {/*    </li>*/}
+            {/*    <li>*/}
+            {/*      <Link href="/shop/product-right-sidebar/lorem-ipsum-fashion-eight">*/}
+            {/*        Right Sidebar*/}
+            {/*      </Link>*/}
+            {/*    </li>*/}
+            {/*    <li>*/}
+            {/*      <Link href="/shop/product-thumb-left/lorem-ipsum-fashion-eight">*/}
+            {/*        Thumb Left*/}
+            {/*      </Link>*/}
+            {/*    </li>*/}
+            {/*  </ul>*/}
+            {/*</li>*/}
+
           </ul>
         </li>
         <li>
