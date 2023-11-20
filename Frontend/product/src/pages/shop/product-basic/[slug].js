@@ -15,7 +15,11 @@ import products from "../../../data/products.json";
 import { ProductSliderTwo } from "../../../components/ProductSlider";
 import { getStaticPathsAPI, getStaticPropsAPI } from "../../../servicesAPI/api";
 
-const ProductLeftSidebar = ({ product }) => {
+const ProductLeftSidebar = ({ product
+
+
+
+}) => {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -113,47 +117,41 @@ const ProductLeftSidebar = ({ product }) => {
 
 export default ProductLeftSidebar;
 
-// export async function getStaticPaths() {
-//   // get the paths we want to pre render based on products
-//   const paths = products.map((product) => ({
-//     params: { slug: product.slug }
-//   }));
-//
-//   return { paths, fallback: false };
-// }
-//
-// export async function getStaticProps({ params }) {
-//   // get product data based on slug
-//   const product = products.filter((single) => single.slug === params.slug)[0];
-//
-//   return { props: { product } };
-// }
-// Import thư viện hoặc module để gọi API hoặc những hàm cần thiết
-
-
 export async function getStaticPaths() {
-  try {
-    const products = await getStaticPathsAPI();
-    const paths = products.map((product) => ({
-      params: { slug: product.slug },
-    }));
-    console.log('thứ 2', paths);
-    return { paths, fallback: false };
-  } catch (error) {
-    console.log('cai gi day troi oi 1');
-    console.error('Error fetching product data:', error);
-    return { paths: [], fallback: false };
-  }
+  // get the paths we want to pre render based on products
+  const paths = products.map((product) => ({
+    params: { slug: product.slug }
+  }));
+
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  try {
-    const product = await getStaticPropsAPI(params.slug);
-    console.log('thứ 1: ', product);
-    return { props: { product } };
-  } catch (error) {
-    console.log('cai gi day troi oi 2');
-    console.error('Error fetching product data:', error);
-    return { props: { product: null } };
-  }
+  // get product data based on slug
+  const product = products.filter((single) => single.slug === params.slug)[0];
+
+  return { props: { product } };
 }
+
+
+// export async function getStaticPaths() {
+//   try {
+//     const products = await getStaticPathsAPI();
+//     const paths = products.map((product) => ({
+//       params: { slug: product.slug },
+//     }));
+//     return { paths, fallback: false };
+//   } catch (error) {
+//     return { paths: [], fallback: false };
+//   }
+// }
+//
+// export async function getStaticProps({ params }) {
+//   try {
+//     const product = await getStaticPropsAPI(params.slug);
+//     // const product = products.filter((single) => single.slug === params.slug)[0];
+//     return { props: { product } };
+//   } catch (error) {
+//     return { props: { product: null } };
+//   }
+// }

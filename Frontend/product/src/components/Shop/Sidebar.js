@@ -116,53 +116,6 @@ const Sidebar = ({ products, getSortParams }) => {
       </div>
 
       <div className="widget">
-        <h5 className="widget__title">Popular Items</h5>
-        {popularProducts.length > 0 ? (
-          <ul className="widget-recent-post-wrapper">
-            {popularProducts &&
-              popularProducts.map((product, key) => {
-                const discountedPrice = getDiscountPrice(
-                  product.price,
-                  product.discount
-                ).toFixed(2);
-                const productPrice = product.price.toFixed(2);
-                return (
-                  <li className="widget-product-post" key={key}>
-                    <div className="widget-product-post__image">
-                      <Link href={"/shop/product-basic/" + product.slug}>
-                        <img src={product.thumbImage[0]} alt="shop_small1" />
-                      </Link>
-                    </div>
-                    <div className="widget-product-post__content">
-                      <h6 className="product-title">
-                        <Link href={"/shop/product-basic/" + product.slug}>
-                          {product.name}
-                        </Link>
-                      </h6>
-                      <div className="product-price">
-                        {product.discount ? (
-                          <Fragment>
-                            <span className="price">${discountedPrice}</span>
-                            <del>${productPrice}</del>
-                          </Fragment>
-                        ) : (
-                          <span className="price">${productPrice}</span>
-                        )}
-                      </div>
-                      <div className="rating-wrap">
-                        <ProductRating ratingValue={product.rating} />
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-          </ul>
-        ) : (
-          "No products found"
-        )}
-      </div>
-
-      <div className="widget">
         <h5 className="widget__title">tags</h5>
         {tags.length > 0 ? (
           <div className="widget__tags">

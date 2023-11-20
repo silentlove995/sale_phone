@@ -2,22 +2,22 @@
   {
     "id": "1",
     "backgroundImage": "/assets/images/hero-slider/five/1.jpg",
-    "subtitle": "tây ở đây",
-    "title": "tây ở đây hihi",
+    "subtitle": "1",
+    "title": "1",
     "url": "/shop/grid-left-sidebar"
   },
   {
     "id": "2",
     "backgroundImage": "/assets/images/hero-slider/five/2.jpg",
-    "subtitle": "tây ở đây 2",
-    "title": "tây ở đây hihi 2",
+    "subtitle": "2",
+    "title": "2",
     "url": "/shop/grid-left-sidebar"
   },
   {
     "id": "3",
     "backgroundImage": "/assets/images/hero-slider/five/3.jpg",
-    "subtitle": "tây ở đây 3",
-    "title": "tây ở đây hihi 3",
+    "subtitle": "3",
+    "title": "3",
     "url": "/shop/grid-left-sidebar"
   }
 ]

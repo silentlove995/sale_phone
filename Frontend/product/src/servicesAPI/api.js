@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function getStaticPathsAPI() {
   try {
-    const response = await axios.post(`http://localhost:8080/api/product/getDetailBySlug/${params.slug}`);
+    const response = await axios.post(`http://localhost:8080/api/product/getListFE`);
     const product = response.data.data;
     return { props: { product } };
   } catch (error) {
@@ -13,8 +13,9 @@ export async function getStaticPathsAPI() {
 
 export async function getStaticPropsAPI({ params }) {
   try {
-    const response = await axios.get(`http://localhost:8080/api/product/getListFE`);
+    const response = await axios.get(`http://localhost:8080/api/product/getDetailBySlug/${params.slug}`);
     const products = response.data.data;
+    console.log(products);
     const product = products.find((p) => p.slug === params.slug);
     return { props: { product } };
   } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import Paginator from "react-hooks-paginator";
 import { LayoutOne } from "../../layouts";
@@ -9,6 +9,7 @@ import { Sidebar, ShopHeader, ShopProducts } from "../../components/Shop";
 import { getSortedProducts } from "../../lib/product";
 import {getStaticPathsAPI} from "../../servicesAPI/api";
 import axios from "axios";
+import {setProducts} from "../../store/slices/product-slice";
 
 const GridLeftSidebar = () => {
   const { products } = useSelector((state) => state.product);
@@ -39,12 +40,14 @@ const GridLeftSidebar = () => {
     setFilterSortValue(sortValue);
   };
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('http://localhost:8080/api/product/getListFE');
       const products = response.data.data;
+      dispatch(setProducts(products));
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
-    console.log('---',sortedProducts);
     const filterSortedProducts = getSortedProducts(
       sortedProducts,
       filterSortType,
