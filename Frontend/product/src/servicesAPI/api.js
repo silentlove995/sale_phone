@@ -10,16 +10,3 @@ export async function getStaticPathsAPI() {
     return { props: { product: null } };
   }
 }
-
-export async function getStaticPropsAPI({ params }) {
-  try {
-    const response = await axios.get(`http://localhost:8080/api/product/getDetailBySlug/${params.slug}`);
-    const products = response.data.data;
-    console.log(products);
-    const product = products.find((p) => p.slug === params.slug);
-    return { props: { product } };
-  } catch (error) {
-    console.error('Error fetching product data:', error);
-    return { props: { product: null } };
-  }
-}
