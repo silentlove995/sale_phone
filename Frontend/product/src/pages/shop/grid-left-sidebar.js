@@ -44,8 +44,6 @@ const GridLeftSidebar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const response = await axios.get('http://localhost:8080/api/product/getListFE');
-      // const products = response.data.data;
       const { props } = await getListProductAPI();
       const { product: products } = props;
       dispatch(setProducts(products));

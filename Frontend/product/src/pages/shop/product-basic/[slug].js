@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { getDiscountPrice } from "../../../lib/product";
 import { getProducts } from "../../../lib/product";
 import { LayoutOne } from "../../../layouts";
@@ -11,15 +11,15 @@ import {
   ProductDescriptionTab,
   Sidebar
 } from "../../../components/ProductDetails";
-import products from "../../../data/products.json";
 import { ProductSliderTwo } from "../../../components/ProductSlider";
+import {getListProductAPI} from "../../../servicesAPI/api";
+import {setProducts} from "../../../store/slices/product-slice";
 
 const ProductLeftSidebar = ({ product}) => {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-
   const relatedProducts = getProducts(products, product.category[0], "popular", 8);
   const discountedPrice = getDiscountPrice(
     product.price,
@@ -96,11 +96,11 @@ const ProductLeftSidebar = ({ product}) => {
               </Row>
 
               {/* related product slider */}
-              <ProductSliderTwo
-                title="Related Products"
-                products={relatedProducts}
-                items={3}
-              />
+              {/*<ProductSliderTwo*/}
+              {/*  title="Related Products"*/}
+              {/*  products={relatedProducts}*/}
+              {/*  items={3}*/}
+              {/*/>*/}
             </Col>
           </Row>
         </Container>
@@ -114,6 +114,9 @@ export default ProductLeftSidebar;
 
 export async function getStaticPaths() {
   // get the paths we want to pre render based on products
+  const { props } = await getListProductAPI();
+  const products = props.product;
+
   const paths = products.map((product) => ({
     params: { slug: product.slug }
   }));
@@ -123,6 +126,21 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // get product data based on slug
-  const product = products.filter((single) => single.slug === params.slug)[0];
-  return { props: { product } };
+  /*const product = products.filter((single) => single.slug === params.slug)[0];
+  return { props: { product } };*/
+  try {
+    // Gọi hàm getListProductAPI để lấy dữ liệu sản phẩm
+    const { props } = await getListProductAPI();
+    const product = props.product.find((single) => single.slug === params.slug);
+    // Lấy danh sách toàn bộ sản phẩm
+    /*const allProducts = props.product;
+
+    // Dispatch action để cập nhật Redux store
+    const dispatch = useDispatch();
+    dispatch(setProducts(allProducts));*/
+    return { props: { product } };
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return { props: { product: null } };
+  }
 }
