@@ -15,6 +15,8 @@ const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   let cartTotalPrice = 0;
 
+  console.log("Cart Items:", cartItems);
+
   return (
     <LayoutOne>
       {/* breadcrumb */}
@@ -55,6 +57,9 @@ const Cart = () => {
                           ).toFixed(2);
 
                           cartTotalPrice += discountedPrice * product.quantity;
+
+                          console.log("Product Details:", product);
+                          console.log("Discounted Price:", discountedPrice);
                           return (
                             <tr key={key}>
                               <td className="product-thumbnail">

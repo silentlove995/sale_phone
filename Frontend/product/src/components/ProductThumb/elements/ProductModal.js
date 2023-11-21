@@ -220,7 +220,7 @@ const ProductModal = ({
                                         setQuantityCount(1);
                                       }}
                                     />
-                                    <label htmlFor={singleSize.name}>
+                                    <label style={{ width: "60px" }} htmlFor={singleSize.name}>
                                       {singleSize.name}
                                     </label>
                                   </Fragment>
